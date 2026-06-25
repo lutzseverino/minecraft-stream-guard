@@ -85,6 +85,20 @@ onboarding:
     cancel-keyword: cancel
     verify-after-link: true
 
+web:
+  live-feed:
+    enabled: true
+    bind-host: "127.0.0.1"
+    port: 8127
+    path: "/api/live"
+    update-interval-seconds: 15
+    cors:
+      allowed-origins:
+        - "http://localhost:5173"
+        - "http://127.0.0.1:5173"
+        - "http://localhost:4173"
+        - "http://127.0.0.1:4173"
+
 commands:
   safe-while-unverified:
     - stream

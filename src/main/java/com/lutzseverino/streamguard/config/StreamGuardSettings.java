@@ -12,6 +12,7 @@ public record StreamGuardSettings(
         Language language,
         Enforcement enforcement,
         Onboarding onboarding,
+        Web web,
         CommandSafety commandSafety,
         Bypass bypass,
         Providers providers
@@ -43,6 +44,7 @@ public record StreamGuardSettings(
                         StateRules.load(reader, "enforcement.not-live", defaultMovement, defaultChat)
                 ),
                 Onboarding.load(reader),
+                Web.load(reader),
                 new CommandSafety(reader.stringList("commands.safe-while-unverified")),
                 new Bypass(
                         reader.bool("bypass.ops-bypass-by-default", true),
@@ -221,6 +223,44 @@ public record StreamGuardSettings(
                     reader.string("onboarding.chat-input.cancel-keyword", "cancel"),
                     reader.bool("onboarding.chat-input.verify-after-link", true)
             );
+        }
+    }
+
+    public record Web(LiveFeed liveFeed) {
+        private static Web load(SettingsReader reader) {
+            return new Web(LiveFeed.load(reader));
+        }
+    }
+
+    public record LiveFeed(
+            boolean enabled,
+            String bindHost,
+            int port,
+            String path,
+            int updateIntervalSeconds,
+            List<String> corsAllowedOrigins
+    ) {
+        private static LiveFeed load(SettingsReader reader) {
+            return new LiveFeed(
+                    reader.bool("web.live-feed.enabled", true),
+                    reader.string("web.live-feed.bind-host", "127.0.0.1"),
+                    Math.max(1, Math.min(65535, reader.integer("web.live-feed.port", 8127))),
+                    normalizePath(reader.string("web.live-feed.path", "/api/live")),
+                    Math.max(5, reader.integer("web.live-feed.update-interval-seconds", 15)),
+                    reader.stringList("web.live-feed.cors.allowed-origins")
+            );
+        }
+
+        public LiveFeed {
+            corsAllowedOrigins = List.copyOf(corsAllowedOrigins);
+        }
+
+        private static String normalizePath(String value) {
+            if (value == null || value.isBlank()) {
+                return "/api/live";
+            }
+            String path = value.trim();
+            return path.startsWith("/") ? path : "/" + path;
         }
     }
 

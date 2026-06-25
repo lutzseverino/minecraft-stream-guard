@@ -2,6 +2,7 @@ package com.lutzseverino.streamguard.bootstrap;
 
 import com.lutzseverino.streamguard.application.AccessService;
 import com.lutzseverino.streamguard.application.BypassService;
+import com.lutzseverino.streamguard.application.LiveFeedService;
 import com.lutzseverino.streamguard.application.SessionRegistry;
 import com.lutzseverino.streamguard.application.StreamService;
 import com.lutzseverino.streamguard.application.StreamProviderRegistry;
@@ -13,6 +14,7 @@ import com.lutzseverino.streamguard.i18n.MessageService;
 import com.lutzseverino.streamguard.infrastructure.TwitchStreamVerificationProvider;
 import com.lutzseverino.streamguard.infrastructure.YamlPlayerAccessRepository;
 import com.lutzseverino.streamguard.infrastructure.YouTubeStreamVerificationProvider;
+import com.lutzseverino.streamguard.platform.bukkit.BukkitLiveFeedServer;
 import com.lutzseverino.streamguard.platform.bukkit.BukkitSettingsReader;
 import com.lutzseverino.streamguard.platform.bukkit.BukkitOnboardingFlow;
 import com.lutzseverino.streamguard.platform.bukkit.BukkitStreamVerificationRunner;
@@ -38,6 +40,7 @@ public final class StreamGuardPlugin extends JavaPlugin {
     private YamlPlayerAccessRepository repository;
     private BukkitTask recheckTask;
     private BukkitOnboardingFlow onboardingFlow;
+    private BukkitLiveFeedServer liveFeedServer;
 
     @Override
     public void onEnable() {
@@ -60,6 +63,10 @@ public final class StreamGuardPlugin extends JavaPlugin {
             onboardingFlow.shutdown();
             onboardingFlow = null;
         }
+        if (liveFeedServer != null) {
+            liveFeedServer.stop();
+            liveFeedServer = null;
+        }
         getLogger().info("StreamGuard disabled.");
     }
 
@@ -73,6 +80,10 @@ public final class StreamGuardPlugin extends JavaPlugin {
         if (onboardingFlow != null) {
             onboardingFlow.shutdown();
             onboardingFlow = null;
+        }
+        if (liveFeedServer != null) {
+            liveFeedServer.stop();
+            liveFeedServer = null;
         }
         HandlerList.unregisterAll(this);
         StreamGuardSettings settings = StreamGuardSettings.load(new BukkitSettingsReader(getConfig()));
@@ -89,6 +100,7 @@ public final class StreamGuardPlugin extends JavaPlugin {
         AccessService accessService = new AccessService(repository, sessionRegistry, policy, clock);
         BypassService bypassService = new BypassService(repository, clock);
         StreamService streamService = new StreamService(repository, verificationProvider, verificationProvider, clock);
+        LiveFeedService liveFeedService = new LiveFeedService(repository, clock);
         BukkitStreamVerificationRunner verificationRunner = new BukkitStreamVerificationRunner(this, streamService, messages);
         onboardingFlow = new BukkitOnboardingFlow(
                 this,
@@ -98,6 +110,8 @@ public final class StreamGuardPlugin extends JavaPlugin {
                 messages,
                 settings.onboarding()
         );
+        liveFeedServer = new BukkitLiveFeedServer(this, liveFeedService, settings.web().liveFeed());
+        liveFeedServer.start();
 
         getServer().getPluginManager().registerEvents(
                 new StreamGuardListener(accessService, sessionRegistry, messages, settings, this),

@@ -69,6 +69,25 @@ final class StreamGuardSettingsTest {
         assertFalse(settings.onboarding().chatInput().verifyAfterLink());
     }
 
+    @Test
+    void loadsLiveFeedWebSettings() {
+        MapSettingsReader reader = new MapSettingsReader(Map.of(
+                "web.live-feed.enabled", "true",
+                "web.live-feed.bind-host", "0.0.0.0",
+                "web.live-feed.port", "9000",
+                "web.live-feed.path", "streams/live",
+                "web.live-feed.update-interval-seconds", "20"
+        ));
+
+        StreamGuardSettings settings = StreamGuardSettings.load(reader);
+
+        assertTrue(settings.web().liveFeed().enabled());
+        assertEquals("0.0.0.0", settings.web().liveFeed().bindHost());
+        assertEquals(9000, settings.web().liveFeed().port());
+        assertEquals("/streams/live", settings.web().liveFeed().path());
+        assertEquals(20, settings.web().liveFeed().updateIntervalSeconds());
+    }
+
     private static final class MapSettingsReader implements SettingsReader {
 
         private final Map<String, String> values;
