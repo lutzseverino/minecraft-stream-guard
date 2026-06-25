@@ -13,6 +13,14 @@
     <description>Paper/Spigot plugin that gates world interaction behind stream verification.</description>
     <url>https://github.com/lutzseverino/minecraft-stream-guard</url>
 
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0 only</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

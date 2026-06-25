@@ -6,6 +6,7 @@
         <img alt="minecraft" src="https://img.shields.io/badge/minecraft-1.20.1%2B-111827">
         <img alt="java" src="https://img.shields.io/badge/java-17-1f2937">
         <img alt="build" src="https://img.shields.io/badge/build-maven-374151">
+        <img alt="license" src="https://img.shields.io/badge/license-GPL--3.0--only-4b5563">
     </p>
 </div>
 
@@ -128,3 +129,10 @@ mvn package
 
 `mvn package` runs the tests and produces the shaded plugin jar. Gson is shaded and relocated for
 provider API JSON parsing; Paper/Spigot remains a provided server dependency.
+
+## License
+
+StreamGuard is licensed under the GNU General Public License v3.0 only.
+
+You can sell packaged builds, use the plugin, compile it yourself, and redistribute modified versions
+under the GPL terms. See [LICENSE](LICENSE).
