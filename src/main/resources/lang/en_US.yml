@@ -1,0 +1,38 @@
+stream:
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} status</aqua>, <aqua>/{label} link twitch|youtube channel</aqua>, or <aqua>/{label} verify</aqua>.</white>"
+  link:
+    saved: "<dark_gray>[<green>+</green>]</dark_gray> <white>Linked <aqua>{platform}</aqua> channel <aqua>{channel}</aqua>.</white>"
+    invalid-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>Choose twitch or youtube.</white>"
+    unsupported-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>{platform} is not configured as a linkable stream provider.</white>"
+  locked:
+    interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before interacting with the world.</white>"
+    unlinked:
+      interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Link your stream account before interacting with the world.</white>"
+      movement: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Link your stream account before moving.</white>"
+      chat: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Link your stream account before chatting.</white>"
+      command: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Link your stream account before using that command.</white>"
+      kick: "<gold>StreamGuard</gold>\n<white>Link your stream account before joining this server.</white>"
+    not-live:
+      interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before interacting with the world.</white>"
+      movement: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before moving.</white>"
+      chat: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before chatting.</white>"
+      command: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before using that command.</white>"
+      kick: "<gold>StreamGuard</gold>\n<white>You need to be live before joining this server.</white>"
+  verified: "<dark_gray>[<green>+</green>]</dark_gray> <white>Stream verified on <aqua>{platform}</aqua>. You can play.</white>"
+  unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>No active stream was found yet.</white>"
+
+admin:
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} status player</aqua>, <aqua>/{label} bypass grant player [duration] [reason]</aqua>, <aqua>/{label} bypass remove player</aqua>, <aqua>/{label} verify player [platform]</aqua>, or <aqua>/{label} reload</aqua>.</white>"
+  status: "<dark_gray>[<green>+</green>]</dark_gray> <white>{player}: <aqua>{state}</aqua>.</white>"
+  bypass:
+    added: "<dark_gray>[<green>+</green>]</dark_gray> <white>Bypass granted to <aqua>{player}</aqua>.</white>"
+    removed: "<dark_gray>[<red>-</red>]</dark_gray> <white>Bypass removed from <aqua>{player}</aqua>.</white>"
+    temporary-disabled: "<dark_gray>[<red>-</red>]</dark_gray> <white>Temporary bypasses are disabled.</white>"
+    too-long: "<dark_gray>[<red>-</red>]</dark_gray> <white>Temporary bypasses cannot exceed <aqua>{minutes}</aqua> minutes.</white>"
+  verify:
+    added: "<dark_gray>[<green>+</green>]</dark_gray> <white>Stream verification granted to <aqua>{player}</aqua>.</white>"
+    removed: "<dark_gray>[<red>-</red>]</dark_gray> <white>Stream verification removed from <aqua>{player}</aqua>.</white>"
+
+system:
+  reloaded: "<dark_gray>[<green>+</green>]</dark_gray> <white>StreamGuard reloaded.</white>"
+  no-permission: "<dark_gray>[<red>-</red>]</dark_gray> <white>You do not have permission.</white>"

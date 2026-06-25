@@ -1,0 +1,64 @@
+language:
+  default-locale: es_ES
+  fallback-locale: en_US
+  per-player-locale: false
+  use-client-locale: false
+
+enforcement:
+  grace-period-seconds: 120
+  recheck-interval-seconds: 60
+  allow-movement-while-unverified: true
+  allow-chat-while-unverified: true
+  unlinked:
+    kick-on-join: false
+    kick-delay-seconds: 0
+    allow-movement: true
+    allow-chat: true
+    allow-commands: true
+  not-live:
+    kick-on-join: false
+    kick-delay-seconds: 0
+    allow-movement: true
+    allow-chat: true
+    allow-commands: true
+  blocked-actions:
+    block-break: true
+    block-place: true
+    block-interact: true
+    container-open: true
+    item-pickup: true
+    item-drop: true
+    inventory-click: false
+    crafting: true
+    villager-trading: true
+    entity-damage: true
+    entity-interact: true
+    buckets: true
+    fire: true
+
+commands:
+  safe-while-unverified:
+    - stream
+    - streamguard status
+    - login
+    - register
+    - l
+    - reg
+    - msg
+    - tell
+    - r
+
+bypass:
+  ops-bypass-by-default: true
+  allow-temporary-bypass: true
+  max-temporary-bypass-minutes: 240
+  log-bypass-changes: true
+
+providers:
+  twitch:
+    enabled: true
+    client-id: ""
+    client-secret: ""
+  youtube:
+    enabled: false
+    api-key: ""

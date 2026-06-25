@@ -1,0 +1,38 @@
+stream:
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} status</aqua>, <aqua>/{label} link twitch|youtube canal</aqua>, o <aqua>/{label} verify</aqua>.</white>"
+  link:
+    saved: "<dark_gray>[<green>+</green>]</dark_gray> <white>Canal <aqua>{channel}</aqua> de <aqua>{platform}</aqua> vinculado.</white>"
+    invalid-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>Elige twitch o youtube.</white>"
+    unsupported-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>{platform} no esta configurado como proveedor vinculable.</white>"
+  locked:
+    interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo para interactuar con el mundo.</white>"
+    unlinked:
+      interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Vincula tu cuenta de directo antes de interactuar con el mundo.</white>"
+      movement: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Vincula tu cuenta de directo antes de moverte.</white>"
+      chat: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Vincula tu cuenta de directo antes de chatear.</white>"
+      command: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Vincula tu cuenta de directo antes de usar ese comando.</white>"
+      kick: "<gold>StreamGuard</gold>\n<white>Vincula tu cuenta de directo antes de entrar en este servidor.</white>"
+    not-live:
+      interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo para interactuar con el mundo.</white>"
+      movement: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo antes de moverte.</white>"
+      chat: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo antes de chatear.</white>"
+      command: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo antes de usar ese comando.</white>"
+      kick: "<gold>StreamGuard</gold>\n<white>Necesitas estar en directo antes de entrar en este servidor.</white>"
+  verified: "<dark_gray>[<green>+</green>]</dark_gray> <white>Directo verificado en <aqua>{platform}</aqua>. Ya puedes jugar.</white>"
+  unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Todavía no se ha encontrado un directo activo.</white>"
+
+admin:
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} status jugador</aqua>, <aqua>/{label} bypass grant jugador [duracion] [motivo]</aqua>, <aqua>/{label} bypass remove jugador</aqua>, <aqua>/{label} verify jugador [plataforma]</aqua>, o <aqua>/{label} reload</aqua>.</white>"
+  status: "<dark_gray>[<green>+</green>]</dark_gray> <white>{player}: <aqua>{state}</aqua>.</white>"
+  bypass:
+    added: "<dark_gray>[<green>+</green>]</dark_gray> <white>Bypass concedido a <aqua>{player}</aqua>.</white>"
+    removed: "<dark_gray>[<red>-</red>]</dark_gray> <white>Bypass retirado de <aqua>{player}</aqua>.</white>"
+    temporary-disabled: "<dark_gray>[<red>-</red>]</dark_gray> <white>Los bypass temporales estan desactivados.</white>"
+    too-long: "<dark_gray>[<red>-</red>]</dark_gray> <white>Los bypass temporales no pueden superar <aqua>{minutes}</aqua> minutos.</white>"
+  verify:
+    added: "<dark_gray>[<green>+</green>]</dark_gray> <white>Verificacion de directo concedida a <aqua>{player}</aqua>.</white>"
+    removed: "<dark_gray>[<red>-</red>]</dark_gray> <white>Verificacion de directo retirada a <aqua>{player}</aqua>.</white>"
+
+system:
+  reloaded: "<dark_gray>[<green>+</green>]</dark_gray> <white>StreamGuard recargado.</white>"
+  no-permission: "<dark_gray>[<red>-</red>]</dark_gray> <white>No tienes permiso.</white>"
