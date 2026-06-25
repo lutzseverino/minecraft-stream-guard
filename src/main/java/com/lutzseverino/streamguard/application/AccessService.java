@@ -28,12 +28,12 @@ public final class AccessService {
     }
 
     public AccessDecision decide(UUID playerId, String playerName, GuardedAction action, boolean permissionBypass) {
-        PlayerAccessRecord record = repository.getOrCreate(playerId, playerName);
-        return policy.decide(action, record, sessionRegistry.sessionFor(playerId), permissionBypass, clock.instant());
+        PlayerAccessRecord accessRecord = repository.getOrCreate(playerId, playerName);
+        return policy.decide(action, accessRecord, sessionRegistry.sessionFor(playerId), permissionBypass, clock.instant());
     }
 
     public GateState gateState(UUID playerId, String playerName, boolean permissionBypass) {
-        PlayerAccessRecord record = repository.getOrCreate(playerId, playerName);
-        return policy.gateState(record, permissionBypass, clock.instant());
+        PlayerAccessRecord accessRecord = repository.getOrCreate(playerId, playerName);
+        return policy.gateState(accessRecord, permissionBypass, clock.instant());
     }
 }

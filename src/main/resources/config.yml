@@ -36,6 +36,55 @@ enforcement:
     buckets: true
     fire: true
 
+onboarding:
+  enabled: true
+  provider-picker:
+    title: "<dark_gray>Choose stream provider</dark_gray>"
+    rows: 3
+    fill-empty-slots: true
+    filler:
+      material: GRAY_STAINED_GLASS_PANE
+      name: " "
+      lore: []
+      custom-model-data: 0
+      glow: false
+    cancel:
+      slot: 22
+      material: BARRIER
+      name: "<red>Cancel</red>"
+      lore:
+        - "<gray>Close this setup flow.</gray>"
+      custom-model-data: 0
+      glow: false
+    providers:
+      twitch:
+        enabled: true
+        slot: 11
+        material: PURPLE_WOOL
+        name: "<light_purple>Twitch</light_purple>"
+        lore:
+          - "<gray>Click to enter your Twitch channel name.</gray>"
+          - "<dark_gray>Example: lutzseverino</dark_gray>"
+        input-hint: "Twitch channel name"
+        custom-model-data: 0
+        glow: false
+      youtube:
+        enabled: true
+        slot: 15
+        material: RED_WOOL
+        name: "<red>YouTube</red>"
+        lore:
+          - "<gray>Click to enter your YouTube channel ID or handle.</gray>"
+          - "<dark_gray>Example: @channel</dark_gray>"
+        input-hint: "YouTube channel ID or @handle"
+        custom-model-data: 0
+        glow: false
+  chat-input:
+    timeout-seconds: 120
+    max-length: 120
+    cancel-keyword: cancel
+    verify-after-link: true
+
 commands:
   safe-while-unverified:
     - stream

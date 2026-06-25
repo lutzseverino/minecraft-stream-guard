@@ -1,9 +1,21 @@
 stream:
-  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} status</aqua>, <aqua>/{label} link twitch|youtube channel</aqua>, or <aqua>/{label} verify</aqua>.</white>"
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} setup</aqua>, <aqua>/{label} status</aqua>, <aqua>/{label} link twitch|youtube channel</aqua>, <aqua>/{label} verify</aqua>, or <aqua>/{label} cancel</aqua>.</white>"
   link:
-    saved: "<dark_gray>[<green>+</green>]</dark_gray> <white>Linked <aqua>{platform}</aqua> channel <aqua>{channel}</aqua>.</white>"
+    saved: "<dark_gray>[<green>+</green>]</dark_gray> <white>Linked <aqua>{platform}</aqua> as <aqua>{channel}</aqua>. The link is saved.</white>"
     invalid-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>Choose twitch or youtube.</white>"
     unsupported-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>{platform} is not configured as a linkable stream provider.</white>"
+  setup:
+    disabled: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Stream setup GUI is disabled. Use <aqua>/stream link twitch|youtube channel</aqua>.</white>"
+    no-providers: "<dark_gray>[<red>-</red>]</dark_gray> <white>No stream providers are available in setup right now.</white>"
+    input:
+      prompt: "<dark_gray>[<aqua>?</aqua>]</dark_gray> <white>Type your <aqua>{input_hint}</aqua> for <aqua>{platform}</aqua> in chat. Type <red>{cancel}</red> to cancel.</white>"
+      empty: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>That was empty. Type your <aqua>{input_hint}</aqua>, or type <red>{cancel}</red> to cancel.</white>"
+      too-long: "<dark_gray>[<red>-</red>]</dark_gray> <white>That input is too long. Use <aqua>{max}</aqua> characters or fewer.</white>"
+      cancelled: "<dark_gray>[<red>-</red>]</dark_gray> <white>Stream setup cancelled.</white>"
+      expired: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Stream setup expired. Run <aqua>/stream setup</aqua> to try again.</white>"
+      none: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You do not have an active stream setup prompt.</white>"
+  verify:
+    started: "<dark_gray>[<aqua>...</aqua>]</dark_gray> <white>Checking whether your linked stream is live now.</white>"
   locked:
     interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before interacting with the world.</white>"
     unlinked:
@@ -18,8 +30,12 @@ stream:
       chat: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before chatting.</white>"
       command: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>You need to be live before using that command.</white>"
       kick: "<gold>StreamGuard</gold>\n<white>You need to be live before joining this server.</white>"
+  live: "<dark_gray>[<green>+</green>]</dark_gray> <white>Live stream found on <aqua>{platform}</aqua>. You can interact with the world.</white>"
+  not-live: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Your account is linked, but no live stream was found yet. Detail: <gray>{detail}</gray> Start streaming, then run <aqua>/stream verify</aqua> or wait for the next check.</white>"
+  not-checked: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Your stream account is linked, but no live check has run yet. Run <aqua>/stream verify</aqua>.</white>"
+  unlinked: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>No stream account is linked yet. Run <aqua>/stream setup</aqua> or <aqua>/stream link twitch|youtube channel</aqua>.</white>"
   verified: "<dark_gray>[<green>+</green>]</dark_gray> <white>Stream verified on <aqua>{platform}</aqua>. You can play.</white>"
-  unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>No active stream was found yet.</white>"
+  unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>No active stream was found yet. Run <aqua>/stream verify</aqua> after you start streaming.</white>"
 
 admin:
   usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} status player</aqua>, <aqua>/{label} bypass grant player [duration] [reason]</aqua>, <aqua>/{label} bypass remove player</aqua>, <aqua>/{label} verify player [platform]</aqua>, or <aqua>/{label} reload</aqua>.</white>"

@@ -1,9 +1,21 @@
 stream:
-  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} status</aqua>, <aqua>/{label} link twitch|youtube canal</aqua>, o <aqua>/{label} verify</aqua>.</white>"
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} setup</aqua>, <aqua>/{label} status</aqua>, <aqua>/{label} link twitch|youtube canal</aqua>, <aqua>/{label} verify</aqua>, o <aqua>/{label} cancel</aqua>.</white>"
   link:
-    saved: "<dark_gray>[<green>+</green>]</dark_gray> <white>Canal <aqua>{channel}</aqua> de <aqua>{platform}</aqua> vinculado.</white>"
+    saved: "<dark_gray>[<green>+</green>]</dark_gray> <white><aqua>{platform}</aqua> vinculado como <aqua>{channel}</aqua>. El enlace queda guardado.</white>"
     invalid-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>Elige twitch o youtube.</white>"
     unsupported-platform: "<dark_gray>[<red>-</red>]</dark_gray> <white>{platform} no esta configurado como proveedor vinculable.</white>"
+  setup:
+    disabled: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>La interfaz de vinculacion esta desactivada. Usa <aqua>/stream link twitch|youtube canal</aqua>.</white>"
+    no-providers: "<dark_gray>[<red>-</red>]</dark_gray> <white>No hay proveedores de directo disponibles ahora mismo.</white>"
+    input:
+      prompt: "<dark_gray>[<aqua>?</aqua>]</dark_gray> <white>Escribe tu <aqua>{input_hint}</aqua> para <aqua>{platform}</aqua> en el chat. Escribe <red>{cancel}</red> para cancelar.</white>"
+      empty: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Eso estaba vacio. Escribe tu <aqua>{input_hint}</aqua>, o escribe <red>{cancel}</red> para cancelar.</white>"
+      too-long: "<dark_gray>[<red>-</red>]</dark_gray> <white>Ese texto es demasiado largo. Usa <aqua>{max}</aqua> caracteres o menos.</white>"
+      cancelled: "<dark_gray>[<red>-</red>]</dark_gray> <white>Vinculacion de directo cancelada.</white>"
+      expired: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>La vinculacion de directo ha caducado. Usa <aqua>/stream setup</aqua> para intentarlo de nuevo.</white>"
+      none: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>No tienes una vinculacion de directo en curso.</white>"
+  verify:
+    started: "<dark_gray>[<aqua>...</aqua>]</dark_gray> <white>Comprobando si tu directo vinculado esta activo ahora.</white>"
   locked:
     interaction: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo para interactuar con el mundo.</white>"
     unlinked:
@@ -18,8 +30,12 @@ stream:
       chat: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo antes de chatear.</white>"
       command: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Necesitas estar en directo antes de usar ese comando.</white>"
       kick: "<gold>StreamGuard</gold>\n<white>Necesitas estar en directo antes de entrar en este servidor.</white>"
+  live: "<dark_gray>[<green>+</green>]</dark_gray> <white>Directo encontrado en <aqua>{platform}</aqua>. Ya puedes interactuar con el mundo.</white>"
+  not-live: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Tu cuenta esta vinculada, pero aun no se ha encontrado un directo activo. Detalle: <gray>{detail}</gray> Empieza el directo y usa <aqua>/stream verify</aqua>, o espera a la siguiente comprobacion.</white>"
+  not-checked: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Tu cuenta de directo esta vinculada, pero aun no se ha hecho ninguna comprobacion. Usa <aqua>/stream verify</aqua>.</white>"
+  unlinked: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Todavia no hay una cuenta de directo vinculada. Usa <aqua>/stream setup</aqua> o <aqua>/stream link twitch|youtube canal</aqua>.</white>"
   verified: "<dark_gray>[<green>+</green>]</dark_gray> <white>Directo verificado en <aqua>{platform}</aqua>. Ya puedes jugar.</white>"
-  unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Todavía no se ha encontrado un directo activo.</white>"
+  unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Todavia no se ha encontrado un directo activo. Usa <aqua>/stream verify</aqua> despues de empezar el directo.</white>"
 
 admin:
   usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} status jugador</aqua>, <aqua>/{label} bypass grant jugador [duracion] [motivo]</aqua>, <aqua>/{label} bypass remove jugador</aqua>, <aqua>/{label} verify jugador [plataforma]</aqua>, o <aqua>/{label} reload</aqua>.</white>"

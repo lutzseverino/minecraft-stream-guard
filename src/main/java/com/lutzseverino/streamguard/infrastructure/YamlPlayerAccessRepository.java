@@ -47,20 +47,20 @@ public final class YamlPlayerAccessRepository implements PlayerAccessRepository 
     }
 
     @Override
-    public synchronized void save(PlayerAccessRecord record) {
-        String root = "players." + record.playerId();
-        yaml.set(root + ".name", record.playerName());
-        record.streamLinkOptional().ifPresentOrElse(link -> {
+    public synchronized void save(PlayerAccessRecord accessRecord) {
+        String root = "players." + accessRecord.playerId();
+        yaml.set(root + ".name", accessRecord.playerName());
+        accessRecord.streamLinkOptional().ifPresentOrElse(link -> {
             yaml.set(root + ".stream.link.platform", link.providerId().value());
             yaml.set(root + ".stream.link.channel", link.channel());
         }, () -> yaml.set(root + ".stream.link", null));
-        record.verificationStatusOptional().ifPresentOrElse(status -> {
+        accessRecord.verificationStatusOptional().ifPresentOrElse(status -> {
             yaml.set(root + ".stream.status.live", status.live());
             yaml.set(root + ".stream.status.platform", status.verifiedProviderId().map(StreamProviderId::value).orElse(null));
             yaml.set(root + ".stream.status.checked-at", status.checkedAt().toEpochMilli());
             yaml.set(root + ".stream.status.detail", status.detail());
         }, () -> yaml.set(root + ".stream.status", null));
-        record.bypassGrantOptional().ifPresentOrElse(grant -> {
+        accessRecord.bypassGrantOptional().ifPresentOrElse(grant -> {
             yaml.set(root + ".bypass.granted-by", grant.grantedBy() == null ? null : grant.grantedBy().toString());
             yaml.set(root + ".bypass.granted-at", grant.grantedAt().toEpochMilli());
             yaml.set(root + ".bypass.expires-at", grant.expiresAtOptional().map(Instant::toEpochMilli).orElse(null));

@@ -10,5 +10,5 @@ public interface PlayerAccessRepository {
 
     Optional<PlayerAccessRecord> find(UUID playerId);
 
-    void save(PlayerAccessRecord record);
+    void save(PlayerAccessRecord accessRecord);
 }

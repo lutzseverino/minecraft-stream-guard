@@ -4,37 +4,37 @@ import com.lutzseverino.streamguard.application.StreamService;
 import com.lutzseverino.streamguard.application.StreamProviderRegistry;
 import com.lutzseverino.streamguard.domain.PlayerAccessRecord;
 import com.lutzseverino.streamguard.domain.StreamProviderId;
-import com.lutzseverino.streamguard.domain.VerificationStatus;
 import com.lutzseverino.streamguard.i18n.MessageService;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public final class StreamCommand implements CommandExecutor, TabCompleter {
 
     private final StreamService streamService;
     private final StreamProviderRegistry providerRegistry;
+    private final BukkitOnboardingFlow onboardingFlow;
+    private final BukkitStreamVerificationRunner verificationRunner;
     private final MessageService messages;
-    private final JavaPlugin plugin;
 
     public StreamCommand(
             StreamService streamService,
             StreamProviderRegistry providerRegistry,
-            MessageService messages,
-            JavaPlugin plugin
+            BukkitOnboardingFlow onboardingFlow,
+            BukkitStreamVerificationRunner verificationRunner,
+            MessageService messages
     ) {
         this.streamService = streamService;
         this.providerRegistry = providerRegistry;
+        this.onboardingFlow = onboardingFlow;
+        this.verificationRunner = verificationRunner;
         this.messages = messages;
-        this.plugin = plugin;
     }
 
     @Override
@@ -52,6 +52,14 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
             sendStatus(player, streamService.status(player.getUniqueId(), player.getName()));
             return true;
         }
+        if ("setup".equalsIgnoreCase(args[0])) {
+            onboardingFlow.open(player);
+            return true;
+        }
+        if ("cancel".equalsIgnoreCase(args[0])) {
+            onboardingFlow.cancel(player, true);
+            return true;
+        }
         if ("link".equalsIgnoreCase(args[0]) && args.length >= 3) {
             StreamProviderId providerId = StreamProviderId.parse(args[1]).orElse(null);
             if (providerId == null || StreamProviderId.MANUAL.equals(providerId)) {
@@ -64,25 +72,17 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
                 )));
                 return true;
             }
-            PlayerAccessRecord record = streamService.link(player.getUniqueId(), player.getName(), providerId, args[2]);
+            String linkReference = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+            PlayerAccessRecord accessRecord = streamService.link(player.getUniqueId(), player.getName(), providerId, linkReference);
             player.sendMessage(messages.renderDefault("stream.link.saved", Map.of(
-                    "platform", record.streamLink().providerId().displayName(),
-                    "channel", record.streamLink().channel()
+                    "platform", accessRecord.streamLink().providerId().displayName(),
+                    "channel", accessRecord.streamLink().channel()
             )));
+            verificationRunner.verify(player);
             return true;
         }
         if ("verify".equalsIgnoreCase(args[0])) {
-            UUID playerId = player.getUniqueId();
-            String playerName = player.getName();
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-                VerificationStatus status = streamService.verify(playerId, playerName);
-                plugin.getServer().getScheduler().runTask(plugin, () -> {
-                    Player online = plugin.getServer().getPlayer(playerId);
-                    if (online != null && online.isOnline()) {
-                        sendVerification(online, status);
-                    }
-                });
-            });
+            verificationRunner.verify(player);
             return true;
         }
         player.sendMessage(messages.renderDefault("stream.usage", Map.of("label", label)));
@@ -97,7 +97,7 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
             @NotNull String[] args
     ) {
         if (args.length == 1) {
-            return List.of("status", "link", "verify");
+            return List.of("status", "setup", "link", "verify", "cancel");
         }
         if (args.length == 2 && "link".equalsIgnoreCase(args[0])) {
             return providerRegistry.linkableProviderIds();
@@ -105,22 +105,14 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
         return List.of();
     }
 
-    private void sendStatus(Player player, PlayerAccessRecord record) {
-        record.verificationStatusOptional().ifPresentOrElse(
-                status -> sendVerification(player, status),
-                () -> player.sendMessage(messages.renderDefault("stream.unverified", Map.of()))
-        );
-    }
-
-    private void sendVerification(Player player, VerificationStatus status) {
-        if (status.live()) {
-            player.sendMessage(messages.renderDefault("stream.verified", Map.of(
-                    "platform", status.verifiedProviderId().map(StreamProviderId::displayName).orElse("Unknown")
-            )));
-        } else {
-            player.sendMessage(messages.renderDefault("stream.unverified", Map.of(
-                    "detail", status.detail().toLowerCase(Locale.ROOT)
-            )));
+    private void sendStatus(Player player, PlayerAccessRecord accessRecord) {
+        if (accessRecord.streamLinkOptional().isEmpty()) {
+            player.sendMessage(messages.renderDefault("stream.unlinked", Map.of()));
+            return;
         }
+        accessRecord.verificationStatusOptional().ifPresentOrElse(
+                status -> verificationRunner.sendVerification(player, status),
+                () -> player.sendMessage(messages.renderDefault("stream.not-checked", Map.of()))
+        );
     }
 }

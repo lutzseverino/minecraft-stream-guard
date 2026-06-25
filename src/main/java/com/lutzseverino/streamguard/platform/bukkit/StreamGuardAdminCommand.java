@@ -67,8 +67,8 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
                 return true;
             }
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
-            PlayerAccessRecord record = streamService.status(target.getUniqueId(), target.getName());
-            String state = record.verificationStatusOptional()
+            PlayerAccessRecord accessRecord = streamService.status(target.getUniqueId(), target.getName());
+            String state = accessRecord.verificationStatusOptional()
                     .map(status -> status.live() ? "live" : "not live")
                     .orElse("unknown");
             sender.sendMessage(messages.renderDefault("admin.status", Map.of(

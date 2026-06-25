@@ -14,6 +14,8 @@ import com.lutzseverino.streamguard.infrastructure.TwitchStreamVerificationProvi
 import com.lutzseverino.streamguard.infrastructure.YamlPlayerAccessRepository;
 import com.lutzseverino.streamguard.infrastructure.YouTubeStreamVerificationProvider;
 import com.lutzseverino.streamguard.platform.bukkit.BukkitSettingsReader;
+import com.lutzseverino.streamguard.platform.bukkit.BukkitOnboardingFlow;
+import com.lutzseverino.streamguard.platform.bukkit.BukkitStreamVerificationRunner;
 import com.lutzseverino.streamguard.platform.bukkit.StreamCommand;
 import com.lutzseverino.streamguard.platform.bukkit.StreamGuardAdminCommand;
 import com.lutzseverino.streamguard.platform.bukkit.StreamGuardListener;
@@ -35,6 +37,7 @@ public final class StreamGuardPlugin extends JavaPlugin {
     private SessionRegistry sessionRegistry;
     private YamlPlayerAccessRepository repository;
     private BukkitTask recheckTask;
+    private BukkitOnboardingFlow onboardingFlow;
 
     @Override
     public void onEnable() {
@@ -53,6 +56,10 @@ public final class StreamGuardPlugin extends JavaPlugin {
             recheckTask.cancel();
             recheckTask = null;
         }
+        if (onboardingFlow != null) {
+            onboardingFlow.shutdown();
+            onboardingFlow = null;
+        }
         getLogger().info("StreamGuard disabled.");
     }
 
@@ -63,6 +70,10 @@ public final class StreamGuardPlugin extends JavaPlugin {
     }
 
     private void wire() {
+        if (onboardingFlow != null) {
+            onboardingFlow.shutdown();
+            onboardingFlow = null;
+        }
         HandlerList.unregisterAll(this);
         StreamGuardSettings settings = StreamGuardSettings.load(new BukkitSettingsReader(getConfig()));
         MessageService messages = new MessageService(
@@ -78,12 +89,28 @@ public final class StreamGuardPlugin extends JavaPlugin {
         AccessService accessService = new AccessService(repository, sessionRegistry, policy, clock);
         BypassService bypassService = new BypassService(repository, clock);
         StreamService streamService = new StreamService(repository, verificationProvider, verificationProvider, clock);
+        BukkitStreamVerificationRunner verificationRunner = new BukkitStreamVerificationRunner(this, streamService, messages);
+        onboardingFlow = new BukkitOnboardingFlow(
+                this,
+                streamService,
+                verificationProvider,
+                verificationRunner,
+                messages,
+                settings.onboarding()
+        );
 
         getServer().getPluginManager().registerEvents(
                 new StreamGuardListener(accessService, sessionRegistry, messages, settings, this),
                 this
         );
-        StreamCommand streamCommand = new StreamCommand(streamService, verificationProvider, messages, this);
+        getServer().getPluginManager().registerEvents(onboardingFlow, this);
+        StreamCommand streamCommand = new StreamCommand(
+                streamService,
+                verificationProvider,
+                onboardingFlow,
+                verificationRunner,
+                messages
+        );
         Objects.requireNonNull(getCommand("stream"), "stream command is missing from plugin.yml")
                 .setExecutor(streamCommand);
         Objects.requireNonNull(getCommand("stream")).setTabCompleter(streamCommand);

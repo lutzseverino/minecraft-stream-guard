@@ -41,6 +41,14 @@ public final class MessageService {
         return plainText.serialize(renderDefault(key, placeholders));
     }
 
+    public Component renderTemplate(String template, Map<String, String> placeholders) {
+        String rendered = template == null ? "" : template;
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            rendered = rendered.replace("{" + entry.getKey() + "}", entry.getValue());
+        }
+        return miniMessage.deserialize(rendered);
+    }
+
     private String lookup(String locale, String key) {
         YamlConfiguration bundle = bundles.get(locale);
         if (bundle != null && bundle.isString(key)) {

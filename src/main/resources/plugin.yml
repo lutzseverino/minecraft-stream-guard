@@ -11,8 +11,8 @@ softdepend:
   - PlaceholderAPI
 commands:
   stream:
-    description: Link and inspect your stream verification status.
-    usage: /stream
+    description: Link, set up, and inspect your stream verification status.
+    usage: /stream [setup|status|link|verify|cancel]
   streamguard:
     description: Admin tools for StreamGuard.
     usage: /streamguard

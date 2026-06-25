@@ -35,6 +35,40 @@ final class StreamGuardSettingsTest {
         assertEquals("abc", settings.providers().get(StreamProviderId.TWITCH).option("client-id"));
     }
 
+    @Test
+    void loadsConfigurableOnboardingProviderButtons() {
+        MapSettingsReader reader = new MapSettingsReader(Map.ofEntries(
+                Map.entry("onboarding.enabled", "true"),
+                Map.entry("onboarding.provider-picker.title", "<gold>Pick</gold>"),
+                Map.entry("onboarding.provider-picker.rows", "4"),
+                Map.entry("onboarding.provider-picker.providers.twitch.enabled", "true"),
+                Map.entry("onboarding.provider-picker.providers.twitch.slot", "13"),
+                Map.entry("onboarding.provider-picker.providers.twitch.material", "PURPLE_WOOL"),
+                Map.entry("onboarding.provider-picker.providers.twitch.name", "<light_purple>Twitch</light_purple>"),
+                Map.entry("onboarding.provider-picker.providers.twitch.input-hint", "Twitch name"),
+                Map.entry("onboarding.chat-input.timeout-seconds", "90"),
+                Map.entry("onboarding.chat-input.max-length", "80"),
+                Map.entry("onboarding.chat-input.cancel-keyword", "stop"),
+                Map.entry("onboarding.chat-input.verify-after-link", "false")
+        ));
+
+        StreamGuardSettings settings = StreamGuardSettings.load(reader);
+
+        assertTrue(settings.onboarding().enabled());
+        assertEquals("<gold>Pick</gold>", settings.onboarding().providerPicker().title());
+        assertEquals(4, settings.onboarding().providerPicker().rows());
+        assertEquals(1, settings.onboarding().providerPicker().providers().size());
+        StreamGuardSettings.ProviderButton button = settings.onboarding().providerPicker().providers().get(0);
+        assertEquals(StreamProviderId.TWITCH, button.providerId());
+        assertEquals(13, button.slot());
+        assertEquals("PURPLE_WOOL", button.item().material());
+        assertEquals("Twitch name", button.inputHint());
+        assertEquals(90, settings.onboarding().chatInput().timeoutSeconds());
+        assertEquals(80, settings.onboarding().chatInput().maxLength());
+        assertEquals("stop", settings.onboarding().chatInput().cancelKeyword());
+        assertFalse(settings.onboarding().chatInput().verifyAfterLink());
+    }
+
     private static final class MapSettingsReader implements SettingsReader {
 
         private final Map<String, String> values;

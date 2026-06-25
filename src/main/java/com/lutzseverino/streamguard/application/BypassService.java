@@ -21,13 +21,13 @@ public final class BypassService {
         Instant now = clock.instant();
         Instant expiresAt = duration == null ? null : now.plus(duration);
         BypassGrant grant = new BypassGrant(playerId, grantedBy, now, expiresAt, reason);
-        PlayerAccessRecord record = repository.getOrCreate(playerId, playerName).withBypassGrant(grant);
-        repository.save(record);
+        PlayerAccessRecord accessRecord = repository.getOrCreate(playerId, playerName).withBypassGrant(grant);
+        repository.save(accessRecord);
         return grant;
     }
 
     public void revoke(UUID playerId, String playerName) {
-        PlayerAccessRecord record = repository.getOrCreate(playerId, playerName);
-        repository.save(record.withoutBypassGrant());
+        PlayerAccessRecord accessRecord = repository.getOrCreate(playerId, playerName);
+        repository.save(accessRecord.withoutBypassGrant());
     }
 }

@@ -28,16 +28,16 @@ public final class StreamService {
     }
 
     public PlayerAccessRecord link(UUID playerId, String playerName, StreamProviderId providerId, String channel) {
-        PlayerAccessRecord record = repository.getOrCreate(playerId, playerName)
+        PlayerAccessRecord accessRecord = repository.getOrCreate(playerId, playerName)
                 .withStreamLink(new StreamLink(providerId, linkNormalizer.normalize(providerId, channel)))
                 .withVerificationStatus(VerificationStatus.unverified(clock.instant(), "Stream link changed."));
-        repository.save(record);
-        return record;
+        repository.save(accessRecord);
+        return accessRecord;
     }
 
     public VerificationStatus verify(UUID playerId, String playerName) {
-        PlayerAccessRecord record = repository.getOrCreate(playerId, playerName);
-        Optional<StreamLink> link = record.streamLinkOptional();
+        PlayerAccessRecord accessRecord = repository.getOrCreate(playerId, playerName);
+        Optional<StreamLink> link = accessRecord.streamLinkOptional();
         VerificationStatus status;
         if (link.isEmpty()) {
             status = VerificationStatus.unverified(clock.instant(), "No stream link configured.");
@@ -47,7 +47,7 @@ public final class StreamService {
                     ? VerificationStatus.live(result.providerId(), clock.instant(), result.detail())
                     : VerificationStatus.unverified(clock.instant(), result.detail());
         }
-        repository.save(record.withVerificationStatus(status));
+        repository.save(accessRecord.withVerificationStatus(status));
         return status;
     }
 

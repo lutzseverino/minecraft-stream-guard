@@ -11,6 +11,7 @@ import java.util.Map;
 public record StreamGuardSettings(
         Language language,
         Enforcement enforcement,
+        Onboarding onboarding,
         CommandSafety commandSafety,
         Bypass bypass,
         Providers providers
@@ -41,6 +42,7 @@ public record StreamGuardSettings(
                         StateRules.load(reader, "enforcement.unlinked", defaultMovement, defaultChat),
                         StateRules.load(reader, "enforcement.not-live", defaultMovement, defaultChat)
                 ),
+                Onboarding.load(reader),
                 new CommandSafety(reader.stringList("commands.safe-while-unverified")),
                 new Bypass(
                         reader.bool("bypass.ops-bypass-by-default", true),
@@ -102,6 +104,123 @@ public record StreamGuardSettings(
     public record CommandSafety(List<String> safeWhileUnverified) {
         public CommandSafety {
             safeWhileUnverified = List.copyOf(safeWhileUnverified);
+        }
+    }
+
+    public record Onboarding(
+            boolean enabled,
+            ProviderPicker providerPicker,
+            ChatInput chatInput
+    ) {
+        private static Onboarding load(SettingsReader reader) {
+            return new Onboarding(
+                    reader.bool("onboarding.enabled", true),
+                    ProviderPicker.load(reader),
+                    ChatInput.load(reader)
+            );
+        }
+    }
+
+    public record ProviderPicker(
+            String title,
+            int rows,
+            boolean fillEmptySlots,
+            GuiItem filler,
+            GuiItem cancel,
+            List<ProviderButton> providers
+    ) {
+        private static ProviderPicker load(SettingsReader reader) {
+            List<ProviderButton> providers = reader.keys("onboarding.provider-picker.providers").stream()
+                    .flatMap(rawKey -> StreamProviderId.parse(rawKey)
+                            .map(providerId -> ProviderButton.load(
+                                    reader,
+                                    "onboarding.provider-picker.providers." + rawKey,
+                                    providerId
+                            ))
+                            .stream())
+                    .toList();
+            return new ProviderPicker(
+                    reader.string("onboarding.provider-picker.title", "<dark_gray>Choose stream provider</dark_gray>"),
+                    Math.max(1, Math.min(6, reader.integer("onboarding.provider-picker.rows", 3))),
+                    reader.bool("onboarding.provider-picker.fill-empty-slots", true),
+                    GuiItem.load(reader, "onboarding.provider-picker.filler", "GRAY_STAINED_GLASS_PANE", " ", List.of(), 0, false),
+                    GuiItem.load(reader, "onboarding.provider-picker.cancel", "BARRIER", "<red>Cancel</red>", List.of(), 22, false),
+                    providers
+            );
+        }
+
+        public ProviderPicker {
+            providers = List.copyOf(providers);
+        }
+    }
+
+    public record ProviderButton(
+            StreamProviderId providerId,
+            boolean enabled,
+            int slot,
+            String inputHint,
+            GuiItem item
+    ) {
+        private static ProviderButton load(SettingsReader reader, String path, StreamProviderId providerId) {
+            return new ProviderButton(
+                    providerId,
+                    reader.bool(path + ".enabled", true),
+                    Math.max(0, reader.integer(path + ".slot", 0)),
+                    reader.string(path + ".input-hint", providerId.displayName()),
+                    GuiItem.load(reader, path, "PAPER", "<aqua>" + providerId.displayName() + "</aqua>", List.of(), 0, false)
+            );
+        }
+    }
+
+    public record GuiItem(
+            String material,
+            String name,
+            List<String> lore,
+            int slot,
+            int customModelData,
+            boolean glow
+    ) {
+        private static GuiItem load(
+                SettingsReader reader,
+                String path,
+                String defaultMaterial,
+                String defaultName,
+                List<String> defaultLore,
+                int defaultSlot,
+                boolean defaultGlow
+        ) {
+            List<String> lore = reader.stringList(path + ".lore");
+            if (lore.isEmpty() && !defaultLore.isEmpty()) {
+                lore = defaultLore;
+            }
+            return new GuiItem(
+                    reader.string(path + ".material", defaultMaterial),
+                    reader.string(path + ".name", defaultName),
+                    lore,
+                    Math.max(0, reader.integer(path + ".slot", defaultSlot)),
+                    Math.max(0, reader.integer(path + ".custom-model-data", 0)),
+                    reader.bool(path + ".glow", defaultGlow)
+            );
+        }
+
+        public GuiItem {
+            lore = List.copyOf(lore);
+        }
+    }
+
+    public record ChatInput(
+            int timeoutSeconds,
+            int maxLength,
+            String cancelKeyword,
+            boolean verifyAfterLink
+    ) {
+        private static ChatInput load(SettingsReader reader) {
+            return new ChatInput(
+                    Math.max(10, reader.integer("onboarding.chat-input.timeout-seconds", 120)),
+                    Math.max(8, reader.integer("onboarding.chat-input.max-length", 120)),
+                    reader.string("onboarding.chat-input.cancel-keyword", "cancel"),
+                    reader.bool("onboarding.chat-input.verify-after-link", true)
+            );
         }
     }
 

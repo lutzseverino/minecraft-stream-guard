@@ -18,7 +18,7 @@ public final class StreamGuardPolicy {
 
     public AccessDecision decide(
             GuardedAction action,
-            PlayerAccessRecord record,
+            PlayerAccessRecord accessRecord,
             SessionState session,
             boolean permissionBypass,
             Instant now
@@ -29,10 +29,10 @@ public final class StreamGuardPolicy {
         if (permissionBypass) {
             return AccessDecision.allow(AccessDecision.Reason.BYPASS);
         }
-        if (record.verificationStatusOptional().filter(VerificationStatus::live).isPresent()) {
+        if (accessRecord.verificationStatusOptional().filter(VerificationStatus::live).isPresent()) {
             return AccessDecision.allow(AccessDecision.Reason.VERIFIED);
         }
-        if (record.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
+        if (accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
             return AccessDecision.allow(AccessDecision.Reason.BYPASS);
         }
         if (!gracePeriod.isZero() && session != null && !session.joinedAt().plus(gracePeriod).isBefore(now)) {
@@ -41,14 +41,14 @@ public final class StreamGuardPolicy {
         return AccessDecision.deny();
     }
 
-    public GateState gateState(PlayerAccessRecord record, boolean permissionBypass, Instant now) {
-        if (permissionBypass || record.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
+    public GateState gateState(PlayerAccessRecord accessRecord, boolean permissionBypass, Instant now) {
+        if (permissionBypass || accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
             return GateState.BYPASSED;
         }
-        if (record.verificationStatusOptional().filter(VerificationStatus::live).isPresent()) {
+        if (accessRecord.verificationStatusOptional().filter(VerificationStatus::live).isPresent()) {
             return GateState.VERIFIED;
         }
-        if (record.streamLinkOptional().isEmpty()) {
+        if (accessRecord.streamLinkOptional().isEmpty()) {
             return GateState.UNLINKED;
         }
         return GateState.NOT_LIVE;

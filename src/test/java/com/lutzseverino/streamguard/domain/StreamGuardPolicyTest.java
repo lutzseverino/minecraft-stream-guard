@@ -18,10 +18,10 @@ final class StreamGuardPolicyTest {
     @Test
     void unlinkedPlayerCannotPerformGuardedWorldActionAfterGracePeriod() {
         StreamGuardPolicy policy = new StreamGuardPolicy(EnumSet.of(GuardedAction.BLOCK_BREAK), Duration.ofSeconds(5));
-        PlayerAccessRecord record = PlayerAccessRecord.empty(PLAYER_ID, "Lutz");
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz");
         SessionState session = new SessionState(PLAYER_ID, NOW.minusSeconds(10));
 
-        AccessDecision decision = policy.decide(GuardedAction.BLOCK_BREAK, record, session, false, NOW);
+        AccessDecision decision = policy.decide(GuardedAction.BLOCK_BREAK, accessRecord, session, false, NOW);
 
         assertFalse(decision.allowed());
         assertEquals(AccessDecision.Reason.DENIED, decision.reason());
@@ -30,10 +30,10 @@ final class StreamGuardPolicyTest {
     @Test
     void gracePeriodAllowsGuardedActionsTemporarily() {
         StreamGuardPolicy policy = new StreamGuardPolicy(EnumSet.of(GuardedAction.BLOCK_PLACE), Duration.ofSeconds(30));
-        PlayerAccessRecord record = PlayerAccessRecord.empty(PLAYER_ID, "Lutz");
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz");
         SessionState session = new SessionState(PLAYER_ID, NOW.minusSeconds(10));
 
-        AccessDecision decision = policy.decide(GuardedAction.BLOCK_PLACE, record, session, false, NOW);
+        AccessDecision decision = policy.decide(GuardedAction.BLOCK_PLACE, accessRecord, session, false, NOW);
 
         assertTrue(decision.allowed());
         assertEquals(AccessDecision.Reason.GRACE_PERIOD, decision.reason());
@@ -42,10 +42,10 @@ final class StreamGuardPolicyTest {
     @Test
     void liveVerificationAllowsGuardedActions() {
         StreamGuardPolicy policy = new StreamGuardPolicy(EnumSet.of(GuardedAction.ENTITY_DAMAGE), Duration.ZERO);
-        PlayerAccessRecord record = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
                 .withVerificationStatus(VerificationStatus.live(StreamProviderId.TWITCH, NOW, "live"));
 
-        AccessDecision decision = policy.decide(GuardedAction.ENTITY_DAMAGE, record, null, false, NOW);
+        AccessDecision decision = policy.decide(GuardedAction.ENTITY_DAMAGE, accessRecord, null, false, NOW);
 
         assertTrue(decision.allowed());
         assertEquals(AccessDecision.Reason.VERIFIED, decision.reason());
@@ -54,22 +54,22 @@ final class StreamGuardPolicyTest {
     @Test
     void expiredBypassDoesNotAllowGuardedActions() {
         StreamGuardPolicy policy = new StreamGuardPolicy(EnumSet.of(GuardedAction.ITEM_DROP), Duration.ZERO);
-        PlayerAccessRecord record = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
                 .withBypassGrant(new BypassGrant(PLAYER_ID, null, NOW.minusSeconds(60), NOW.minusSeconds(1), "test"));
 
-        AccessDecision decision = policy.decide(GuardedAction.ITEM_DROP, record, null, false, NOW);
+        AccessDecision decision = policy.decide(GuardedAction.ITEM_DROP, accessRecord, null, false, NOW);
 
         assertFalse(decision.allowed());
-        assertEquals(GateState.UNLINKED, policy.gateState(record, false, NOW));
+        assertEquals(GateState.UNLINKED, policy.gateState(accessRecord, false, NOW));
     }
 
     @Test
     void linkedButOfflinePlayerHasNotLiveGateState() {
         StreamGuardPolicy policy = new StreamGuardPolicy(EnumSet.allOf(GuardedAction.class), Duration.ZERO);
-        PlayerAccessRecord record = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
                 .withStreamLink(new StreamLink(StreamProviderId.YOUTUBE, "@channel"))
                 .withVerificationStatus(VerificationStatus.unverified(NOW, "offline"));
 
-        assertEquals(GateState.NOT_LIVE, policy.gateState(record, false, NOW));
+        assertEquals(GateState.NOT_LIVE, policy.gateState(accessRecord, false, NOW));
     }
 }

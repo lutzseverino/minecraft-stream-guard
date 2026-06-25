@@ -31,10 +31,12 @@ choose how strict the live requirement should be.
 Players manage their stream link from the server:
 
 ```text
+/stream setup
 /stream status
 /stream link twitch <channel-login>
 /stream link youtube <channel-id-or-@handle>
 /stream verify
+/stream cancel
 ```
 
 Admins manage access, manual verification, and bypasses:
@@ -59,6 +61,11 @@ the duration grants a persistent bypass.
 - `enforcement.not-live` controls linked players who are not currently live.
 - `enforcement.blocked-actions` controls block break/place, containers, pickup/drop, crafting,
   trading, entity damage/interact, buckets, fire, and other guarded interactions.
+- `onboarding.enabled` controls the optional provider-picker setup flow.
+- `onboarding.provider-picker` controls the chest GUI title, rows, filler item, cancel item, and
+  provider buttons.
+- `onboarding.chat-input` controls chat input timeout, max length, cancel keyword, and whether to
+  verify immediately after linking.
 - `commands.safe-while-unverified` keeps commands such as `/stream`, `/login`, and `/register`
   usable when command blocking is enabled.
 
