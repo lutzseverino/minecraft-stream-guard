@@ -98,6 +98,12 @@ Provider identity is modeled as data through `StreamProviderId`, not as a closed
 provider, such as Discord streaming presence, can add an infrastructure adapter and register its
 provider ID without changing the core access policy.
 
+## Companion Site
+
+The optional live wall lives at
+[minecraft-stream-guard-site](https://github.com/lutzseverino/minecraft-stream-guard-site). It reads
+StreamGuard's `/api/live` feed and renders the currently live players as a fullscreen web wall.
+
 ## Architecture
 
 The codebase keeps server, network, YAML, persistence, and rendering concerns at the edges.
