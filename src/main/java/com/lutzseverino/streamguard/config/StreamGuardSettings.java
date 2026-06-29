@@ -238,6 +238,7 @@ public record StreamGuardSettings(
             int port,
             String path,
             int updateIntervalSeconds,
+            int metadataCacheSeconds,
             List<String> corsAllowedOrigins
     ) {
         private static LiveFeed load(SettingsReader reader) {
@@ -247,6 +248,7 @@ public record StreamGuardSettings(
                     Math.max(1, Math.min(65535, reader.integer("web.live-feed.port", 8127))),
                     normalizePath(reader.string("web.live-feed.path", "/api/live")),
                     Math.max(5, reader.integer("web.live-feed.update-interval-seconds", 15)),
+                    Math.max(15, reader.integer("web.live-feed.metadata-cache-seconds", 60)),
                     reader.stringList("web.live-feed.cors.allowed-origins")
             );
         }

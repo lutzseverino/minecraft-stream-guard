@@ -52,6 +52,36 @@ final class LiveFeedServiceTest {
         assertEquals("lutzseverino", streamer.embed().channel());
     }
 
+    @Test
+    void snapshotEnrichesVerifiedPlayersWithProviderMetadata() {
+        InMemoryRepository repository = new InMemoryRepository(Map.of(
+                LIVE_PLAYER_ID,
+                PlayerAccessRecord.empty(LIVE_PLAYER_ID, "LiveLutz")
+                        .withStreamLink(new StreamLink(StreamProviderId.TWITCH, "lutzseverino"))
+                        .withVerificationStatus(VerificationStatus.live(StreamProviderId.TWITCH, NOW, "live"))
+        ));
+        StreamMetadataProvider metadataProvider = link -> Optional.of(new LiveStreamMetadata(
+                "live-lutz",
+                "Building a base",
+                "https://example.com/thumb.jpg",
+                42,
+                NOW.minusSeconds(600),
+                "https://twitch.tv/live-lutz"
+        ));
+        LiveFeedService service = new LiveFeedService(repository, metadataProvider, Clock.fixed(NOW, ZoneOffset.UTC));
+
+        LiveFeedSnapshot snapshot = service.snapshot(List.of(new LiveFeedPlayer(LIVE_PLAYER_ID, "CurrentLiveLutz")));
+
+        LiveStreamer streamer = snapshot.streamers().get(0);
+        assertEquals("https://twitch.tv/live-lutz", streamer.url());
+        assertEquals("Building a base", streamer.title());
+        assertEquals("https://example.com/thumb.jpg", streamer.thumbnailUrl());
+        assertEquals(42, streamer.viewerCount());
+        assertEquals("2026-06-26T11:50:00Z", streamer.liveSince());
+        assertEquals("live-lutz", streamer.channel());
+        assertEquals("live-lutz", streamer.embed().channel());
+    }
+
     private static final class InMemoryRepository implements PlayerAccessRepository {
 
         private final Map<UUID, PlayerAccessRecord> records = new ConcurrentHashMap<>();

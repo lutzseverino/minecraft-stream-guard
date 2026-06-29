@@ -66,6 +66,8 @@ the duration grants a persistent bypass.
   provider buttons.
 - `onboarding.chat-input` controls chat input timeout, max length, cancel keyword, and whether to
   verify immediately after linking.
+- `web.live-feed` controls the optional live feed API, CORS origins, refresh interval, and provider
+  metadata cache for the companion site.
 - `commands.safe-while-unverified` keeps commands such as `/stream`, `/login`, and `/register`
   usable when command blocking is enabled.
 

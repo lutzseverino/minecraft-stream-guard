@@ -2,6 +2,7 @@ package com.lutzseverino.streamguard.bootstrap;
 
 import com.lutzseverino.streamguard.application.AccessService;
 import com.lutzseverino.streamguard.application.BypassService;
+import com.lutzseverino.streamguard.application.CachingStreamMetadataProvider;
 import com.lutzseverino.streamguard.application.LiveFeedService;
 import com.lutzseverino.streamguard.application.SessionRegistry;
 import com.lutzseverino.streamguard.application.StreamService;
@@ -23,6 +24,7 @@ import com.lutzseverino.streamguard.platform.bukkit.StreamGuardAdminCommand;
 import com.lutzseverino.streamguard.platform.bukkit.StreamGuardListener;
 import java.io.File;
 import java.time.Clock;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -100,7 +102,12 @@ public final class StreamGuardPlugin extends JavaPlugin {
         AccessService accessService = new AccessService(repository, sessionRegistry, policy, clock);
         BypassService bypassService = new BypassService(repository, clock);
         StreamService streamService = new StreamService(repository, verificationProvider, verificationProvider, clock);
-        LiveFeedService liveFeedService = new LiveFeedService(repository, clock);
+        CachingStreamMetadataProvider liveFeedMetadataProvider = new CachingStreamMetadataProvider(
+                verificationProvider,
+                clock,
+                Duration.ofSeconds(settings.web().liveFeed().metadataCacheSeconds())
+        );
+        LiveFeedService liveFeedService = new LiveFeedService(repository, liveFeedMetadataProvider, clock);
         BukkitStreamVerificationRunner verificationRunner = new BukkitStreamVerificationRunner(this, streamService, messages);
         onboardingFlow = new BukkitOnboardingFlow(
                 this,
@@ -162,23 +169,33 @@ public final class StreamGuardPlugin extends JavaPlugin {
         }, intervalTicks, intervalTicks);
     }
 
-    private static StreamProviderRegistry verificationProvider(StreamGuardSettings settings) {
+    private StreamProviderRegistry verificationProvider(StreamGuardSettings settings) {
         List<StreamProviderRegistration> providers = new ArrayList<>();
         StreamGuardSettings.ProviderSettings twitch = settings.providers().get(StreamProviderId.TWITCH);
+        TwitchStreamVerificationProvider twitchProvider = new TwitchStreamVerificationProvider(
+                twitch.enabled(),
+                twitch.option("client-id"),
+                twitch.option("client-secret"),
+                getLogger()
+        );
         providers.add(new StreamProviderRegistration(
                 StreamProviderId.TWITCH,
-                new TwitchStreamVerificationProvider(
-                        twitch.enabled(),
-                        twitch.option("client-id"),
-                        twitch.option("client-secret")
-                ),
+                twitchProvider,
+                twitchProvider,
                 StreamGuardPlugin::normalizeTwitchLogin
         ));
         StreamGuardSettings.ProviderSettings youtube = settings.providers().get(StreamProviderId.YOUTUBE);
-        providers.add(StreamProviderRegistration.of(StreamProviderId.YOUTUBE, new YouTubeStreamVerificationProvider(
+        YouTubeStreamVerificationProvider youtubeProvider = new YouTubeStreamVerificationProvider(
                 youtube.enabled(),
-                youtube.option("api-key")
-        )));
+                youtube.option("api-key"),
+                getLogger()
+        );
+        providers.add(new StreamProviderRegistration(
+                StreamProviderId.YOUTUBE,
+                youtubeProvider,
+                youtubeProvider,
+                String::trim
+        ));
         return new StreamProviderRegistry(providers);
     }
 

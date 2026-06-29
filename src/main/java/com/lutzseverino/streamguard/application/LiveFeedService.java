@@ -18,10 +18,16 @@ public final class LiveFeedService {
     private static final Pattern YOUTUBE_LIVE_URL = Pattern.compile("youtube\\.com/live/([^/?#]+)");
 
     private final PlayerAccessRepository repository;
+    private final StreamMetadataProvider metadataProvider;
     private final Clock clock;
 
     public LiveFeedService(PlayerAccessRepository repository, Clock clock) {
+        this(repository, StreamMetadataProvider.none(), clock);
+    }
+
+    public LiveFeedService(PlayerAccessRepository repository, StreamMetadataProvider metadataProvider, Clock clock) {
         this.repository = repository;
+        this.metadataProvider = metadataProvider;
         this.clock = clock;
     }
 
@@ -49,16 +55,20 @@ public final class LiveFeedService {
         }
         String provider = streamLink.providerId().value();
         String channel = streamLink.channel();
+        Optional<LiveStreamMetadata> metadata = metadataProvider.metadata(streamLink);
+        String feedChannel = metadata.flatMap(LiveStreamMetadata::channelOptional).orElse(channel);
+        String url = metadata.flatMap(LiveStreamMetadata::urlOptional).orElseGet(() -> providerUrl(streamLink));
+        String embedReference = StreamProviderId.TWITCH.equals(streamLink.providerId()) ? feedChannel : url;
         return Optional.of(new LiveStreamer(
                 player.playerName(),
                 provider,
-                channel,
-                providerUrl(streamLink),
-                null,
-                null,
-                null,
-                null,
-                embed(streamLink)
+                feedChannel,
+                url,
+                metadata.flatMap(LiveStreamMetadata::titleOptional).orElse(null),
+                metadata.flatMap(LiveStreamMetadata::thumbnailUrlOptional).orElse(null),
+                metadata.map(LiveStreamMetadata::viewerCount).orElse(null),
+                metadata.flatMap(LiveStreamMetadata::liveSinceOptional).map(java.time.Instant::toString).orElse(null),
+                embed(new StreamLink(streamLink.providerId(), embedReference))
         ));
     }
 

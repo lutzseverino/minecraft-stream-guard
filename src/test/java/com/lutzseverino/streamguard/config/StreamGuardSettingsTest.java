@@ -76,7 +76,8 @@ final class StreamGuardSettingsTest {
                 "web.live-feed.bind-host", "0.0.0.0",
                 "web.live-feed.port", "9000",
                 "web.live-feed.path", "streams/live",
-                "web.live-feed.update-interval-seconds", "20"
+                "web.live-feed.update-interval-seconds", "20",
+                "web.live-feed.metadata-cache-seconds", "120"
         ));
 
         StreamGuardSettings settings = StreamGuardSettings.load(reader);
@@ -86,6 +87,7 @@ final class StreamGuardSettingsTest {
         assertEquals(9000, settings.web().liveFeed().port());
         assertEquals("/streams/live", settings.web().liveFeed().path());
         assertEquals(20, settings.web().liveFeed().updateIntervalSeconds());
+        assertEquals(120, settings.web().liveFeed().metadataCacheSeconds());
     }
 
     private static final class MapSettingsReader implements SettingsReader {

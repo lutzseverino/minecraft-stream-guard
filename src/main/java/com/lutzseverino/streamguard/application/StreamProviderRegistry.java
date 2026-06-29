@@ -5,8 +5,9 @@ import com.lutzseverino.streamguard.domain.StreamProviderId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public final class StreamProviderRegistry implements StreamVerificationProvider, StreamLinkNormalizer {
+public final class StreamProviderRegistry implements StreamVerificationProvider, StreamLinkNormalizer, StreamMetadataProvider {
 
     private final Map<StreamProviderId, StreamProviderRegistration> registrations;
 
@@ -36,6 +37,15 @@ public final class StreamProviderRegistry implements StreamVerificationProvider,
             return linkReference.trim();
         }
         return registration.linkNormalizer().apply(linkReference);
+    }
+
+    @Override
+    public Optional<LiveStreamMetadata> metadata(StreamLink link) {
+        StreamProviderRegistration registration = registrations.get(link.providerId());
+        if (registration == null) {
+            return Optional.empty();
+        }
+        return registration.metadataProvider().metadata(link);
     }
 
     public boolean linkable(StreamProviderId providerId) {

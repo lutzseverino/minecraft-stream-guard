@@ -92,6 +92,7 @@ web:
     port: 8127
     path: "/api/live"
     update-interval-seconds: 15
+    metadata-cache-seconds: 60
     cors:
       allowed-origins:
         - "http://localhost:5173"

@@ -16,6 +16,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -34,6 +35,8 @@ public final class BukkitLiveFeedServer {
     private HttpServer server;
     private ExecutorService executor;
     private BukkitTask refreshTask;
+    private final AtomicBoolean refreshInProgress = new AtomicBoolean();
+    private volatile boolean running;
     private volatile String cachedJson = GSON.toJson(new CachedFeed(List.of()));
 
     public BukkitLiveFeedServer(
@@ -60,6 +63,7 @@ public final class BukkitLiveFeedServer {
             });
             server.setExecutor(executor);
             server.start();
+            running = true;
             scheduleRefresh();
             plugin.getLogger().info("StreamGuard live feed listening on http://"
                     + settings.bindHost() + ":" + settings.port() + settings.path());
@@ -74,6 +78,7 @@ public final class BukkitLiveFeedServer {
             refreshTask.cancel();
             refreshTask = null;
         }
+        running = false;
         if (server != null) {
             server.stop(0);
             server = null;
@@ -91,10 +96,25 @@ public final class BukkitLiveFeedServer {
     }
 
     private void refresh() {
+        if (!running) {
+            return;
+        }
         List<LiveFeedPlayer> players = plugin.getServer().getOnlinePlayers().stream()
                 .map(player -> new LiveFeedPlayer(player.getUniqueId(), player.getName()))
                 .toList();
-        cachedJson = GSON.toJson(liveFeedService.snapshot(players));
+        if (!refreshInProgress.compareAndSet(false, true)) {
+            return;
+        }
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+            try {
+                String nextJson = GSON.toJson(liveFeedService.snapshot(players));
+                if (running) {
+                    cachedJson = nextJson;
+                }
+            } finally {
+                refreshInProgress.set(false);
+            }
+        });
     }
 
     private void handle(HttpExchange exchange) throws IOException {
