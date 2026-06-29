@@ -7,8 +7,14 @@
         <img alt="java" src="https://img.shields.io/badge/java-17-1f2937">
         <img alt="build" src="https://img.shields.io/badge/build-maven-374151">
         <img alt="license" src="https://img.shields.io/badge/license-GPL--3.0--only-4b5563">
+        <a href="https://ko-fi.com/lutzseverino"><img alt="support on ko-fi" src="https://img.shields.io/badge/support-Ko--fi-ff5f5f?logo=kofi&logoColor=white"></a>
     </p>
 </div>
+
+## Support
+
+StreamGuard is free and open source. If it helps your server, you can support development on
+[Ko-fi](https://ko-fi.com/lutzseverino).
 
 ## Overview
 
@@ -105,11 +111,6 @@ provider ID without changing the core access policy.
 The optional live wall lives at
 [minecraft-stream-guard-site](https://github.com/lutzseverino/minecraft-stream-guard-site). It reads
 StreamGuard's `/api/live` feed and renders the currently live players as a fullscreen web wall.
-
-## Support
-
-StreamGuard is free and open source. If it helps your server, you can support development on
-[Ko-fi](https://ko-fi.com/lutzseverino).
 
 ## Architecture
 
