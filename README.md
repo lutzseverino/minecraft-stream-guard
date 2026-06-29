@@ -106,6 +106,11 @@ The optional live wall lives at
 [minecraft-stream-guard-site](https://github.com/lutzseverino/minecraft-stream-guard-site). It reads
 StreamGuard's `/api/live` feed and renders the currently live players as a fullscreen web wall.
 
+## Support
+
+StreamGuard is free and open source. If it helps your server, you can support development on
+[Ko-fi](https://ko-fi.com/lutzseverino).
+
 ## Architecture
 
 The codebase keeps server, network, YAML, persistence, and rendering concerns at the edges.
@@ -132,7 +137,7 @@ mvn package
 The plugin jar is written to:
 
 ```text
-target/StreamGuard-0.1.0-SNAPSHOT.jar
+target/StreamGuard-1.0.0-beta.1.jar
 ```
 
 ## Quality Checks
