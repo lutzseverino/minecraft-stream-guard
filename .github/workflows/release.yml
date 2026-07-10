@@ -3,48 +3,68 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
-  workflow_dispatch:
+      - "v[0-9]*.[0-9]*.[0-9]*"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   publish:
     name: Publish plugin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    environment: release
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - name: Check out repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5
         with:
           distribution: temurin
           java-version: "17"
           cache: maven
 
-      - name: Resolve version
+      - name: Validate release version
         id: version
         shell: bash
         run: |
-          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            VERSION="${GITHUB_REF_NAME#v}"
-          else
-            VERSION="$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
-          fi
-          VERSION_TYPE="release"
-          if [[ "${VERSION}" == *alpha* ]]; then
-            VERSION_TYPE="alpha"
-          elif [[ "${VERSION}" == *beta* ]]; then
-            VERSION_TYPE="beta"
-          fi
-          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
-          echo "version_type=${VERSION_TYPE}" >> "${GITHUB_OUTPUT}"
+          set -euo pipefail
 
-      - name: Build
-        run: mvn --batch-mode package
+          if [[ ! "${GITHUB_REF_NAME}" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Release tag must be an exact numeric Romantic Version, such as v1.0.0." >&2
+            exit 1
+          fi
+
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          POM_VERSION="$(mvn --batch-mode help:evaluate -Dexpression=project.version -q -DforceStdout)"
+          if [[ "${TAG_VERSION}" != "${POM_VERSION}" ]]; then
+            echo "Tag ${TAG_VERSION} does not match pom.xml ${POM_VERSION}." >&2
+            exit 1
+          fi
+          if [[ ! -s "docs/releases/${TAG_VERSION}.md" ]]; then
+            echo "Missing non-empty release note: docs/releases/${TAG_VERSION}.md" >&2
+            exit 1
+          fi
+
+          echo "version=${TAG_VERSION}" >> "${GITHUB_OUTPUT}"
+
+      - name: Build and test
+        run: mvn --batch-mode --no-transfer-progress verify
+
+      - name: Validate packaged plugin metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          JAR="target/StreamGuard-${{ steps.version.outputs.version }}.jar"
+          test -s "${JAR}"
+          PLUGIN_VERSION="$(unzip -p "${JAR}" plugin.yml | awk '$1 == "version:" { print $2; exit }')"
+          if [[ "${PLUGIN_VERSION}" != "${{ steps.version.outputs.version }}" ]]; then
+            echo "Packaged plugin.yml ${PLUGIN_VERSION} does not match the release version." >&2
+            exit 1
+          fi
 
       - name: Read changelog
         id: changelog
@@ -57,17 +77,17 @@ jobs:
           } >> "${GITHUB_OUTPUT}"
 
       - name: Publish to GitHub and Modrinth
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kir-Antipov/mc-publish@995edadc13559a8b28d0b7e6571229f067ec7659 # v3.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-tag: v${{ steps.version.outputs.version }}
-          github-prerelease: ${{ steps.version.outputs.version_type != 'release' }}
+          github-prerelease: false
           github-generate-changelog: true
 
           modrinth-id: stream-guard
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          modrinth-version-type: ${{ steps.version.outputs.version_type }}
-          modrinth-featured: ${{ steps.version.outputs.version_type == 'release' }}
+          modrinth-version-type: release
+          modrinth-featured: true
 
           files: target/StreamGuard-${{ steps.version.outputs.version }}.jar
           name: StreamGuard ${{ steps.version.outputs.version }}
@@ -96,7 +116,7 @@ jobs:
             17
 
       - name: Publish to Hangar
-        uses: benwoo1110/hangar-upload-action@main
+        uses: benwoo1110/hangar-upload-action@9cd877c616a20ad49cd6ea8b4550b3264c1dabcf # main, pinned 2026-07-10
         with:
           api_token: ${{ secrets.HANGAR_API_TOKEN }}
           slug: stream-guard
