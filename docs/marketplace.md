@@ -7,6 +7,10 @@ Unverified players can be allowed to move, chat, and use safe commands, or they 
 command-limited, or kicked. World-affecting actions are configured separately, so each server can
 choose how strict the live requirement should be.
 
+StreamGuard checks whether a public channel is live; it does not prove that the Minecraft player
+owns it. Self-service linking is an honor system unless your administrators verify ownership
+separately.
+
 ## Server Target
 
 - Paper/Spigot `1.20.1+`
@@ -33,7 +37,7 @@ Admins manage access, manual verification, and bypasses:
 /streamguard status <player>
 /streamguard bypass grant <player> [duration] [reason]
 /streamguard bypass remove <player>
-/streamguard verify <player> [manual|twitch|youtube] [reason]
+/streamguard verify <player> [reason]
 /streamguard unverify <player> [reason]
 /streamguard reload
 ```
@@ -49,6 +53,9 @@ the duration grants a persistent bypass.
 - `enforcement.not-live` controls linked players who are not currently live.
 - `enforcement.blocked-actions` controls block break/place, containers, pickup/drop, crafting,
   trading, entity damage/interact, buckets, fire, and other guarded interactions.
+- `verification.cache` controls how long recent live and offline provider results are reused.
+- `verification.maximum-status-age-seconds` stops stale provider observations from granting access;
+  manual administrator verification remains durable.
 - `onboarding.enabled` controls the optional provider-picker setup flow.
 - `onboarding.provider-picker` controls the chest GUI title, rows, filler item, cancel item, and
   provider buttons.
@@ -59,7 +66,9 @@ the duration grants a persistent bypass.
 - `commands.safe-while-unverified` keeps commands such as `/stream`, `/login`, and `/register`
   usable when command blocking is enabled.
 
-Each state can independently allow or block movement, chat, commands, and kick-on-join.
+Each state can independently allow or block movement, chat, commands, and kick-on-join. Scheduled
+rechecks are deduplicated by provider/link; Twitch checks and direct YouTube video checks are
+batched before provider calls.
 
 ## Providers
 
@@ -82,7 +91,11 @@ providers:
     api-key: ""
 ```
 
-YouTube links accept either a channel ID or `@handle`.
+YouTube links accept a channel ID, `@handle`, channel URL, or direct live/watch URL. Direct video
+URLs avoid a channel-wide live search.
+
+Both bundled providers are disabled by default. A provider becomes linkable only after it is enabled
+with all required credentials.
 
 Provider identity is modeled as data, not as a closed enum. A future provider, such as Discord
 streaming presence, can add an infrastructure adapter and register its provider ID without changing

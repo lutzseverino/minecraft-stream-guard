@@ -1,159 +1,127 @@
 <div align="center">
-    <h1 align="center">StreamGuard</h1>
-    <p>A configurable Paper/Spigot plugin that requires players to be live before they can affect a survival world.</p>
-    <p>
-        <img alt="plugin" src="https://img.shields.io/badge/plugin-paper%2Fspigot-0f172a">
-        <img alt="minecraft" src="https://img.shields.io/badge/minecraft-1.20.1%2B-111827">
-        <img alt="java" src="https://img.shields.io/badge/java-17-1f2937">
-        <img alt="build" src="https://img.shields.io/badge/build-maven-374151">
-        <img alt="license" src="https://img.shields.io/badge/license-GPL--3.0--only-4b5563">
-        <a href="https://ko-fi.com/lutzseverino"><img alt="support on ko-fi" src="https://img.shields.io/badge/support-Ko--fi-ff5f5f?logo=kofi&logoColor=white"></a>
-    </p>
+  <h1>StreamGuard</h1>
+  <p>Require players to be live before they can affect a Minecraft survival world.</p>
+
+  [![Releases](https://img.shields.io/github/v/release/lutzseverino/minecraft-stream-guard)](https://github.com/lutzseverino/minecraft-stream-guard/releases)
+  [![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1%2B-3c8527)](https://papermc.io/)
+  [![Java](https://img.shields.io/badge/Java-17%2B-e76f00)](https://adoptium.net/)
+  [![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-2f3437)](LICENSE)
 </div>
 
-## Support
+StreamGuard is a configurable Paper and Spigot plugin for communities where
+survival interaction depends on a live Twitch or YouTube stream. A player can
+still move, chat, authenticate, and manage their stream link while StreamGuard
+independently blocks world-changing actions.
 
-StreamGuard is free and open source. If it helps your server, you can support development on
-[Ko-fi](https://ko-fi.com/lutzseverino).
+> [!IMPORTANT]
+> StreamGuard checks whether a public channel is live; it does not prove that the
+> Minecraft player owns that channel. Treat self-service linking as an honor
+> system, or have administrators verify player/channel ownership separately.
 
-## Overview
+## How It Works
 
-StreamGuard is a survival-server guardrail for communities that want world interaction gated behind
-live stream verification.
+1. A player links a Twitch channel or YouTube channel, handle, or live video.
+2. StreamGuard checks the provider and records whether the linked stream is live.
+3. The configured policy decides what unlinked and offline players may do.
+4. Scheduled checks keep that state fresh; administrators can verify, unverify,
+   or bypass a player when needed.
 
-Unverified players can be allowed to move, chat, and use safe commands, or they can be frozen,
-command-limited, or kicked. World-affecting actions are configured separately, so each server can
-choose how strict the live requirement should be.
+Provider checks are deduplicated by link. Twitch and direct YouTube video checks
+are batched, and live and offline results use separate configurable cache times.
+Provider errors are not treated as proof that a player is offline.
 
-## Server Target
+## Installation
 
-- Paper/Spigot `1.20.1+`
-- Java `17+`
-- Classic `plugin.yml`
-- No NMS or CraftBukkit internals
+1. Download the latest jar from [GitHub Releases](https://github.com/lutzseverino/minecraft-stream-guard/releases).
+2. Place it in the server's `plugins/` directory.
+3. Start the server once to create `plugins/StreamGuard/config.yml`.
+4. Stop the server, configure at least one provider, then start it again.
 
-## Player Flow
-
-Players manage their stream link from the server:
-
-```text
-/stream setup
-/stream status
-/stream link twitch <channel-login>
-/stream link youtube <channel-id-or-@handle>
-/stream verify
-/stream cancel
-```
-
-Admins manage access, manual verification, and bypasses:
-
-```text
-/streamguard status <player>
-/streamguard bypass grant <player> [duration] [reason]
-/streamguard bypass remove <player>
-/streamguard verify <player> [manual|twitch|youtube] [reason]
-/streamguard unverify <player> [reason]
-/streamguard reload
-```
-
-Bypass durations support `s`, `m`, `h`, and `d` suffixes, such as `30m`, `2h`, or `1d`. Omitting
-the duration grants a persistent bypass.
+StreamGuard targets Paper or Spigot `1.20.1+` on Java `17+`. It uses the classic
+Bukkit plugin system and does not depend on NMS or CraftBukkit internals.
 
 ## Configuration
 
-`config.yml` separates player state rules from world-affecting action rules.
-
-- `enforcement.unlinked` controls players who have not linked a stream account.
-- `enforcement.not-live` controls linked players who are not currently live.
-- `enforcement.blocked-actions` controls block break/place, containers, pickup/drop, crafting,
-  trading, entity damage/interact, buckets, fire, and other guarded interactions.
-- `onboarding.enabled` controls the optional provider-picker setup flow.
-- `onboarding.provider-picker` controls the chest GUI title, rows, filler item, cancel item, and
-  provider buttons.
-- `onboarding.chat-input` controls chat input timeout, max length, cancel keyword, and whether to
-  verify immediately after linking.
-- `web.live-feed` controls the optional live feed API, CORS origins, refresh interval, and provider
-  metadata cache for the companion site.
-- `commands.safe-while-unverified` keeps commands such as `/stream`, `/login`, and `/register`
-  usable when command blocking is enabled.
-
-Each state can independently allow or block movement, chat, commands, and kick-on-join.
-
-## Providers
-
-Twitch verification uses the Helix streams API with:
+The generated `plugins/StreamGuard/config.yml` keeps providers and the live feed
+disabled until credentials and exposure are configured deliberately:
 
 ```yaml
+enforcement:
+  grace-period-seconds: 120
+  recheck-interval-seconds: 60
+  unlinked:
+    allow-movement: true
+    allow-chat: true
+    allow-commands: true
+  blocked-actions:
+    block-break: true
+    block-place: true
+    container-open: true
+    crafting: true
+verification:
+  maximum-status-age-seconds: 180
+  cache:
+    live-seconds: 60
+    offline-seconds: 120
 providers:
   twitch:
-    enabled: true
-    client-id: ""
-    client-secret: ""
-```
-
-YouTube verification uses the YouTube Data API with:
-
-```yaml
-providers:
+    enabled: false
+    client-id: ''
+    client-secret: ''
   youtube:
-    enabled: true
-    api-key: ""
+    enabled: false
+    api-key: ''
+web:
+  live-feed:
+    enabled: false
+    bind-host: 127.0.0.1
 ```
 
-YouTube links accept either a channel ID or `@handle`.
+Each unverified state can independently allow movement, chat, commands, and
+kick-on-join behavior, while guarded actions decide which world changes require
+a current live observation. Manual administrator verification remains durable;
+provider observations expire. See the
+[configuration reference](docs/reference/configuration.md) for every setting
+and complete provider examples.
 
-Provider identity is modeled as data through `StreamProviderId`, not as a closed enum. A future
-provider, such as Discord streaming presence, can add an infrastructure adapter and register its
-provider ID without changing the core access policy.
+## Commands
+
+Players use `/stream setup`, `/stream status`, `/stream link`, `/stream verify`,
+and `/stream cancel`. Administrators use `/streamguard` to inspect status,
+manage bypasses, verify or unverify players, and reload configuration.
+
+See the [commands and permissions reference](docs/reference/commands-and-permissions.md)
+for syntax, duration rules, and permission nodes.
 
 ## Companion Site
 
-The optional live wall lives at
-[minecraft-stream-guard-site](https://github.com/lutzseverino/minecraft-stream-guard-site). It reads
-StreamGuard's `/api/live` feed and renders the currently live players as a fullscreen web wall.
+The optional [StreamGuard site](https://github.com/lutzseverino/minecraft-stream-guard-site)
+renders the plugin's `/api/live` feed as a fullscreen live wall. The feed can
+include provider metadata such as titles, thumbnails, viewer counts, and live
+start times when the provider returns them.
 
-## Architecture
+## Development
 
-The codebase keeps server, network, YAML, persistence, and rendering concerns at the edges.
-
-- `domain` owns pure policy, stream status, session state, and bypass rules.
-- `application` owns use cases and provider/repository ports.
-- `config` owns typed settings and validation.
-- `i18n` owns locale fallback and message rendering.
-- `infrastructure` owns Twitch, YouTube, and YAML persistence adapters.
-- `platform.bukkit` owns Bukkit listeners, commands, permissions, and scheduler glue.
-- `bootstrap` wires the plugin together.
-
-Dependency direction points inward: Bukkit and infrastructure depend on application/domain
-abstractions, not the other way around.
-
-## Build
-
-Build and test from the repository root:
+Build and test from the repository root with Java 17 and Maven:
 
 ```bash
-mvn package
+mvn --batch-mode verify
 ```
 
-The plugin jar is written to:
+The plugin jar is written to `target/StreamGuard-<version>.jar`. Gson and Adventure
+are shaded and relocated; the Paper API remains a provided server dependency.
 
-```text
-target/StreamGuard-1.0.0-beta.1.jar
-```
+## Documentation
 
-## Quality Checks
+Start with the [documentation index](docs/README.md). Documentation is organized
+by reader intent, including installation, operational guides, configuration
+reference, game-policy concepts, architecture, and versioning.
 
-```bash
-mvn test
-mvn package
-```
+## Support
 
-`mvn package` runs the tests and produces the shaded plugin jar. Gson is shaded and relocated for
-provider API JSON parsing; Paper/Spigot remains a provided server dependency.
+StreamGuard is free and open source. If it helps your server, you can support
+development on [Ko-fi](https://ko-fi.com/lutzseverino).
 
 ## License
 
-StreamGuard is licensed under the GNU General Public License v3.0 only.
-
-You can sell packaged builds, use the plugin, compile it yourself, and redistribute modified versions
-under the GPL terms. See [LICENSE](LICENSE).
+StreamGuard is available under the [GNU General Public License v3.0 only](LICENSE).
