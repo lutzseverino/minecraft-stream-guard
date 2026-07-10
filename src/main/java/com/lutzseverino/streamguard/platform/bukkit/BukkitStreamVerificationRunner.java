@@ -25,10 +25,10 @@ public final class BukkitStreamVerificationRunner {
         UUID playerId = player.getUniqueId();
         String playerName = player.getName();
         if (streamService.status(playerId, playerName).streamLinkOptional().isEmpty()) {
-            player.sendMessage(messages.renderDefault("stream.unlinked", Map.of()));
+            player.sendMessage(messages.renderLegacyDefault("stream.unlinked", Map.of()));
             return;
         }
-        player.sendMessage(messages.renderDefault("stream.verify.started", Map.of()));
+        player.sendMessage(messages.renderLegacyDefault("stream.verify.started", Map.of()));
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             VerificationStatus status = streamService.verify(playerId, playerName);
             plugin.getServer().getScheduler().runTask(plugin, () -> {
@@ -42,12 +42,12 @@ public final class BukkitStreamVerificationRunner {
 
     public void sendVerification(Player player, VerificationStatus status) {
         if (status.live()) {
-            player.sendMessage(messages.renderDefault("stream.live", Map.of(
+            player.sendMessage(messages.renderLegacyDefault("stream.live", Map.of(
                     "platform", status.verifiedProviderId().map(StreamProviderId::displayName).orElse("Unknown")
             )));
             return;
         }
-        player.sendMessage(messages.renderDefault("stream.not-live", Map.of(
+        player.sendMessage(messages.renderLegacyDefault("stream.not-live", Map.of(
                 "detail", status.detail().isBlank() ? "No active stream was found." : status.detail()
         )));
     }

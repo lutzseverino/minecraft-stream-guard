@@ -72,4 +72,40 @@ final class StreamGuardPolicyTest {
 
         assertEquals(GateState.NOT_LIVE, policy.gateState(accessRecord, false, NOW));
     }
+
+    @Test
+    void staleProviderVerificationDoesNotGrantAccess() {
+        StreamGuardPolicy policy = new StreamGuardPolicy(
+                EnumSet.of(GuardedAction.BLOCK_BREAK),
+                Duration.ZERO,
+                Duration.ofMinutes(3)
+        );
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
+                .withStreamLink(new StreamLink(StreamProviderId.TWITCH, "channel"))
+                .withVerificationStatus(VerificationStatus.live(
+                        StreamProviderId.TWITCH,
+                        NOW.minus(Duration.ofMinutes(4)),
+                        "old result"
+                ));
+
+        assertFalse(policy.decide(GuardedAction.BLOCK_BREAK, accessRecord, null, false, NOW).allowed());
+        assertEquals(GateState.NOT_LIVE, policy.gateState(accessRecord, false, NOW));
+    }
+
+    @Test
+    void manualVerificationRemainsValidUntilAnAdminRemovesIt() {
+        StreamGuardPolicy policy = new StreamGuardPolicy(
+                EnumSet.of(GuardedAction.BLOCK_BREAK),
+                Duration.ZERO,
+                Duration.ofMinutes(3)
+        );
+        PlayerAccessRecord accessRecord = PlayerAccessRecord.empty(PLAYER_ID, "Lutz")
+                .withVerificationStatus(VerificationStatus.live(
+                        StreamProviderId.MANUAL,
+                        NOW.minus(Duration.ofDays(30)),
+                        "approved"
+                ));
+
+        assertTrue(policy.decide(GuardedAction.BLOCK_BREAK, accessRecord, null, false, NOW).allowed());
+    }
 }

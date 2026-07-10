@@ -63,18 +63,18 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
         if ("link".equalsIgnoreCase(args[0]) && args.length >= 3) {
             StreamProviderId providerId = StreamProviderId.parse(args[1]).orElse(null);
             if (providerId == null || StreamProviderId.MANUAL.equals(providerId)) {
-                player.sendMessage(messages.renderDefault("stream.link.invalid-platform", Map.of()));
+                player.sendMessage(messages.renderLegacyDefault("stream.link.invalid-platform", Map.of()));
                 return true;
             }
             if (!providerRegistry.linkable(providerId)) {
-                player.sendMessage(messages.renderDefault("stream.link.unsupported-platform", Map.of(
+                player.sendMessage(messages.renderLegacyDefault("stream.link.unsupported-platform", Map.of(
                         "platform", providerId.displayName()
                 )));
                 return true;
             }
             String linkReference = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
             PlayerAccessRecord accessRecord = streamService.link(player.getUniqueId(), player.getName(), providerId, linkReference);
-            player.sendMessage(messages.renderDefault("stream.link.saved", Map.of(
+            player.sendMessage(messages.renderLegacyDefault("stream.link.saved", Map.of(
                     "platform", accessRecord.streamLink().providerId().displayName(),
                     "channel", accessRecord.streamLink().channel()
             )));
@@ -85,7 +85,7 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
             verificationRunner.verify(player);
             return true;
         }
-        player.sendMessage(messages.renderDefault("stream.usage", Map.of("label", label)));
+        player.sendMessage(messages.renderLegacyDefault("stream.usage", Map.of("label", label)));
         return true;
     }
 
@@ -107,12 +107,12 @@ public final class StreamCommand implements CommandExecutor, TabCompleter {
 
     private void sendStatus(Player player, PlayerAccessRecord accessRecord) {
         if (accessRecord.streamLinkOptional().isEmpty()) {
-            player.sendMessage(messages.renderDefault("stream.unlinked", Map.of()));
+            player.sendMessage(messages.renderLegacyDefault("stream.unlinked", Map.of()));
             return;
         }
         accessRecord.verificationStatusOptional().ifPresentOrElse(
                 status -> verificationRunner.sendVerification(player, status),
-                () -> player.sendMessage(messages.renderDefault("stream.not-checked", Map.of()))
+                () -> player.sendMessage(messages.renderLegacyDefault("stream.not-checked", Map.of()))
         );
     }
 }

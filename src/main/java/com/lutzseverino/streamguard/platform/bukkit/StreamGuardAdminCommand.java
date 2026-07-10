@@ -5,7 +5,6 @@ import com.lutzseverino.streamguard.application.StreamService;
 import com.lutzseverino.streamguard.config.StreamGuardSettings;
 import com.lutzseverino.streamguard.domain.BypassGrant;
 import com.lutzseverino.streamguard.domain.PlayerAccessRecord;
-import com.lutzseverino.streamguard.domain.StreamProviderId;
 import com.lutzseverino.streamguard.i18n.MessageService;
 import java.time.Duration;
 import java.util.Arrays;
@@ -51,7 +50,7 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
             @NotNull String[] args
     ) {
         if (args.length == 0) {
-            sender.sendMessage(messages.renderDefault("admin.usage", Map.of("label", label)));
+            sender.sendMessage(messages.renderLegacyDefault("admin.usage", Map.of("label", label)));
             return true;
         }
         if ("reload".equalsIgnoreCase(args[0])) {
@@ -59,7 +58,7 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
                 return true;
             }
             reloadAction.run();
-            sender.sendMessage(messages.renderDefault("system.reloaded", Map.of()));
+            sender.sendMessage(messages.renderLegacyDefault("system.reloaded", Map.of()));
             return true;
         }
         if ("status".equalsIgnoreCase(args[0]) && args.length >= 2) {
@@ -71,7 +70,7 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
             String state = accessRecord.verificationStatusOptional()
                     .map(status -> status.live() ? "live" : "not live")
                     .orElse("unknown");
-            sender.sendMessage(messages.renderDefault("admin.status", Map.of(
+            sender.sendMessage(messages.renderLegacyDefault("admin.status", Map.of(
                     "player", displayName(target),
                     "state", state
             )));
@@ -82,11 +81,8 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
                 return true;
             }
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
-            StreamProviderId providerId = args.length >= 3
-                    ? StreamProviderId.parse(args[2]).orElse(StreamProviderId.MANUAL)
-                    : StreamProviderId.MANUAL;
-            streamService.manuallyVerify(target.getUniqueId(), target.getName(), providerId, reason(args, 3));
-            sender.sendMessage(messages.renderDefault("admin.verify.added", Map.of("player", displayName(target))));
+            streamService.manuallyVerify(target.getUniqueId(), target.getName(), reason(args, 2));
+            sender.sendMessage(messages.renderLegacyDefault("admin.verify.added", Map.of("player", displayName(target))));
             return true;
         }
         if ("unverify".equalsIgnoreCase(args[0]) && args.length >= 2) {
@@ -95,14 +91,14 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
             }
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
             streamService.unverify(target.getUniqueId(), target.getName(), reason(args, 2));
-            sender.sendMessage(messages.renderDefault("admin.verify.removed", Map.of("player", displayName(target))));
+            sender.sendMessage(messages.renderLegacyDefault("admin.verify.removed", Map.of("player", displayName(target))));
             return true;
         }
         if ("bypass".equalsIgnoreCase(args[0]) && args.length >= 2) {
             handleBypass(sender, args);
             return true;
         }
-        sender.sendMessage(messages.renderDefault("admin.usage", Map.of("label", label)));
+        sender.sendMessage(messages.renderLegacyDefault("admin.usage", Map.of("label", label)));
         return true;
     }
 
@@ -119,9 +115,6 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
         if (args.length == 2 && "bypass".equalsIgnoreCase(args[0])) {
             return List.of("grant", "remove");
         }
-        if (args.length == 3 && "verify".equalsIgnoreCase(args[0])) {
-            return List.of("manual", "twitch", "youtube");
-        }
         return List.of();
     }
 
@@ -132,7 +125,7 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
         if ("remove".equalsIgnoreCase(args[1]) && args.length >= 3) {
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
             bypassService.revoke(target.getUniqueId(), target.getName());
-            sender.sendMessage(messages.renderDefault("admin.bypass.removed", Map.of("player", displayName(target))));
+            sender.sendMessage(messages.renderLegacyDefault("admin.bypass.removed", Map.of("player", displayName(target))));
             return;
         }
         if ("grant".equalsIgnoreCase(args[1]) && args.length >= 3) {
@@ -145,12 +138,12 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
                     Duration parsedDuration = parsed.get();
                     if (!parsedDuration.isZero()) {
                         if (!settings.bypass().allowTemporaryBypass()) {
-                            sender.sendMessage(messages.renderDefault("admin.bypass.temporary-disabled", Map.of()));
+                            sender.sendMessage(messages.renderLegacyDefault("admin.bypass.temporary-disabled", Map.of()));
                             return;
                         }
                         int maxMinutes = settings.bypass().maxTemporaryBypassMinutes();
                         if (maxMinutes > 0 && parsedDuration.toMinutes() > maxMinutes) {
-                            sender.sendMessage(messages.renderDefault("admin.bypass.too-long", Map.of(
+                            sender.sendMessage(messages.renderLegacyDefault("admin.bypass.too-long", Map.of(
                                     "minutes", Integer.toString(maxMinutes)
                             )));
                             return;
@@ -168,18 +161,18 @@ public final class StreamGuardAdminCommand implements CommandExecutor, TabComple
                     duration,
                     reason(args, reasonStart)
             );
-            sender.sendMessage(messages.renderDefault("admin.bypass.added", Map.of(
+            sender.sendMessage(messages.renderLegacyDefault("admin.bypass.added", Map.of(
                     "player", displayName(target),
                     "duration", grant.temporary() ? grant.expiresAt().toString() : "permanent"
             )));
             return;
         }
-        sender.sendMessage(messages.renderDefault("admin.usage", Map.of("label", "streamguard")));
+        sender.sendMessage(messages.renderLegacyDefault("admin.usage", Map.of("label", "streamguard")));
     }
 
     private boolean lacksPermission(CommandSender sender, String permission) {
         if (!sender.hasPermission(permission)) {
-            sender.sendMessage(messages.renderDefault("system.no-permission", Map.of()));
+            sender.sendMessage(messages.renderLegacyDefault("system.no-permission", Map.of()));
             return true;
         }
         return false;

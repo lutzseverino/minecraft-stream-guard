@@ -90,6 +90,21 @@ final class StreamGuardSettingsTest {
         assertEquals(120, settings.web().liveFeed().metadataCacheSeconds());
     }
 
+    @Test
+    void loadsVerificationCacheSettings() {
+        MapSettingsReader reader = new MapSettingsReader(Map.of(
+                "verification.cache.live-seconds", "45",
+                "verification.cache.offline-seconds", "180",
+                "verification.maximum-status-age-seconds", "240"
+        ));
+
+        StreamGuardSettings settings = StreamGuardSettings.load(reader);
+
+        assertEquals(45, settings.verification().cache().liveTimeToLive().toSeconds());
+        assertEquals(180, settings.verification().cache().offlineTimeToLive().toSeconds());
+        assertEquals(240, settings.verification().maximumStatusAge().toSeconds());
+    }
+
     private static final class MapSettingsReader implements SettingsReader {
 
         private final Map<String, String> values;

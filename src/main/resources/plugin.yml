@@ -1,5 +1,5 @@
 name: StreamGuard
-version: 1.0.0-beta.1
+version: ${project.version}
 main: com.lutzseverino.streamguard.bootstrap.StreamGuardPlugin
 api-version: '1.20'
 author: lutzseverino
@@ -22,23 +22,15 @@ permissions:
     default: op
     children:
       streamguard.bypass: true
-      streamguard.exempt: true
       streamguard.reload: true
       streamguard.status.others: true
       streamguard.bypass.always: true
-      streamguard.status.self: true
   streamguard.bypass:
     description: Allows granting and removing temporary bypasses.
-    default: op
-  streamguard.exempt:
-    description: Allows managing persistent stream requirement exemptions.
     default: op
   streamguard.reload:
     description: Allows reloading StreamGuard configuration.
     default: op
-  streamguard.status.self:
-    description: Allows viewing your own stream verification status.
-    default: true
   streamguard.status.others:
     description: Allows viewing another player's stream verification status.
     default: op

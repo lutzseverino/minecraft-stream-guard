@@ -38,7 +38,7 @@ stream:
   unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Todavia no se ha encontrado un directo activo. Usa <aqua>/stream verify</aqua> despues de empezar el directo.</white>"
 
 admin:
-  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} status jugador</aqua>, <aqua>/{label} bypass grant jugador [duracion] [motivo]</aqua>, <aqua>/{label} bypass remove jugador</aqua>, <aqua>/{label} verify jugador [plataforma]</aqua>, o <aqua>/{label} reload</aqua>.</white>"
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Usa <aqua>/{label} status jugador</aqua>, <aqua>/{label} bypass grant jugador [duracion] [motivo]</aqua>, <aqua>/{label} bypass remove jugador</aqua>, <aqua>/{label} verify jugador [motivo]</aqua>, o <aqua>/{label} reload</aqua>.</white>"
   status: "<dark_gray>[<green>+</green>]</dark_gray> <white>{player}: <aqua>{state}</aqua>.</white>"
   bypass:
     added: "<dark_gray>[<green>+</green>]</dark_gray> <white>Bypass concedido a <aqua>{player}</aqua>.</white>"

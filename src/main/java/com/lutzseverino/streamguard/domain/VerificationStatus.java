@@ -1,5 +1,6 @@
 package com.lutzseverino.streamguard.domain;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -20,5 +21,15 @@ public record VerificationStatus(
 
     public Optional<StreamProviderId> verifiedProviderId() {
         return Optional.ofNullable(providerId);
+    }
+
+    public boolean grantsAccessAt(Instant now, Duration maximumProviderAge) {
+        if (!live) {
+            return false;
+        }
+        if (StreamProviderId.MANUAL.equals(providerId)) {
+            return true;
+        }
+        return now.isBefore(checkedAt.plus(maximumProviderAge));
     }
 }

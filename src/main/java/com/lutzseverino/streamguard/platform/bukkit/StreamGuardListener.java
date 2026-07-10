@@ -37,6 +37,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.projectiles.ProjectileSource;
 
+@SuppressWarnings("deprecation")
 public final class StreamGuardListener implements Listener {
 
     private final AccessService accessService;
@@ -82,7 +83,7 @@ public final class StreamGuardListener implements Listener {
             return;
         }
         event.setCancelled(true);
-        player.sendMessage(messages.renderDefault(messageKey(state, "movement"), Map.of()));
+        player.sendMessage(messages.renderLegacyDefault(messageKey(state, "movement"), Map.of()));
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -93,7 +94,7 @@ public final class StreamGuardListener implements Listener {
             return;
         }
         event.setCancelled(true);
-        player.sendMessage(messages.renderDefault(messageKey(state, "chat"), Map.of()));
+        player.sendMessage(messages.renderLegacyDefault(messageKey(state, "chat"), Map.of()));
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -104,7 +105,7 @@ public final class StreamGuardListener implements Listener {
             return;
         }
         event.setCancelled(true);
-        player.sendMessage(messages.renderDefault(messageKey(state, "command"), Map.of()));
+        player.sendMessage(messages.renderLegacyDefault(messageKey(state, "command"), Map.of()));
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -210,7 +211,7 @@ public final class StreamGuardListener implements Listener {
         }
         cancellation.cancel();
         GateState state = gateState(player);
-        player.sendMessage(messages.renderDefault(messageKey(state, "interaction"), Map.of("action", action.configKey())));
+        player.sendMessage(messages.renderLegacyDefault(messageKey(state, "interaction"), Map.of("action", action.configKey())));
     }
 
     private boolean hasPermissionBypass(Player player) {
@@ -243,7 +244,7 @@ public final class StreamGuardListener implements Listener {
             }
             GateState current = gateState(player);
             if (stateRules(current).kickOnJoin()) {
-                player.kickPlayer(messages.renderPlainDefault(messageKey(current, "kick"), Map.of()));
+                player.kickPlayer(messages.renderLegacyDefault(messageKey(current, "kick"), Map.of()));
             }
         }, ticks);
     }

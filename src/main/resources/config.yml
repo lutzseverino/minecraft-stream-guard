@@ -1,14 +1,10 @@
 language:
   default-locale: es_ES
   fallback-locale: en_US
-  per-player-locale: false
-  use-client-locale: false
 
 enforcement:
   grace-period-seconds: 120
   recheck-interval-seconds: 60
-  allow-movement-while-unverified: true
-  allow-chat-while-unverified: true
   unlinked:
     kick-on-join: false
     kick-delay-seconds: 0
@@ -35,6 +31,12 @@ enforcement:
     entity-interact: true
     buckets: true
     fire: true
+
+verification:
+  maximum-status-age-seconds: 180
+  cache:
+    live-seconds: 60
+    offline-seconds: 120
 
 onboarding:
   enabled: true
@@ -87,7 +89,7 @@ onboarding:
 
 web:
   live-feed:
-    enabled: true
+    enabled: false
     bind-host: "127.0.0.1"
     port: 8127
     path: "/api/live"
@@ -116,11 +118,10 @@ bypass:
   ops-bypass-by-default: true
   allow-temporary-bypass: true
   max-temporary-bypass-minutes: 240
-  log-bypass-changes: true
 
 providers:
   twitch:
-    enabled: true
+    enabled: false
     client-id: ""
     client-secret: ""
   youtube:

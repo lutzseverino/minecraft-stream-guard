@@ -17,16 +17,30 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class YouTubeStreamVerificationProvider implements StreamVerificationProvider, StreamMetadataProvider {
 
+    private static final Pattern YOUTUBE_WATCH_URL = Pattern.compile("[?&]v=([^&]+)");
+    private static final Pattern YOUTUBE_SHORT_URL = Pattern.compile("youtu\\.be/([^/?#]+)");
+    private static final Pattern YOUTUBE_LIVE_URL = Pattern.compile("youtube\\.com/live/([^/?#]+)");
+    private static final Pattern YOUTUBE_CHANNEL_URL = Pattern.compile("youtube\\.com/channel/([^/?#]+)");
+    private static final Pattern YOUTUBE_HANDLE_URL = Pattern.compile("youtube\\.com/@([^/?#]+)");
+    private static final int MAX_VIDEO_IDS_PER_REQUEST = 50;
     private final boolean enabled;
     private final String apiKey;
     private final HttpClient httpClient;
     private final Logger logger;
+    private final Map<String, String> channelIdsByHandle = new ConcurrentHashMap<>();
 
     private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(5);
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(8);
@@ -44,24 +58,52 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
 
     @Override
     public VerificationResult verify(StreamLink link) {
+        return verifyAll(List.of(link)).get(link);
+    }
+
+    @Override
+    public Map<StreamLink, VerificationResult> verifyAll(Collection<StreamLink> links) {
         if (!enabled) {
-            return VerificationResult.offline(link.providerId(), "YouTube verification is disabled.");
+            return offlineResults(links, "YouTube verification is disabled.");
         }
         if (apiKey.isBlank()) {
-            return VerificationResult.offline(link.providerId(), "YouTube API key is missing.");
+            return offlineResults(links, "YouTube API key is missing.");
         }
-        try {
-            return liveVideo(resolveChannelId(link.channel())).isPresent()
-                    ? VerificationResult.live(link.providerId(), "YouTube channel is live.")
-                    : VerificationResult.offline(link.providerId(), "YouTube channel is not live.");
-        } catch (IOException exception) {
-            return VerificationResult.offline(link.providerId(), "YouTube verification failed: " + exception.getMessage());
-        } catch (InterruptedException exception) {
-            Thread.currentThread().interrupt();
-            return VerificationResult.offline(link.providerId(), "YouTube verification was interrupted.");
-        } catch (RuntimeException exception) {
-            return VerificationResult.offline(link.providerId(), "YouTube response could not be read.");
+
+        Map<StreamLink, VerificationResult> results = new LinkedHashMap<>();
+        Map<StreamLink, String> directVideoIds = new LinkedHashMap<>();
+        for (StreamLink link : links) {
+            Optional<String> videoId = videoIdFromReference(link.channel());
+            if (videoId.isPresent()) {
+                directVideoIds.put(link, videoId.get());
+            }
         }
+
+        if (!directVideoIds.isEmpty()) {
+            verifyDirectVideoLinks(directVideoIds, results);
+        }
+
+        for (StreamLink link : links) {
+            if (results.containsKey(link)) {
+                continue;
+            }
+            try {
+                results.put(link, liveVideoForChannel(resolveChannelId(link.channel())).isPresent()
+                        ? VerificationResult.live(link.providerId(), "YouTube channel is live.")
+                        : VerificationResult.offline(link.providerId(), "YouTube channel is not live."));
+            } catch (IOException exception) {
+                results.put(link, VerificationResult.unavailable(
+                        link.providerId(),
+                        "YouTube verification failed: " + exception.getMessage()
+                ));
+            } catch (InterruptedException exception) {
+                Thread.currentThread().interrupt();
+                results.put(link, VerificationResult.unavailable(link.providerId(), "YouTube verification was interrupted."));
+            } catch (RuntimeException exception) {
+                results.put(link, VerificationResult.unavailable(link.providerId(), "YouTube response could not be read."));
+            }
+        }
+        return Map.copyOf(results);
     }
 
     @Override
@@ -70,7 +112,13 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
             return Optional.empty();
         }
         try {
-            Optional<JsonObject> liveVideo = liveVideo(resolveChannelId(link.channel()));
+            Optional<String> directVideoId = videoIdFromReference(link.channel());
+            if (directVideoId.isPresent()) {
+                return videoDetails(directVideoId.get())
+                        .filter(YouTubeStreamVerificationProvider::isLiveVideo)
+                        .map(details -> metadataFromVideo(directVideoId.get(), details, details));
+            }
+            Optional<JsonObject> liveVideo = liveVideo(link.channel());
             if (liveVideo.isEmpty()) {
                 return Optional.empty();
             }
@@ -90,7 +138,15 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
         }
     }
 
-    private Optional<JsonObject> liveVideo(String channelId) throws IOException, InterruptedException {
+    private Optional<JsonObject> liveVideo(String reference) throws IOException, InterruptedException {
+        Optional<String> videoId = videoIdFromReference(reference);
+        if (videoId.isPresent()) {
+            return videoDetails(videoId.get()).filter(YouTubeStreamVerificationProvider::isLiveVideo);
+        }
+        return liveVideoForChannel(resolveChannelId(reference));
+    }
+
+    private Optional<JsonObject> liveVideoForChannel(String channelId) throws IOException, InterruptedException {
         URI uri = URI.create("https://www.googleapis.com/youtube/v3/search"
                 + "?part=snippet"
                 + "&type=video"
@@ -110,9 +166,32 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
     }
 
     private Optional<JsonObject> videoDetails(String videoId) throws IOException, InterruptedException {
+        return Optional.ofNullable(videoDetails(List.of(videoId)).get(videoId));
+    }
+
+    private Map<String, JsonObject> videoDetails(Collection<String> videoIds) throws IOException, InterruptedException {
+        Map<String, String> uniqueVideoIds = new LinkedHashMap<>();
+        for (String videoId : videoIds) {
+            if (videoId != null && !videoId.isBlank()) {
+                uniqueVideoIds.putIfAbsent(videoId, videoId);
+            }
+        }
+        if (uniqueVideoIds.isEmpty()) {
+            return Map.of();
+        }
+        Map<String, JsonObject> detailsByVideoId = new LinkedHashMap<>();
+        List<String> ids = List.copyOf(uniqueVideoIds.keySet());
+        for (int index = 0; index < ids.size(); index += MAX_VIDEO_IDS_PER_REQUEST) {
+            List<String> chunk = ids.subList(index, Math.min(index + MAX_VIDEO_IDS_PER_REQUEST, ids.size()));
+            detailsByVideoId.putAll(fetchVideoDetails(chunk));
+        }
+        return Map.copyOf(detailsByVideoId);
+    }
+
+    private Map<String, JsonObject> fetchVideoDetails(List<String> videoIds) throws IOException, InterruptedException {
         URI uri = URI.create("https://www.googleapis.com/youtube/v3/videos"
                 + "?part=snippet,liveStreamingDetails,statistics"
-                + "&id=" + encode(videoId)
+                + "&id=" + encode(String.join(",", videoIds))
                 + "&key=" + encode(apiKey));
         HttpResponse<String> response = send(uri);
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
@@ -120,15 +199,32 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
         }
         JsonObject body = JsonParser.parseString(response.body()).getAsJsonObject();
         if (!body.has("items") || body.getAsJsonArray("items").isEmpty()) {
-            return Optional.empty();
+            return Map.of();
         }
-        return Optional.of(body.getAsJsonArray("items").get(0).getAsJsonObject());
+        Map<String, JsonObject> detailsByVideoId = new LinkedHashMap<>();
+        for (int index = 0; index < body.getAsJsonArray("items").size(); index++) {
+            JsonObject item = body.getAsJsonArray("items").get(index).getAsJsonObject();
+            string(item, "id").ifPresent(videoId -> detailsByVideoId.put(videoId, item));
+        }
+        return Map.copyOf(detailsByVideoId);
     }
 
     private String resolveChannelId(String configuredChannel) throws IOException, InterruptedException {
         String channel = configuredChannel.trim();
+        Optional<String> channelIdFromUrl = channelIdFromUrl(channel);
+        if (channelIdFromUrl.isPresent()) {
+            return channelIdFromUrl.get();
+        }
+        Optional<String> handleFromUrl = handleFromUrl(channel);
+        if (handleFromUrl.isPresent()) {
+            channel = "@" + handleFromUrl.get();
+        }
         if (!channel.startsWith("@")) {
             return channel;
+        }
+        String cachedChannelId = channelIdsByHandle.get(channel);
+        if (cachedChannelId != null) {
+            return cachedChannelId;
         }
         URI uri = URI.create("https://www.googleapis.com/youtube/v3/channels"
                 + "?part=id"
@@ -142,12 +238,53 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
         if (!body.has("items") || body.getAsJsonArray("items").isEmpty()) {
             throw new IOException("handle was not found");
         }
-        return body.getAsJsonArray("items").get(0).getAsJsonObject().get("id").getAsString();
+        String channelId = body.getAsJsonArray("items").get(0).getAsJsonObject().get("id").getAsString();
+        channelIdsByHandle.put(channel, channelId);
+        return channelId;
     }
 
     private HttpResponse<String> send(URI uri) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(uri).timeout(REQUEST_TIMEOUT).GET().build();
         return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    private void verifyDirectVideoLinks(
+            Map<StreamLink, String> directVideoIds,
+            Map<StreamLink, VerificationResult> results
+    ) {
+        try {
+            Map<String, JsonObject> detailsByVideoId = videoDetails(directVideoIds.values());
+            for (Map.Entry<StreamLink, String> entry : directVideoIds.entrySet()) {
+                JsonObject details = detailsByVideoId.get(entry.getValue());
+                results.put(entry.getKey(), details != null && isLiveVideo(details)
+                        ? VerificationResult.live(entry.getKey().providerId(), "YouTube stream is live.")
+                        : VerificationResult.offline(entry.getKey().providerId(), "YouTube stream is not live."));
+            }
+        } catch (IOException exception) {
+            directVideoIds.keySet().forEach(link -> results.put(link, VerificationResult.unavailable(
+                    link.providerId(),
+                    "YouTube verification failed: " + exception.getMessage()
+            )));
+        } catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            directVideoIds.keySet().forEach(link -> results.put(
+                    link,
+                    VerificationResult.unavailable(link.providerId(), "YouTube verification was interrupted.")
+            ));
+        } catch (RuntimeException exception) {
+            directVideoIds.keySet().forEach(link -> results.put(
+                    link,
+                    VerificationResult.unavailable(link.providerId(), "YouTube response could not be read.")
+            ));
+        }
+    }
+
+    private static Map<StreamLink, VerificationResult> offlineResults(Collection<StreamLink> links, String detail) {
+        Map<StreamLink, VerificationResult> results = new LinkedHashMap<>();
+        for (StreamLink link : links) {
+            results.put(link, VerificationResult.offline(link.providerId(), detail));
+        }
+        return Map.copyOf(results);
     }
 
     private static String encode(String value) {
@@ -171,6 +308,35 @@ public final class YouTubeStreamVerificationProvider implements StreamVerificati
 
     private static Optional<String> videoId(JsonObject searchItem) {
         return object(searchItem, "id").flatMap(id -> string(id, "videoId"));
+    }
+
+    private static boolean isLiveVideo(JsonObject video) {
+        Optional<String> broadcastState = object(video, "snippet").flatMap(snippet -> string(snippet, "liveBroadcastContent"));
+        if (broadcastState.filter("live"::equalsIgnoreCase).isPresent()) {
+            return true;
+        }
+        Optional<JsonObject> liveDetails = object(video, "liveStreamingDetails");
+        return liveDetails.flatMap(details -> string(details, "actualStartTime")).isPresent()
+                && liveDetails.flatMap(details -> string(details, "actualEndTime")).isEmpty();
+    }
+
+    private static Optional<String> videoIdFromReference(String value) {
+        return firstMatch(YOUTUBE_WATCH_URL, value)
+                .or(() -> firstMatch(YOUTUBE_SHORT_URL, value))
+                .or(() -> firstMatch(YOUTUBE_LIVE_URL, value));
+    }
+
+    private static Optional<String> channelIdFromUrl(String value) {
+        return firstMatch(YOUTUBE_CHANNEL_URL, value);
+    }
+
+    private static Optional<String> handleFromUrl(String value) {
+        return firstMatch(YOUTUBE_HANDLE_URL, value);
+    }
+
+    private static Optional<String> firstMatch(Pattern pattern, String value) {
+        Matcher matcher = pattern.matcher(value);
+        return matcher.find() ? Optional.of(matcher.group(1)) : Optional.empty();
     }
 
     private static Optional<String> thumbnail(JsonObject snippet) {

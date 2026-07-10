@@ -3,11 +3,14 @@ package com.lutzseverino.streamguard.bootstrap;
 import com.lutzseverino.streamguard.application.AccessService;
 import com.lutzseverino.streamguard.application.BypassService;
 import com.lutzseverino.streamguard.application.CachingStreamMetadataProvider;
+import com.lutzseverino.streamguard.application.CachingStreamVerificationProvider;
 import com.lutzseverino.streamguard.application.LiveFeedService;
 import com.lutzseverino.streamguard.application.SessionRegistry;
 import com.lutzseverino.streamguard.application.StreamService;
 import com.lutzseverino.streamguard.application.StreamProviderRegistry;
 import com.lutzseverino.streamguard.application.StreamProviderRegistration;
+import com.lutzseverino.streamguard.application.StreamVerificationProvider;
+import com.lutzseverino.streamguard.application.StreamVerificationTarget;
 import com.lutzseverino.streamguard.config.StreamGuardSettings;
 import com.lutzseverino.streamguard.domain.StreamGuardPolicy;
 import com.lutzseverino.streamguard.domain.StreamProviderId;
@@ -27,7 +30,9 @@ import java.time.Clock;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -47,11 +52,11 @@ public final class StreamGuardPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        saveResource("lang/en_US.yml", false);
-        saveResource("lang/es_ES.yml", false);
+        saveBundledResourceIfMissing("lang/en_US.yml");
+        saveBundledResourceIfMissing("lang/es_ES.yml");
         repository = new YamlPlayerAccessRepository(new File(getDataFolder(), "data.yml"), getLogger());
         sessionRegistry = new SessionRegistry(clock);
-        wire();
+        wire(loadSettings());
         getLogger().info("StreamGuard initialized.");
     }
 
@@ -74,11 +79,16 @@ public final class StreamGuardPlugin extends JavaPlugin {
 
     private void reloadStreamGuard() {
         reloadConfig();
+        StreamGuardSettings settings = loadSettings();
         repository.reload();
-        wire();
+        wire(settings);
     }
 
-    private void wire() {
+    private StreamGuardSettings loadSettings() {
+        return StreamGuardSettings.load(new BukkitSettingsReader(getConfig()));
+    }
+
+    private void wire(StreamGuardSettings settings) {
         if (onboardingFlow != null) {
             onboardingFlow.shutdown();
             onboardingFlow = null;
@@ -88,31 +98,42 @@ public final class StreamGuardPlugin extends JavaPlugin {
             liveFeedServer = null;
         }
         HandlerList.unregisterAll(this);
-        StreamGuardSettings settings = StreamGuardSettings.load(new BukkitSettingsReader(getConfig()));
         MessageService messages = new MessageService(
                 new File(getDataFolder(), "lang"),
                 settings.language().defaultLocale(),
                 settings.language().fallbackLocale()
         );
-        StreamProviderRegistry verificationProvider = verificationProvider(settings);
+        StreamProviderRegistry providerRegistry = verificationProvider(settings);
+        StreamVerificationProvider verificationProvider = new CachingStreamVerificationProvider(
+                providerRegistry,
+                clock,
+                settings.verification().cache().liveTimeToLive(),
+                settings.verification().cache().offlineTimeToLive()
+        );
         StreamGuardPolicy policy = new StreamGuardPolicy(
                 settings.enforcement().guardedActions(),
-                settings.enforcement().gracePeriod()
+                settings.enforcement().gracePeriod(),
+                settings.verification().maximumStatusAge()
         );
         AccessService accessService = new AccessService(repository, sessionRegistry, policy, clock);
         BypassService bypassService = new BypassService(repository, clock);
-        StreamService streamService = new StreamService(repository, verificationProvider, verificationProvider, clock);
+        StreamService streamService = new StreamService(repository, verificationProvider, providerRegistry, clock);
         CachingStreamMetadataProvider liveFeedMetadataProvider = new CachingStreamMetadataProvider(
-                verificationProvider,
+                providerRegistry,
                 clock,
                 Duration.ofSeconds(settings.web().liveFeed().metadataCacheSeconds())
         );
-        LiveFeedService liveFeedService = new LiveFeedService(repository, liveFeedMetadataProvider, clock);
+        LiveFeedService liveFeedService = new LiveFeedService(
+                repository,
+                liveFeedMetadataProvider,
+                clock,
+                settings.verification().maximumStatusAge()
+        );
         BukkitStreamVerificationRunner verificationRunner = new BukkitStreamVerificationRunner(this, streamService, messages);
         onboardingFlow = new BukkitOnboardingFlow(
                 this,
                 streamService,
-                verificationProvider,
+                providerRegistry,
                 verificationRunner,
                 messages,
                 settings.onboarding()
@@ -127,7 +148,7 @@ public final class StreamGuardPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(onboardingFlow, this);
         StreamCommand streamCommand = new StreamCommand(
                 streamService,
-                verificationProvider,
+                providerRegistry,
                 onboardingFlow,
                 verificationRunner,
                 messages
@@ -155,15 +176,25 @@ public final class StreamGuardPlugin extends JavaPlugin {
             recheckTask = null;
         }
         long intervalTicks = Math.max(20L, settings.enforcement().recheckInterval().toSeconds() * 20L);
+        AtomicBoolean recheckInProgress = new AtomicBoolean();
         recheckTask = getServer().getScheduler().runTaskTimer(this, () -> {
+            if (!recheckInProgress.compareAndSet(false, true)) {
+                return;
+            }
             List<OnlinePlayerSnapshot> players = getServer().getOnlinePlayers().stream()
                     .map(player -> new OnlinePlayerSnapshot(player.getUniqueId(), player.getName()))
                     .toList();
             getServer().getScheduler().runTaskAsynchronously(this, () -> {
-                for (OnlinePlayerSnapshot player : players) {
-                    if (streamService.status(player.playerId(), player.playerName()).streamLinkOptional().isPresent()) {
-                        streamService.verify(player.playerId(), player.playerName());
-                    }
+                try {
+                    List<StreamVerificationTarget> targets = players.stream()
+                            .filter(player -> streamService.status(player.playerId(), player.playerName())
+                                    .streamLinkOptional()
+                                    .isPresent())
+                            .map(player -> new StreamVerificationTarget(player.playerId(), player.playerName()))
+                            .toList();
+                    streamService.verifyAll(targets);
+                } finally {
+                    recheckInProgress.set(false);
                 }
             });
         }, intervalTicks, intervalTicks);
@@ -172,36 +203,58 @@ public final class StreamGuardPlugin extends JavaPlugin {
     private StreamProviderRegistry verificationProvider(StreamGuardSettings settings) {
         List<StreamProviderRegistration> providers = new ArrayList<>();
         StreamGuardSettings.ProviderSettings twitch = settings.providers().get(StreamProviderId.TWITCH);
-        TwitchStreamVerificationProvider twitchProvider = new TwitchStreamVerificationProvider(
-                twitch.enabled(),
-                twitch.option("client-id"),
-                twitch.option("client-secret"),
-                getLogger()
-        );
-        providers.add(new StreamProviderRegistration(
-                StreamProviderId.TWITCH,
-                twitchProvider,
-                twitchProvider,
-                StreamGuardPlugin::normalizeTwitchLogin
-        ));
+        if (twitch.enabled() && credentialsPresent(twitch, "client-id", "client-secret")) {
+            TwitchStreamVerificationProvider twitchProvider = new TwitchStreamVerificationProvider(
+                    true,
+                    twitch.option("client-id"),
+                    twitch.option("client-secret"),
+                    getLogger()
+            );
+            providers.add(new StreamProviderRegistration(
+                    StreamProviderId.TWITCH,
+                    twitchProvider,
+                    twitchProvider,
+                    StreamGuardPlugin::normalizeTwitchLogin
+            ));
+        } else if (twitch.enabled()) {
+            getLogger().warning("Twitch is enabled but has incomplete credentials; it will not be linkable.");
+        }
         StreamGuardSettings.ProviderSettings youtube = settings.providers().get(StreamProviderId.YOUTUBE);
-        YouTubeStreamVerificationProvider youtubeProvider = new YouTubeStreamVerificationProvider(
-                youtube.enabled(),
-                youtube.option("api-key"),
-                getLogger()
-        );
-        providers.add(new StreamProviderRegistration(
-                StreamProviderId.YOUTUBE,
-                youtubeProvider,
-                youtubeProvider,
-                String::trim
-        ));
+        if (youtube.enabled() && credentialsPresent(youtube, "api-key")) {
+            YouTubeStreamVerificationProvider youtubeProvider = new YouTubeStreamVerificationProvider(
+                    true,
+                    youtube.option("api-key"),
+                    getLogger()
+            );
+            providers.add(new StreamProviderRegistration(
+                    StreamProviderId.YOUTUBE,
+                    youtubeProvider,
+                    youtubeProvider,
+                    String::trim
+            ));
+        } else if (youtube.enabled()) {
+            getLogger().warning("YouTube is enabled but has no API key; it will not be linkable.");
+        }
         return new StreamProviderRegistry(providers);
+    }
+
+    private static boolean credentialsPresent(
+            StreamGuardSettings.ProviderSettings provider,
+            String... keys
+    ) {
+        return java.util.Arrays.stream(keys).allMatch(key -> !provider.option(key).isBlank());
     }
 
     private static String normalizeTwitchLogin(String value) {
         String normalized = value.trim();
-        return normalized.startsWith("@") ? normalized.substring(1) : normalized;
+        normalized = normalized.startsWith("@") ? normalized.substring(1) : normalized;
+        return normalized.toLowerCase(Locale.ROOT);
+    }
+
+    private void saveBundledResourceIfMissing(String resourcePath) {
+        if (!new File(getDataFolder(), resourcePath).exists()) {
+            saveResource(resourcePath, false);
+        }
     }
 
     private record OnlinePlayerSnapshot(java.util.UUID playerId, String playerName) {

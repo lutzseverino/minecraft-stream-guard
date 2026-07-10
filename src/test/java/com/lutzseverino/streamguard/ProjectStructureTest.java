@@ -1,14 +1,46 @@
 package com.lutzseverino.streamguard;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
-import org.junit.jupiter.api.Test;
+import com.tngtech.archunit.core.importer.ImportOption;
+import com.tngtech.archunit.junit.AnalyzeClasses;
+import com.tngtech.archunit.junit.ArchTest;
+import com.tngtech.archunit.lang.ArchRule;
 
+@AnalyzeClasses(
+        packages = "com.lutzseverino.streamguard",
+        importOptions = ImportOption.DoNotIncludeTests.class
+)
 final class ProjectStructureTest {
 
-    @Test
-    void projectHasATestHarness() {
-        assertNotNull(ProjectStructureTest.class);
-    }
-}
+    @ArchTest
+    static final ArchRule DOMAIN_IS_PURE = noClasses()
+            .that().resideInAPackage("..domain..")
+            .should().dependOnClassesThat()
+            .resideInAnyPackage(
+                    "..application..",
+                    "..bootstrap..",
+                    "..config..",
+                    "..i18n..",
+                    "..infrastructure..",
+                    "..platform..",
+                    "org.bukkit..",
+                    "com.google.gson..",
+                    "net.kyori.."
+            );
 
+    @ArchTest
+    static final ArchRule APPLICATION_IGNORES_ADAPTERS = noClasses()
+            .that().resideInAPackage("..application..")
+            .should().dependOnClassesThat()
+            .resideInAnyPackage(
+                    "..bootstrap..",
+                    "..config..",
+                    "..i18n..",
+                    "..infrastructure..",
+                    "..platform..",
+                    "org.bukkit..",
+                    "com.google.gson..",
+                    "net.kyori.."
+            );
+}

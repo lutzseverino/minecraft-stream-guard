@@ -38,7 +38,7 @@ stream:
   unverified: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>No active stream was found yet. Run <aqua>/stream verify</aqua> after you start streaming.</white>"
 
 admin:
-  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} status player</aqua>, <aqua>/{label} bypass grant player [duration] [reason]</aqua>, <aqua>/{label} bypass remove player</aqua>, <aqua>/{label} verify player [platform]</aqua>, or <aqua>/{label} reload</aqua>.</white>"
+  usage: "<dark_gray>[<gold>!</gold>]</dark_gray> <white>Use <aqua>/{label} status player</aqua>, <aqua>/{label} bypass grant player [duration] [reason]</aqua>, <aqua>/{label} bypass remove player</aqua>, <aqua>/{label} verify player [reason]</aqua>, or <aqua>/{label} reload</aqua>.</white>"
   status: "<dark_gray>[<green>+</green>]</dark_gray> <white>{player}: <aqua>{state}</aqua>.</white>"
   bypass:
     added: "<dark_gray>[<green>+</green>]</dark_gray> <white>Bypass granted to <aqua>{player}</aqua>.</white>"

@@ -29,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@SuppressWarnings("deprecation")
 public final class BukkitOnboardingFlow implements Listener {
 
     private final JavaPlugin plugin;
@@ -57,7 +58,7 @@ public final class BukkitOnboardingFlow implements Listener {
 
     public void open(Player player) {
         if (!settings.enabled()) {
-            player.sendMessage(messages.renderDefault("stream.setup.disabled", Map.of()));
+            player.sendMessage(messages.renderLegacyDefault("stream.setup.disabled", Map.of()));
             return;
         }
         List<StreamGuardSettings.ProviderButton> buttons = settings.providerPicker().providers().stream()
@@ -65,7 +66,7 @@ public final class BukkitOnboardingFlow implements Listener {
                 .filter(button -> providerRegistry.linkable(button.providerId()))
                 .toList();
         if (buttons.isEmpty()) {
-            player.sendMessage(messages.renderDefault("stream.setup.no-providers", Map.of()));
+            player.sendMessage(messages.renderLegacyDefault("stream.setup.no-providers", Map.of()));
             return;
         }
 
@@ -74,7 +75,7 @@ public final class BukkitOnboardingFlow implements Listener {
         Inventory inventory = Bukkit.createInventory(
                 holder,
                 size,
-                messages.renderTemplate(settings.providerPicker().title(), Map.of())
+                messages.renderLegacyTemplate(settings.providerPicker().title(), Map.of())
         );
         holder.setInventory(inventory);
 
@@ -110,12 +111,12 @@ public final class BukkitOnboardingFlow implements Listener {
         if (input != null) {
             input.timeoutTask().cancel();
             if (notify) {
-                player.sendMessage(messages.renderDefault("stream.setup.input.cancelled", Map.of()));
+                player.sendMessage(messages.renderLegacyDefault("stream.setup.input.cancelled", Map.of()));
             }
             return;
         }
         if (notify) {
-            player.sendMessage(messages.renderDefault("stream.setup.input.none", Map.of()));
+            player.sendMessage(messages.renderLegacyDefault("stream.setup.input.none", Map.of()));
         }
     }
 
@@ -138,7 +139,7 @@ public final class BukkitOnboardingFlow implements Listener {
         }
         if (event.getRawSlot() == holder.cancelSlot()) {
             player.closeInventory();
-            player.sendMessage(messages.renderDefault("stream.setup.input.cancelled", Map.of()));
+            player.sendMessage(messages.renderLegacyDefault("stream.setup.input.cancelled", Map.of()));
             return;
         }
         ProviderChoice choice = holder.providerAt(event.getRawSlot());
@@ -177,11 +178,11 @@ public final class BukkitOnboardingFlow implements Listener {
         var timeoutTask = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             PendingInput removed = pendingInputs.remove(player.getUniqueId());
             if (removed != null && player.isOnline()) {
-                player.sendMessage(messages.renderDefault("stream.setup.input.expired", Map.of()));
+                player.sendMessage(messages.renderLegacyDefault("stream.setup.input.expired", Map.of()));
             }
         }, settings.chatInput().timeoutSeconds() * 20L);
         pendingInputs.put(player.getUniqueId(), new PendingInput(choice.providerId(), choice.inputHint(), timeoutTask));
-        player.sendMessage(messages.renderDefault("stream.setup.input.prompt", Map.of(
+        player.sendMessage(messages.renderLegacyDefault("stream.setup.input.prompt", Map.of(
                 "platform", choice.providerId().displayName(),
                 "input_hint", choice.inputHint(),
                 "cancel", settings.chatInput().cancelKeyword()
@@ -195,7 +196,7 @@ public final class BukkitOnboardingFlow implements Listener {
             return;
         }
         if (trimmed.isBlank()) {
-            player.sendMessage(messages.renderDefault("stream.setup.input.empty", Map.of(
+            player.sendMessage(messages.renderLegacyDefault("stream.setup.input.empty", Map.of(
                     "platform", pending.providerId().displayName(),
                     "input_hint", pending.inputHint(),
                     "cancel", settings.chatInput().cancelKeyword()
@@ -203,7 +204,7 @@ public final class BukkitOnboardingFlow implements Listener {
             return;
         }
         if (trimmed.length() > settings.chatInput().maxLength()) {
-            player.sendMessage(messages.renderDefault("stream.setup.input.too-long", Map.of(
+            player.sendMessage(messages.renderLegacyDefault("stream.setup.input.too-long", Map.of(
                     "max", Integer.toString(settings.chatInput().maxLength())
             )));
             return;
@@ -219,7 +220,7 @@ public final class BukkitOnboardingFlow implements Listener {
                 removed.providerId(),
                 trimmed
         );
-        player.sendMessage(messages.renderDefault("stream.link.saved", Map.of(
+        player.sendMessage(messages.renderLegacyDefault("stream.link.saved", Map.of(
                 "platform", accessRecord.streamLink().providerId().displayName(),
                 "channel", accessRecord.streamLink().channel()
         )));
@@ -236,10 +237,10 @@ public final class BukkitOnboardingFlow implements Listener {
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
-            meta.displayName(messages.renderTemplate(item.name(), placeholders));
+            meta.setDisplayName(messages.renderLegacyTemplate(item.name(), placeholders));
             if (!item.lore().isEmpty()) {
-                meta.lore(item.lore().stream()
-                        .map(line -> messages.renderTemplate(line, placeholders))
+                meta.setLore(item.lore().stream()
+                        .map(line -> messages.renderLegacyTemplate(line, placeholders))
                         .toList());
             }
             if (item.customModelData() > 0) {

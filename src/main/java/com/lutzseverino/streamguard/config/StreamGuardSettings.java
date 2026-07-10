@@ -11,6 +11,7 @@ import java.util.Map;
 public record StreamGuardSettings(
         Language language,
         Enforcement enforcement,
+        Verification verification,
         Onboarding onboarding,
         Web web,
         CommandSafety commandSafety,
@@ -25,32 +26,26 @@ public record StreamGuardSettings(
                 guardedActions.add(action);
             }
         }
-        boolean defaultMovement = reader.bool("enforcement.allow-movement-while-unverified", true);
-        boolean defaultChat = reader.bool("enforcement.allow-chat-while-unverified", true);
         return new StreamGuardSettings(
                 new Language(
                         reader.string("language.default-locale", "en_US"),
-                        reader.string("language.fallback-locale", "en_US"),
-                        reader.bool("language.per-player-locale", false),
-                        reader.bool("language.use-client-locale", false)
+                        reader.string("language.fallback-locale", "en_US")
                 ),
                 new Enforcement(
                         Duration.ofSeconds(Math.max(0, reader.integer("enforcement.grace-period-seconds", 0))),
                         Duration.ofSeconds(Math.max(5, reader.integer("enforcement.recheck-interval-seconds", 60))),
-                        defaultMovement,
-                        defaultChat,
                         guardedActions,
-                        StateRules.load(reader, "enforcement.unlinked", defaultMovement, defaultChat),
-                        StateRules.load(reader, "enforcement.not-live", defaultMovement, defaultChat)
+                        StateRules.load(reader, "enforcement.unlinked"),
+                        StateRules.load(reader, "enforcement.not-live")
                 ),
+                Verification.load(reader),
                 Onboarding.load(reader),
                 Web.load(reader),
                 new CommandSafety(reader.stringList("commands.safe-while-unverified")),
                 new Bypass(
                         reader.bool("bypass.ops-bypass-by-default", true),
                         reader.bool("bypass.allow-temporary-bypass", true),
-                        Math.max(0, reader.integer("bypass.max-temporary-bypass-minutes", 240)),
-                        reader.bool("bypass.log-bypass-changes", true)
+                        Math.max(0, reader.integer("bypass.max-temporary-bypass-minutes", 240))
                 ),
                 Providers.load(reader)
         );
@@ -58,17 +53,13 @@ public record StreamGuardSettings(
 
     public record Language(
             String defaultLocale,
-            String fallbackLocale,
-            boolean perPlayerLocale,
-            boolean useClientLocale
+            String fallbackLocale
     ) {
     }
 
     public record Enforcement(
             Duration gracePeriod,
             Duration recheckInterval,
-            boolean allowMovementWhileUnverified,
-            boolean allowChatWhileUnverified,
             EnumSet<GuardedAction> guardedActions,
             StateRules unlinked,
             StateRules notLive
@@ -89,16 +80,35 @@ public record StreamGuardSettings(
     ) {
         private static StateRules load(
                 SettingsReader reader,
-                String path,
-                boolean defaultMovement,
-                boolean defaultChat
+                String path
         ) {
             return new StateRules(
                     reader.bool(path + ".kick-on-join", false),
                     Math.max(0, reader.integer(path + ".kick-delay-seconds", 0)),
-                    reader.bool(path + ".allow-movement", defaultMovement),
-                    reader.bool(path + ".allow-chat", defaultChat),
+                    reader.bool(path + ".allow-movement", true),
+                    reader.bool(path + ".allow-chat", true),
                     reader.bool(path + ".allow-commands", true)
+            );
+        }
+    }
+
+    public record Verification(Cache cache, Duration maximumStatusAge) {
+        private static Verification load(SettingsReader reader) {
+            return new Verification(
+                    Cache.load(reader),
+                    Duration.ofSeconds(Math.max(
+                            30,
+                            reader.integer("verification.maximum-status-age-seconds", 180)
+                    ))
+            );
+        }
+    }
+
+    public record Cache(Duration liveTimeToLive, Duration offlineTimeToLive) {
+        private static Cache load(SettingsReader reader) {
+            return new Cache(
+                    Duration.ofSeconds(Math.max(0, reader.integer("verification.cache.live-seconds", 60))),
+                    Duration.ofSeconds(Math.max(0, reader.integer("verification.cache.offline-seconds", 120)))
             );
         }
     }
@@ -269,8 +279,7 @@ public record StreamGuardSettings(
     public record Bypass(
             boolean opsBypassByDefault,
             boolean allowTemporaryBypass,
-            int maxTemporaryBypassMinutes,
-            boolean logBypassChanges
+            int maxTemporaryBypassMinutes
     ) {
     }
 

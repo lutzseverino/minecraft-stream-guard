@@ -104,5 +104,10 @@ final class LiveFeedServiceTest {
         public void save(PlayerAccessRecord accessRecord) {
             records.put(accessRecord.playerId(), accessRecord);
         }
+
+        @Override
+        public boolean saveIfUnchanged(PlayerAccessUpdate update) {
+            return records.replace(update.expected().playerId(), update.expected(), update.updated());
+        }
     }
 }

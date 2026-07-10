@@ -17,6 +17,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +32,7 @@ public final class TwitchStreamVerificationProvider implements StreamVerificatio
     private static final URI TOKEN_URI = URI.create("https://id.twitch.tv/oauth2/token");
     private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(5);
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(8);
+    private static final int MAX_STREAMS_PER_REQUEST = 100;
 
     private final boolean enabled;
     private final String clientId;
@@ -50,23 +56,33 @@ public final class TwitchStreamVerificationProvider implements StreamVerificatio
 
     @Override
     public VerificationResult verify(StreamLink link) {
+        return verifyAll(List.of(link)).get(link);
+    }
+
+    @Override
+    public Map<StreamLink, VerificationResult> verifyAll(Collection<StreamLink> links) {
         if (!enabled) {
-            return VerificationResult.offline(link.providerId(), "Twitch verification is disabled.");
+            return offlineResults(links, "Twitch verification is disabled.");
         }
         if (clientId.isBlank() || clientSecret.isBlank()) {
-            return VerificationResult.offline(link.providerId(), "Twitch credentials are missing.");
+            return offlineResults(links, "Twitch credentials are missing.");
         }
         try {
-            return liveStream(link).isPresent()
-                    ? VerificationResult.live(link.providerId(), "Twitch channel is live.")
-                    : VerificationResult.offline(link.providerId(), "Twitch channel is not live.");
+            Map<String, JsonObject> streamsByLogin = liveStreamsByLogin(links);
+            Map<StreamLink, VerificationResult> results = new LinkedHashMap<>();
+            for (StreamLink link : links) {
+                results.put(link, streamsByLogin.containsKey(normalizeLogin(link.channel()))
+                        ? VerificationResult.live(link.providerId(), "Twitch channel is live.")
+                        : VerificationResult.offline(link.providerId(), "Twitch channel is not live."));
+            }
+            return Map.copyOf(results);
         } catch (IOException exception) {
-            return VerificationResult.offline(link.providerId(), "Twitch verification failed: " + exception.getMessage());
+            return unavailableResults(links, "Twitch verification failed: " + exception.getMessage());
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            return VerificationResult.offline(link.providerId(), "Twitch verification was interrupted.");
+            return unavailableResults(links, "Twitch verification was interrupted.");
         } catch (RuntimeException exception) {
-            return VerificationResult.offline(link.providerId(), "Twitch response could not be read.");
+            return unavailableResults(links, "Twitch response could not be read.");
         }
     }
 
@@ -87,12 +103,46 @@ public final class TwitchStreamVerificationProvider implements StreamVerificatio
     }
 
     private Optional<JsonObject> liveStream(StreamLink link) throws IOException, InterruptedException {
+        return Optional.ofNullable(liveStreamsByLogin(List.of(link)).get(normalizeLogin(link.channel())));
+    }
+
+    private Map<String, JsonObject> liveStreamsByLogin(Collection<StreamLink> links) throws IOException, InterruptedException {
+        Map<String, String> uniqueLogins = new LinkedHashMap<>();
+        for (StreamLink link : links) {
+            String login = normalizeLogin(link.channel());
+            if (!login.isBlank()) {
+                uniqueLogins.putIfAbsent(login, login);
+            }
+        }
+        if (uniqueLogins.isEmpty()) {
+            return Map.of();
+        }
+
         String token = accessToken();
-        String channel = encode(link.channel());
-        URI uri = URI.create("https://api.twitch.tv/helix/streams"
-                + "?user_login=" + channel
-                + "&type=live"
-                + "&first=1");
+        Map<String, JsonObject> streamsByLogin = new LinkedHashMap<>();
+        List<String> logins = List.copyOf(uniqueLogins.keySet());
+        for (int index = 0; index < logins.size(); index += MAX_STREAMS_PER_REQUEST) {
+            List<String> chunk = logins.subList(index, Math.min(index + MAX_STREAMS_PER_REQUEST, logins.size()));
+            JsonObject body = fetchStreams(token, chunk);
+            if (!body.has("data") || body.getAsJsonArray("data").isEmpty()) {
+                continue;
+            }
+            for (int streamIndex = 0; streamIndex < body.getAsJsonArray("data").size(); streamIndex++) {
+                JsonObject stream = body.getAsJsonArray("data").get(streamIndex).getAsJsonObject();
+                string(stream, "user_login")
+                        .map(TwitchStreamVerificationProvider::normalizeLogin)
+                        .ifPresent(login -> streamsByLogin.put(login, stream));
+            }
+        }
+        return streamsByLogin;
+    }
+
+    private JsonObject fetchStreams(String token, List<String> logins) throws IOException, InterruptedException {
+        StringBuilder query = new StringBuilder("type=live&first=").append(logins.size());
+        for (String login : logins) {
+            query.append("&user_login=").append(encode(login));
+        }
+        URI uri = URI.create("https://api.twitch.tv/helix/streams?" + query);
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .timeout(REQUEST_TIMEOUT)
                 .header("Client-Id", clientId)
@@ -103,11 +153,7 @@ public final class TwitchStreamVerificationProvider implements StreamVerificatio
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
             throw new IOException("Twitch returned HTTP " + response.statusCode());
         }
-        JsonObject body = JsonParser.parseString(response.body()).getAsJsonObject();
-        if (!body.has("data") || body.getAsJsonArray("data").isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(body.getAsJsonArray("data").get(0).getAsJsonObject());
+        return JsonParser.parseString(response.body()).getAsJsonObject();
     }
 
     private synchronized String accessToken() throws IOException, InterruptedException {
@@ -176,5 +222,25 @@ public final class TwitchStreamVerificationProvider implements StreamVerificatio
 
     private static String encode(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
+    }
+
+    private static String normalizeLogin(String value) {
+        return value.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static Map<StreamLink, VerificationResult> offlineResults(Collection<StreamLink> links, String detail) {
+        Map<StreamLink, VerificationResult> results = new LinkedHashMap<>();
+        for (StreamLink link : links) {
+            results.put(link, VerificationResult.offline(link.providerId(), detail));
+        }
+        return Map.copyOf(results);
+    }
+
+    private static Map<StreamLink, VerificationResult> unavailableResults(Collection<StreamLink> links, String detail) {
+        Map<StreamLink, VerificationResult> results = new LinkedHashMap<>();
+        for (StreamLink link : links) {
+            results.put(link, VerificationResult.unavailable(link.providerId(), detail));
+        }
+        return Map.copyOf(results);
     }
 }

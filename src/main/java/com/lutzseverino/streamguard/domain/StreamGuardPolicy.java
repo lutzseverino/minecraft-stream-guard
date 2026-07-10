@@ -8,12 +8,24 @@ public final class StreamGuardPolicy {
 
     private final EnumSet<GuardedAction> guardedActions;
     private final Duration gracePeriod;
+    private final Duration maximumProviderStatusAge;
 
     public StreamGuardPolicy(EnumSet<GuardedAction> guardedActions, Duration gracePeriod) {
+        this(guardedActions, gracePeriod, Duration.ofMinutes(3));
+    }
+
+    public StreamGuardPolicy(
+            EnumSet<GuardedAction> guardedActions,
+            Duration gracePeriod,
+            Duration maximumProviderStatusAge
+    ) {
         this.guardedActions = guardedActions.isEmpty()
                 ? EnumSet.noneOf(GuardedAction.class)
                 : EnumSet.copyOf(guardedActions);
         this.gracePeriod = gracePeriod.isNegative() ? Duration.ZERO : gracePeriod;
+        this.maximumProviderStatusAge = maximumProviderStatusAge.isNegative()
+                ? Duration.ZERO
+                : maximumProviderStatusAge;
     }
 
     public AccessDecision decide(
@@ -29,7 +41,9 @@ public final class StreamGuardPolicy {
         if (permissionBypass) {
             return AccessDecision.allow(AccessDecision.Reason.BYPASS);
         }
-        if (accessRecord.verificationStatusOptional().filter(VerificationStatus::live).isPresent()) {
+        if (accessRecord.verificationStatusOptional()
+                .filter(status -> status.grantsAccessAt(now, maximumProviderStatusAge))
+                .isPresent()) {
             return AccessDecision.allow(AccessDecision.Reason.VERIFIED);
         }
         if (accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
@@ -45,7 +59,9 @@ public final class StreamGuardPolicy {
         if (permissionBypass || accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
             return GateState.BYPASSED;
         }
-        if (accessRecord.verificationStatusOptional().filter(VerificationStatus::live).isPresent()) {
+        if (accessRecord.verificationStatusOptional()
+                .filter(status -> status.grantsAccessAt(now, maximumProviderStatusAge))
+                .isPresent()) {
             return GateState.VERIFIED;
         }
         if (accessRecord.streamLinkOptional().isEmpty()) {

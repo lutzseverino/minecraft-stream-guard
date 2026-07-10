@@ -1,6 +1,7 @@
 package com.lutzseverino.streamguard.infrastructure;
 
 import com.lutzseverino.streamguard.application.PlayerAccessRepository;
+import com.lutzseverino.streamguard.application.PlayerAccessUpdate;
 import com.lutzseverino.streamguard.domain.BypassGrant;
 import com.lutzseverino.streamguard.domain.PlayerAccessRecord;
 import com.lutzseverino.streamguard.domain.StreamLink;
@@ -8,7 +9,12 @@ import com.lutzseverino.streamguard.domain.StreamProviderId;
 import com.lutzseverino.streamguard.domain.VerificationStatus;
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -48,6 +54,36 @@ public final class YamlPlayerAccessRepository implements PlayerAccessRepository 
 
     @Override
     public synchronized void save(PlayerAccessRecord accessRecord) {
+        updateYaml(accessRecord);
+        persist();
+    }
+
+    @Override
+    public synchronized boolean saveIfUnchanged(PlayerAccessUpdate update) {
+        if (!find(update.expected().playerId()).filter(update.expected()::equals).isPresent()) {
+            return false;
+        }
+        updateYaml(update.updated());
+        persist();
+        return true;
+    }
+
+    @Override
+    public synchronized void saveAllIfUnchanged(Collection<PlayerAccessUpdate> updates) {
+        boolean changed = false;
+        for (PlayerAccessUpdate update : updates) {
+            if (find(update.expected().playerId()).filter(update.expected()::equals).isPresent()) {
+                updateYaml(update.updated());
+                changed = true;
+            }
+        }
+        if (!changed) {
+            return;
+        }
+        persist();
+    }
+
+    private void updateYaml(PlayerAccessRecord accessRecord) {
         String root = "players." + accessRecord.playerId();
         yaml.set(root + ".name", accessRecord.playerName());
         accessRecord.streamLinkOptional().ifPresentOrElse(link -> {
@@ -66,7 +102,6 @@ public final class YamlPlayerAccessRepository implements PlayerAccessRepository 
             yaml.set(root + ".bypass.expires-at", grant.expiresAtOptional().map(Instant::toEpochMilli).orElse(null));
             yaml.set(root + ".bypass.reason", grant.reason());
         }, () -> yaml.set(root + ".bypass", null));
-        persist();
     }
 
     public synchronized void reload() {
@@ -126,10 +161,28 @@ public final class YamlPlayerAccessRepository implements PlayerAccessRepository 
     }
 
     private void persist() {
+        File temporary = new File(file.getParentFile(), file.getName() + ".tmp");
         try {
-            yaml.save(file);
+            Files.createDirectories(file.toPath().toAbsolutePath().getParent());
+            yaml.save(temporary);
+            try {
+                Files.move(
+                        temporary.toPath(),
+                        file.toPath(),
+                        StandardCopyOption.ATOMIC_MOVE,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+            } catch (AtomicMoveNotSupportedException ignored) {
+                Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
         } catch (IOException exception) {
             logger.log(Level.SEVERE, "Could not save StreamGuard player data.", exception);
+            try {
+                Files.deleteIfExists(temporary.toPath());
+            } catch (IOException cleanupException) {
+                exception.addSuppressed(cleanupException);
+            }
+            throw new UncheckedIOException("Could not save StreamGuard player data", exception);
         }
     }
 }

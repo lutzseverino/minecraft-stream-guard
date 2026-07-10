@@ -5,6 +5,7 @@ import com.lutzseverino.streamguard.domain.StreamLink;
 import com.lutzseverino.streamguard.domain.StreamProviderId;
 import com.lutzseverino.streamguard.domain.VerificationStatus;
 import java.time.Clock;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
@@ -20,15 +21,26 @@ public final class LiveFeedService {
     private final PlayerAccessRepository repository;
     private final StreamMetadataProvider metadataProvider;
     private final Clock clock;
+    private final Duration maximumStatusAge;
 
     public LiveFeedService(PlayerAccessRepository repository, Clock clock) {
-        this(repository, StreamMetadataProvider.none(), clock);
+        this(repository, StreamMetadataProvider.none(), clock, Duration.ofMinutes(3));
     }
 
     public LiveFeedService(PlayerAccessRepository repository, StreamMetadataProvider metadataProvider, Clock clock) {
+        this(repository, metadataProvider, clock, Duration.ofMinutes(3));
+    }
+
+    public LiveFeedService(
+            PlayerAccessRepository repository,
+            StreamMetadataProvider metadataProvider,
+            Clock clock,
+            Duration maximumStatusAge
+    ) {
         this.repository = repository;
         this.metadataProvider = metadataProvider;
         this.clock = clock;
+        this.maximumStatusAge = maximumStatusAge;
     }
 
     public LiveFeedSnapshot snapshot(Collection<LiveFeedPlayer> players) {
@@ -46,7 +58,7 @@ public final class LiveFeedService {
         PlayerAccessRecord accessRecord = repository.getOrCreate(player.playerId(), player.playerName());
         Optional<StreamLink> link = accessRecord.streamLinkOptional();
         Optional<VerificationStatus> status = accessRecord.verificationStatusOptional();
-        if (link.isEmpty() || status.filter(VerificationStatus::live).isEmpty()) {
+        if (link.isEmpty() || status.filter(value -> value.grantsAccessAt(clock.instant(), maximumStatusAge)).isEmpty()) {
             return Optional.empty();
         }
         StreamLink streamLink = link.get();
