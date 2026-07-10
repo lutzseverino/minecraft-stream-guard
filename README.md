@@ -91,7 +91,7 @@ and `/stream cancel`. Administrators use `/streamguard` to inspect status,
 manage bypasses, verify or unverify players, and reload configuration.
 
 See the [commands and permissions reference](docs/reference/commands-and-permissions.md)
-for syntax, duration rules, and permission nodes.
+for command behavior, duration rules, and permission nodes.
 
 ## Companion Site
 
