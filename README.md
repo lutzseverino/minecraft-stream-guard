@@ -103,7 +103,8 @@ start times when the provider returns them.
 
 ## Development
 
-Build and test from the repository root with Java 17:
+Build and test from the repository root with JDK 21. Maven emits Java
+17-compatible bytecode for Paper compatibility:
 
 ```bash
 ./mvnw --batch-mode --no-transfer-progress verify
