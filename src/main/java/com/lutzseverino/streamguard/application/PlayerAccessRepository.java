@@ -7,15 +7,15 @@ import java.util.UUID;
 
 public interface PlayerAccessRepository {
 
-    PlayerAccessRecord getOrCreate(UUID playerId, String playerName);
+  PlayerAccessRecord getOrCreate(UUID playerId, String playerName);
 
-    Optional<PlayerAccessRecord> find(UUID playerId);
+  Optional<PlayerAccessRecord> find(UUID playerId);
 
-    void save(PlayerAccessRecord accessRecord);
+  void save(PlayerAccessRecord accessRecord);
 
-    boolean saveIfUnchanged(PlayerAccessUpdate update);
+  boolean saveIfUnchanged(PlayerAccessUpdate update);
 
-    default void saveAllIfUnchanged(Collection<PlayerAccessUpdate> updates) {
-        updates.forEach(this::saveIfUnchanged);
-    }
+  default void saveAllIfUnchanged(Collection<PlayerAccessUpdate> updates) {
+    updates.forEach(this::saveIfUnchanged);
+  }
 }

@@ -2,6 +2,7 @@
   <h1>StreamGuard</h1>
   <p>Require players to be live before they can affect a Minecraft survival world.</p>
 
+  [![CI](https://github.com/lutzseverino/minecraft-stream-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/lutzseverino/minecraft-stream-guard/actions/workflows/ci.yml)
   [![Releases](https://img.shields.io/github/v/release/lutzseverino/minecraft-stream-guard)](https://github.com/lutzseverino/minecraft-stream-guard/releases)
   [![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1%2B-3c8527)](https://papermc.io/)
   [![Java](https://img.shields.io/badge/Java-17%2B-e76f00)](https://adoptium.net/)
@@ -102,10 +103,10 @@ start times when the provider returns them.
 
 ## Development
 
-Build and test from the repository root with Java 17 and Maven:
+Build and test from the repository root with Java 17:
 
 ```bash
-mvn --batch-mode verify
+./mvnw --batch-mode --no-transfer-progress verify
 ```
 
 The plugin jar is written to `target/StreamGuard-<version>.jar`. Gson and Adventure

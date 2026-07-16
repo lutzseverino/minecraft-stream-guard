@@ -1,5 +1,2 @@
-/**
- * Typed configuration loading, validation, and defaults.
- */
+/** Typed configuration loading, validation, and defaults. */
 package com.lutzseverino.streamguard.config;
-

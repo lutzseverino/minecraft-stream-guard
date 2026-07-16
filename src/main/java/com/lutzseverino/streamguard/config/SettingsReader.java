@@ -5,13 +5,13 @@ import java.util.Set;
 
 public interface SettingsReader {
 
-    String string(String path, String fallback);
+  String string(String path, String fallback);
 
-    boolean bool(String path, boolean fallback);
+  boolean bool(String path, boolean fallback);
 
-    int integer(String path, int fallback);
+  int integer(String path, int fallback);
 
-    List<String> stringList(String path);
+  List<String> stringList(String path);
 
-    Set<String> keys(String path);
+  Set<String> keys(String path);
 }

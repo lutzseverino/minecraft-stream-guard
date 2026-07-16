@@ -1,41 +1,35 @@
 # Documentation
 
-StreamGuard documentation is organized by reader intent.
+Documentation is organized by reader intent.
 
-## Tutorials
+## Sections
 
-Learn the plugin through a complete, guided setup.
-
-- [Install and configure StreamGuard](tutorials/install-and-configure.md)
-
-## How-To Guides
-
-Solve a focused operational task.
-
-- [Configure Twitch and YouTube](how-to/configure-providers.md)
-- [Publish the live feed safely](how-to/publish-live-feed.md)
-
-## Reference
-
-Look up commands, permissions, settings, and release rules.
-
-- [Commands and permissions](reference/commands-and-permissions.md)
-- [Configuration](reference/configuration.md)
-- [Versioning](reference/versioning.md)
-
-## Explanation
-
-Understand the policy and codebase design.
-
-- [Enforcement model](explanation/enforcement-model.md)
-- [Architecture](explanation/architecture.md)
-
-Release notes live in [`releases/`](releases/). Marketplace copy is maintained in
-[`marketplace.md`](marketplace.md).
+- `tutorials/` teaches through guided learning paths.
+- `how-to/` solves focused operational or implementation tasks.
+- `reference/` captures factual lookup material.
+- `explanation/` records concepts, rationale, and architecture.
+- `decisions/` stores durable decision records.
+- `_templates/` contains starting points for new documents.
 
 ## Writing Rules
 
 - Choose the section by reader intent, not by topic.
-- Keep durable guidance here; keep temporary plans and checklists in issues.
-- Link every new document from this index or the nearest section index.
-- Keep reference pages factual and how-to guides task-oriented.
+- Keep documents durable and reader-oriented.
+- Keep examples concrete only when they clarify durable guidance.
+- Keep temporary plans and implementation checklists in issues.
+- Link new documents from the nearest section README.
+- Use the templates in `_templates/` when creating a new document.
+
+## Documents
+
+- [Tutorials](tutorials/README.md)
+- [How-To Guides](how-to/README.md)
+- [Reference](reference/README.md)
+- [Explanation](explanation/README.md)
+- [Decisions](decisions/README.md)
+- [Templates](_templates/README.md)
+
+## Repository Materials
+
+- [Release notes](releases/)
+- [Marketplace copy](marketplace.md)

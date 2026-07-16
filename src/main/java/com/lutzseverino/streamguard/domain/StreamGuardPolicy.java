@@ -6,67 +6,71 @@ import java.util.EnumSet;
 
 public final class StreamGuardPolicy {
 
-    private final EnumSet<GuardedAction> guardedActions;
-    private final Duration gracePeriod;
-    private final Duration maximumProviderStatusAge;
+  private final EnumSet<GuardedAction> guardedActions;
+  private final Duration gracePeriod;
+  private final Duration maximumProviderStatusAge;
 
-    public StreamGuardPolicy(EnumSet<GuardedAction> guardedActions, Duration gracePeriod) {
-        this(guardedActions, gracePeriod, Duration.ofMinutes(3));
-    }
+  public StreamGuardPolicy(EnumSet<GuardedAction> guardedActions, Duration gracePeriod) {
+    this(guardedActions, gracePeriod, Duration.ofMinutes(3));
+  }
 
-    public StreamGuardPolicy(
-            EnumSet<GuardedAction> guardedActions,
-            Duration gracePeriod,
-            Duration maximumProviderStatusAge
-    ) {
-        this.guardedActions = guardedActions.isEmpty()
-                ? EnumSet.noneOf(GuardedAction.class)
-                : EnumSet.copyOf(guardedActions);
-        this.gracePeriod = gracePeriod.isNegative() ? Duration.ZERO : gracePeriod;
-        this.maximumProviderStatusAge = maximumProviderStatusAge.isNegative()
-                ? Duration.ZERO
-                : maximumProviderStatusAge;
-    }
+  public StreamGuardPolicy(
+      EnumSet<GuardedAction> guardedActions,
+      Duration gracePeriod,
+      Duration maximumProviderStatusAge) {
+    this.guardedActions =
+        guardedActions.isEmpty()
+            ? EnumSet.noneOf(GuardedAction.class)
+            : EnumSet.copyOf(guardedActions);
+    this.gracePeriod = gracePeriod.isNegative() ? Duration.ZERO : gracePeriod;
+    this.maximumProviderStatusAge =
+        maximumProviderStatusAge.isNegative() ? Duration.ZERO : maximumProviderStatusAge;
+  }
 
-    public AccessDecision decide(
-            GuardedAction action,
-            PlayerAccessRecord accessRecord,
-            SessionState session,
-            boolean permissionBypass,
-            Instant now
-    ) {
-        if (!guardedActions.contains(action)) {
-            return AccessDecision.allow(AccessDecision.Reason.ACTION_NOT_GUARDED);
-        }
-        if (permissionBypass) {
-            return AccessDecision.allow(AccessDecision.Reason.BYPASS);
-        }
-        if (accessRecord.verificationStatusOptional()
-                .filter(status -> status.grantsAccessAt(now, maximumProviderStatusAge))
-                .isPresent()) {
-            return AccessDecision.allow(AccessDecision.Reason.VERIFIED);
-        }
-        if (accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
-            return AccessDecision.allow(AccessDecision.Reason.BYPASS);
-        }
-        if (!gracePeriod.isZero() && session != null && !session.joinedAt().plus(gracePeriod).isBefore(now)) {
-            return AccessDecision.allow(AccessDecision.Reason.GRACE_PERIOD);
-        }
-        return AccessDecision.deny();
+  public AccessDecision decide(
+      GuardedAction action,
+      PlayerAccessRecord accessRecord,
+      SessionState session,
+      boolean permissionBypass,
+      Instant now) {
+    if (!guardedActions.contains(action)) {
+      return AccessDecision.allow(AccessDecision.Reason.ACTION_NOT_GUARDED);
     }
+    if (permissionBypass) {
+      return AccessDecision.allow(AccessDecision.Reason.BYPASS);
+    }
+    if (accessRecord
+        .verificationStatusOptional()
+        .filter(status -> status.grantsAccessAt(now, maximumProviderStatusAge))
+        .isPresent()) {
+      return AccessDecision.allow(AccessDecision.Reason.VERIFIED);
+    }
+    if (accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
+      return AccessDecision.allow(AccessDecision.Reason.BYPASS);
+    }
+    if (!gracePeriod.isZero()
+        && session != null
+        && !session.joinedAt().plus(gracePeriod).isBefore(now)) {
+      return AccessDecision.allow(AccessDecision.Reason.GRACE_PERIOD);
+    }
+    return AccessDecision.deny();
+  }
 
-    public GateState gateState(PlayerAccessRecord accessRecord, boolean permissionBypass, Instant now) {
-        if (permissionBypass || accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
-            return GateState.BYPASSED;
-        }
-        if (accessRecord.verificationStatusOptional()
-                .filter(status -> status.grantsAccessAt(now, maximumProviderStatusAge))
-                .isPresent()) {
-            return GateState.VERIFIED;
-        }
-        if (accessRecord.streamLinkOptional().isEmpty()) {
-            return GateState.UNLINKED;
-        }
-        return GateState.NOT_LIVE;
+  public GateState gateState(
+      PlayerAccessRecord accessRecord, boolean permissionBypass, Instant now) {
+    if (permissionBypass
+        || accessRecord.bypassGrantOptional().filter(grant -> grant.activeAt(now)).isPresent()) {
+      return GateState.BYPASSED;
     }
+    if (accessRecord
+        .verificationStatusOptional()
+        .filter(status -> status.grantsAccessAt(now, maximumProviderStatusAge))
+        .isPresent()) {
+      return GateState.VERIFIED;
+    }
+    if (accessRecord.streamLinkOptional().isEmpty()) {
+      return GateState.UNLINKED;
+    }
+    return GateState.NOT_LIVE;
+  }
 }

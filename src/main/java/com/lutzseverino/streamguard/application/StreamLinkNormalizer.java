@@ -4,5 +4,5 @@ import com.lutzseverino.streamguard.domain.StreamProviderId;
 
 public interface StreamLinkNormalizer {
 
-    String normalize(StreamProviderId providerId, String linkReference);
+  String normalize(StreamProviderId providerId, String linkReference);
 }

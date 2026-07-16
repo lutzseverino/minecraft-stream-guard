@@ -5,9 +5,9 @@ import java.util.Optional;
 
 public interface StreamMetadataProvider {
 
-    Optional<LiveStreamMetadata> metadata(StreamLink link);
+  Optional<LiveStreamMetadata> metadata(StreamLink link);
 
-    static StreamMetadataProvider none() {
-        return link -> Optional.empty();
-    }
+  static StreamMetadataProvider none() {
+    return link -> Optional.empty();
+  }
 }

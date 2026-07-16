@@ -8,15 +8,17 @@ import org.junit.jupiter.api.Test;
 
 final class MessageServiceTest {
 
-    @Test
-    void rendersPlaceholderValuesAsTextInsteadOfMiniMessageMarkup() {
-        MessageService messages = new MessageService(Map.of(), "en_US", "en_US");
+  @Test
+  void rendersPlaceholderValuesAsTextInsteadOfMiniMessageMarkup() {
+    MessageService messages = new MessageService(Map.of(), "en_US", "en_US");
 
-        String rendered = PlainTextComponentSerializer.plainText().serialize(messages.renderTemplate(
-                "<green>Channel: {channel}</green>",
-                Map.of("channel", "<red>not formatting</red>")
-        ));
+    String rendered =
+        PlainTextComponentSerializer.plainText()
+            .serialize(
+                messages.renderTemplate(
+                    "<green>Channel: {channel}</green>",
+                    Map.of("channel", "<red>not formatting</red>")));
 
-        assertEquals("Channel: <red>not formatting</red>", rendered);
-    }
+    assertEquals("Channel: <red>not formatting</red>", rendered);
+  }
 }

@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 
 final class YouTubeStreamVerificationProviderTest {
 
-    @Test
-    void mapsVideoDetailsIntoLiveFeedMetadata() {
-        LiveStreamMetadata metadata = YouTubeStreamVerificationProvider.metadataFromVideo(
-                "jfKfPfyJRdk",
-                JsonParser.parseString("""
+  @Test
+  void mapsVideoDetailsIntoLiveFeedMetadata() {
+    LiveStreamMetadata metadata =
+        YouTubeStreamVerificationProvider.metadataFromVideo(
+            "jfKfPfyJRdk",
+            JsonParser.parseString(
+                    """
                         {
                           "id": { "videoId": "jfKfPfyJRdk" },
                           "snippet": {
@@ -22,8 +24,10 @@ final class YouTubeStreamVerificationProviderTest {
                             }
                           }
                         }
-                        """).getAsJsonObject(),
-                JsonParser.parseString("""
+                        """)
+                .getAsJsonObject(),
+            JsonParser.parseString(
+                    """
                         {
                           "snippet": {
                             "title": "Hardcore live",
@@ -36,13 +40,13 @@ final class YouTubeStreamVerificationProviderTest {
                             "concurrentViewers": "612"
                           }
                         }
-                        """).getAsJsonObject()
-        );
+                        """)
+                .getAsJsonObject());
 
-        assertEquals("Hardcore live", metadata.title());
-        assertEquals("https://example.com/high.jpg", metadata.thumbnailUrl());
-        assertEquals(612, metadata.viewerCount());
-        assertEquals("2026-06-26T10:24:00Z", metadata.liveSince().toString());
-        assertEquals("https://youtube.com/watch?v=jfKfPfyJRdk", metadata.url());
-    }
+    assertEquals("Hardcore live", metadata.title());
+    assertEquals("https://example.com/high.jpg", metadata.thumbnailUrl());
+    assertEquals(612, metadata.viewerCount());
+    assertEquals("2026-06-26T10:24:00Z", metadata.liveSince().toString());
+    assertEquals("https://youtube.com/watch?v=jfKfPfyJRdk", metadata.url());
+  }
 }

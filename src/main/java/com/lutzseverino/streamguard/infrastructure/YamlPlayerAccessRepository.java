@@ -24,165 +24,180 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public final class YamlPlayerAccessRepository implements PlayerAccessRepository {
 
-    private final File file;
-    private final Logger logger;
-    private YamlConfiguration yaml;
+  private final File file;
+  private final Logger logger;
+  private YamlConfiguration yaml;
 
-    public YamlPlayerAccessRepository(File file, Logger logger) {
-        this.file = file;
-        this.logger = logger;
-        this.yaml = YamlConfiguration.loadConfiguration(file);
+  public YamlPlayerAccessRepository(File file, Logger logger) {
+    this.file = file;
+    this.logger = logger;
+    this.yaml = YamlConfiguration.loadConfiguration(file);
+  }
+
+  @Override
+  public synchronized PlayerAccessRecord getOrCreate(UUID playerId, String playerName) {
+    return find(playerId).orElseGet(() -> PlayerAccessRecord.empty(playerId, playerName));
+  }
+
+  @Override
+  public synchronized Optional<PlayerAccessRecord> find(UUID playerId) {
+    ConfigurationSection section = yaml.getConfigurationSection("players." + playerId);
+    if (section == null) {
+      return Optional.empty();
     }
+    String name = section.getString("name", "");
+    StreamLink link = readLink(section.getConfigurationSection("stream.link"));
+    VerificationStatus status = readVerification(section.getConfigurationSection("stream.status"));
+    BypassGrant grant = readBypass(playerId, section.getConfigurationSection("bypass"));
+    return Optional.of(new PlayerAccessRecord(playerId, name, link, status, grant));
+  }
 
-    @Override
-    public synchronized PlayerAccessRecord getOrCreate(UUID playerId, String playerName) {
-        return find(playerId).orElseGet(() -> PlayerAccessRecord.empty(playerId, playerName));
+  @Override
+  public synchronized void save(PlayerAccessRecord accessRecord) {
+    updateYaml(accessRecord);
+    persist();
+  }
+
+  @Override
+  public synchronized boolean saveIfUnchanged(PlayerAccessUpdate update) {
+    if (!find(update.expected().playerId()).filter(update.expected()::equals).isPresent()) {
+      return false;
     }
+    updateYaml(update.updated());
+    persist();
+    return true;
+  }
 
-    @Override
-    public synchronized Optional<PlayerAccessRecord> find(UUID playerId) {
-        ConfigurationSection section = yaml.getConfigurationSection("players." + playerId);
-        if (section == null) {
-            return Optional.empty();
-        }
-        String name = section.getString("name", "");
-        StreamLink link = readLink(section.getConfigurationSection("stream.link"));
-        VerificationStatus status = readVerification(section.getConfigurationSection("stream.status"));
-        BypassGrant grant = readBypass(playerId, section.getConfigurationSection("bypass"));
-        return Optional.of(new PlayerAccessRecord(playerId, name, link, status, grant));
-    }
-
-    @Override
-    public synchronized void save(PlayerAccessRecord accessRecord) {
-        updateYaml(accessRecord);
-        persist();
-    }
-
-    @Override
-    public synchronized boolean saveIfUnchanged(PlayerAccessUpdate update) {
-        if (!find(update.expected().playerId()).filter(update.expected()::equals).isPresent()) {
-            return false;
-        }
+  @Override
+  public synchronized void saveAllIfUnchanged(Collection<PlayerAccessUpdate> updates) {
+    boolean changed = false;
+    for (PlayerAccessUpdate update : updates) {
+      if (find(update.expected().playerId()).filter(update.expected()::equals).isPresent()) {
         updateYaml(update.updated());
-        persist();
-        return true;
+        changed = true;
+      }
     }
+    if (!changed) {
+      return;
+    }
+    persist();
+  }
 
-    @Override
-    public synchronized void saveAllIfUnchanged(Collection<PlayerAccessUpdate> updates) {
-        boolean changed = false;
-        for (PlayerAccessUpdate update : updates) {
-            if (find(update.expected().playerId()).filter(update.expected()::equals).isPresent()) {
-                updateYaml(update.updated());
-                changed = true;
-            }
-        }
-        if (!changed) {
-            return;
-        }
-        persist();
-    }
+  private void updateYaml(PlayerAccessRecord accessRecord) {
+    String root = "players." + accessRecord.playerId();
+    yaml.set(root + ".name", accessRecord.playerName());
+    accessRecord
+        .streamLinkOptional()
+        .ifPresentOrElse(
+            link -> {
+              yaml.set(root + ".stream.link.platform", link.providerId().value());
+              yaml.set(root + ".stream.link.channel", link.channel());
+            },
+            () -> yaml.set(root + ".stream.link", null));
+    accessRecord
+        .verificationStatusOptional()
+        .ifPresentOrElse(
+            status -> {
+              yaml.set(root + ".stream.status.live", status.live());
+              yaml.set(
+                  root + ".stream.status.platform",
+                  status.verifiedProviderId().map(StreamProviderId::value).orElse(null));
+              yaml.set(root + ".stream.status.checked-at", status.checkedAt().toEpochMilli());
+              yaml.set(root + ".stream.status.detail", status.detail());
+            },
+            () -> yaml.set(root + ".stream.status", null));
+    accessRecord
+        .bypassGrantOptional()
+        .ifPresentOrElse(
+            grant -> {
+              yaml.set(
+                  root + ".bypass.granted-by",
+                  grant.grantedBy() == null ? null : grant.grantedBy().toString());
+              yaml.set(root + ".bypass.granted-at", grant.grantedAt().toEpochMilli());
+              yaml.set(
+                  root + ".bypass.expires-at",
+                  grant.expiresAtOptional().map(Instant::toEpochMilli).orElse(null));
+              yaml.set(root + ".bypass.reason", grant.reason());
+            },
+            () -> yaml.set(root + ".bypass", null));
+  }
 
-    private void updateYaml(PlayerAccessRecord accessRecord) {
-        String root = "players." + accessRecord.playerId();
-        yaml.set(root + ".name", accessRecord.playerName());
-        accessRecord.streamLinkOptional().ifPresentOrElse(link -> {
-            yaml.set(root + ".stream.link.platform", link.providerId().value());
-            yaml.set(root + ".stream.link.channel", link.channel());
-        }, () -> yaml.set(root + ".stream.link", null));
-        accessRecord.verificationStatusOptional().ifPresentOrElse(status -> {
-            yaml.set(root + ".stream.status.live", status.live());
-            yaml.set(root + ".stream.status.platform", status.verifiedProviderId().map(StreamProviderId::value).orElse(null));
-            yaml.set(root + ".stream.status.checked-at", status.checkedAt().toEpochMilli());
-            yaml.set(root + ".stream.status.detail", status.detail());
-        }, () -> yaml.set(root + ".stream.status", null));
-        accessRecord.bypassGrantOptional().ifPresentOrElse(grant -> {
-            yaml.set(root + ".bypass.granted-by", grant.grantedBy() == null ? null : grant.grantedBy().toString());
-            yaml.set(root + ".bypass.granted-at", grant.grantedAt().toEpochMilli());
-            yaml.set(root + ".bypass.expires-at", grant.expiresAtOptional().map(Instant::toEpochMilli).orElse(null));
-            yaml.set(root + ".bypass.reason", grant.reason());
-        }, () -> yaml.set(root + ".bypass", null));
-    }
+  public synchronized void reload() {
+    yaml = YamlConfiguration.loadConfiguration(file);
+  }
 
-    public synchronized void reload() {
-        yaml = YamlConfiguration.loadConfiguration(file);
+  private StreamLink readLink(ConfigurationSection section) {
+    if (section == null) {
+      return null;
     }
+    Optional<StreamProviderId> providerId = StreamProviderId.parse(section.getString("platform"));
+    String channel = section.getString("channel", "");
+    if (providerId.isEmpty() || channel.isBlank()) {
+      return null;
+    }
+    return new StreamLink(providerId.get(), channel);
+  }
 
-    private StreamLink readLink(ConfigurationSection section) {
-        if (section == null) {
-            return null;
-        }
-        Optional<StreamProviderId> providerId = StreamProviderId.parse(section.getString("platform"));
-        String channel = section.getString("channel", "");
-        if (providerId.isEmpty() || channel.isBlank()) {
-            return null;
-        }
-        return new StreamLink(providerId.get(), channel);
+  private VerificationStatus readVerification(ConfigurationSection section) {
+    if (section == null) {
+      return null;
     }
+    Instant checkedAt = Instant.ofEpochMilli(section.getLong("checked-at", 0L));
+    String detail = section.getString("detail", "");
+    if (!section.getBoolean("live", false)) {
+      return VerificationStatus.unverified(checkedAt, detail);
+    }
+    Optional<StreamProviderId> providerId = StreamProviderId.parse(section.getString("platform"));
+    return providerId
+        .map(value -> VerificationStatus.live(value, checkedAt, detail))
+        .orElseGet(() -> VerificationStatus.unverified(checkedAt, detail));
+  }
 
-    private VerificationStatus readVerification(ConfigurationSection section) {
-        if (section == null) {
-            return null;
-        }
-        Instant checkedAt = Instant.ofEpochMilli(section.getLong("checked-at", 0L));
-        String detail = section.getString("detail", "");
-        if (!section.getBoolean("live", false)) {
-            return VerificationStatus.unverified(checkedAt, detail);
-        }
-        Optional<StreamProviderId> providerId = StreamProviderId.parse(section.getString("platform"));
-        return providerId
-                .map(value -> VerificationStatus.live(value, checkedAt, detail))
-                .orElseGet(() -> VerificationStatus.unverified(checkedAt, detail));
+  private BypassGrant readBypass(UUID playerId, ConfigurationSection section) {
+    if (section == null || !section.isLong("granted-at")) {
+      return null;
     }
+    UUID grantedBy = null;
+    String grantedByRaw = section.getString("granted-by");
+    if (grantedByRaw != null && !grantedByRaw.isBlank()) {
+      try {
+        grantedBy = UUID.fromString(grantedByRaw);
+      } catch (IllegalArgumentException ignored) {
+        // Keep corrupt legacy sender IDs from breaking all player data reads.
+      }
+    }
+    Instant expiresAt =
+        section.isLong("expires-at") ? Instant.ofEpochMilli(section.getLong("expires-at")) : null;
+    return new BypassGrant(
+        playerId,
+        grantedBy,
+        Instant.ofEpochMilli(section.getLong("granted-at")),
+        expiresAt,
+        section.getString("reason", ""));
+  }
 
-    private BypassGrant readBypass(UUID playerId, ConfigurationSection section) {
-        if (section == null || !section.isLong("granted-at")) {
-            return null;
-        }
-        UUID grantedBy = null;
-        String grantedByRaw = section.getString("granted-by");
-        if (grantedByRaw != null && !grantedByRaw.isBlank()) {
-            try {
-                grantedBy = UUID.fromString(grantedByRaw);
-            } catch (IllegalArgumentException ignored) {
-                // Keep corrupt legacy sender IDs from breaking all player data reads.
-            }
-        }
-        Instant expiresAt = section.isLong("expires-at")
-                ? Instant.ofEpochMilli(section.getLong("expires-at"))
-                : null;
-        return new BypassGrant(
-                playerId,
-                grantedBy,
-                Instant.ofEpochMilli(section.getLong("granted-at")),
-                expiresAt,
-                section.getString("reason", "")
-        );
+  private void persist() {
+    File temporary = new File(file.getParentFile(), file.getName() + ".tmp");
+    try {
+      Files.createDirectories(file.toPath().toAbsolutePath().getParent());
+      yaml.save(temporary);
+      try {
+        Files.move(
+            temporary.toPath(),
+            file.toPath(),
+            StandardCopyOption.ATOMIC_MOVE,
+            StandardCopyOption.REPLACE_EXISTING);
+      } catch (AtomicMoveNotSupportedException ignored) {
+        Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+      }
+    } catch (IOException exception) {
+      logger.log(Level.SEVERE, "Could not save StreamGuard player data.", exception);
+      try {
+        Files.deleteIfExists(temporary.toPath());
+      } catch (IOException cleanupException) {
+        exception.addSuppressed(cleanupException);
+      }
+      throw new UncheckedIOException("Could not save StreamGuard player data", exception);
     }
-
-    private void persist() {
-        File temporary = new File(file.getParentFile(), file.getName() + ".tmp");
-        try {
-            Files.createDirectories(file.toPath().toAbsolutePath().getParent());
-            yaml.save(temporary);
-            try {
-                Files.move(
-                        temporary.toPath(),
-                        file.toPath(),
-                        StandardCopyOption.ATOMIC_MOVE,
-                        StandardCopyOption.REPLACE_EXISTING
-                );
-            } catch (AtomicMoveNotSupportedException ignored) {
-                Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException exception) {
-            logger.log(Level.SEVERE, "Could not save StreamGuard player data.", exception);
-            try {
-                Files.deleteIfExists(temporary.toPath());
-            } catch (IOException cleanupException) {
-                exception.addSuppressed(cleanupException);
-            }
-            throw new UncheckedIOException("Could not save StreamGuard player data", exception);
-        }
-    }
+  }
 }

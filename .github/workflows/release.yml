@@ -8,20 +8,24 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Publish plugin
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: release
     permissions:
       contents: write
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Set up Java
-        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
         with:
           distribution: temurin
           java-version: "17"
@@ -39,7 +43,7 @@ jobs:
           fi
 
           TAG_VERSION="${GITHUB_REF_NAME#v}"
-          POM_VERSION="$(mvn --batch-mode help:evaluate -Dexpression=project.version -q -DforceStdout)"
+          POM_VERSION="$(./mvnw --batch-mode --no-transfer-progress help:evaluate -Dexpression=project.version -q -DforceStdout)"
           if [[ "${TAG_VERSION}" != "${POM_VERSION}" ]]; then
             echo "Tag ${TAG_VERSION} does not match pom.xml ${POM_VERSION}." >&2
             exit 1
@@ -52,7 +56,7 @@ jobs:
           echo "version=${TAG_VERSION}" >> "${GITHUB_OUTPUT}"
 
       - name: Build and test
-        run: mvn --batch-mode --no-transfer-progress verify
+        run: ./mvnw --batch-mode --no-transfer-progress verify
 
       - name: Validate packaged plugin metadata
         shell: bash
