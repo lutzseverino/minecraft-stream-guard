@@ -15,8 +15,8 @@
         "id": "canonical-labels"
       },
       "operationIndex": 0,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -35,8 +35,8 @@
         "id": "pull-request-integration"
       },
       "operationIndex": 1,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -112,8 +112,8 @@
           "directories": []
         }
       },
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -189,8 +189,8 @@
           "directories": []
         }
       },
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -226,8 +226,8 @@
         "id": "documentation-navigation"
       },
       "operationIndex": 2,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -246,8 +246,8 @@
         "id": "pull-request-reviewer"
       },
       "operationIndex": 3,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -266,8 +266,8 @@
         "id": "factory-review-policy"
       },
       "operationIndex": 4,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -286,8 +286,8 @@
         "id": "project-readme-structure"
       },
       "operationIndex": 5,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -308,8 +308,8 @@
         "id": "repository-readme-structure"
       },
       "operationIndex": 6,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -330,8 +330,8 @@
         "id": "typescript-vite-stack-manifests"
       },
       "operationIndex": 7,
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -407,8 +407,8 @@
           "directories": []
         }
       },
-      "before": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
-      "after": "sha256:738c1bef83066210ddb1369340c42521c839349ec0f88e4612098a5ea163a401",
+      "before": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
+      "after": "sha256:054711a24a5d40636112ed321738b1c956d69d21cf7e6ec22d930aa5170882c7",
       "changes": {},
       "boundaryChanges": {},
       "violations": []
@@ -585,16 +585,335 @@
     }
   ],
   "retryHistory": [],
-  "changeSet": [],
+  "changeSet": [
+    {
+      "path": ".agents/skills/babysit/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/body-links.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/merge.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/pull-request-reviewer.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/request.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/review-outcome.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/trusted-review-config.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/wait.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/code-review/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/code-review/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/codebase-design/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/codebase-design/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/diagnosing-bugs/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/diagnosing-bugs/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/domain-modeling/ADR-FORMAT.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/domain-modeling/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/domain-modeling/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/grill-with-docs/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/grill-with-docs/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/grilling/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/grilling/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/implement/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/implement/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/implement/agents/openai.yaml",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/improve-codebase-architecture/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/improve-codebase-architecture/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/pr/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/pr/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/prototype/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/prototype/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/research/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/research/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/tdd/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/tdd/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/to-spec/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/to-spec/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/to-tickets/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/to-tickets/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/triage/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/triage/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/triage/ready.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/wayfinder/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/wayfinder/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": "docs/agents/README.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": "docs/agents/issue-tracker.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": "docs/agents/triage-labels.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": "scripts/validate-issue-contract.mjs",
+      "phases": [
+        "installation"
+      ]
+    }
+  ],
   "lastComplete": {
-    "run": "3655f1c4-8485-47a3-9cbb-f076051a9b72",
-    "inspection": "sha256:fa714da41d174dcb4c6a3f15493f683d7af0fde82720765170b3fb4a0d486697",
-    "completedAt": "2026-10-31T19:07:05.765Z",
-    "head": "ae16c069499c2147cd71f118ce29d7dd2b85243b"
+    "run": "cf5afe01-4405-45f6-a1ce-88320e8454e1",
+    "inspection": "sha256:f00855186e1beb60b0a708aad822435b5920d3ac9073315981d3c11e6c07b0f7",
+    "completedAt": "2026-11-02T12:31:51.436Z",
+    "head": "5f03b214631ba87e91a232501f118577cb511e25"
   },
   "baselines": {
     "docs/agents/README.md": {
-      "sha256": "6d85984e4f6ae21c5d08f58bc37e260e11661beb7da481696483e635d5c9b502",
+      "sha256": "ec642abe47a6e67e2d7a6d030a7daf762f97e1b39a655b415f5905514d37f8f9",
       "executable": false
     },
     "AGENTS.md": {
@@ -606,7 +925,7 @@
       "executable": false
     },
     "CONTRIBUTING.md": {
-      "sha256": "aba9cc5949f5e78855ddde0b8fa7c9a07cd2da0b05b5b5a674e24e64d28638ed",
+      "sha256": "7339c01ea325a5537d74bedf311b671930a24c6b1134618565167e20ea2b18de",
       "executable": false
     },
     "docs/agents/domain.md": {
@@ -630,7 +949,7 @@
       "executable": false
     },
     "scripts/validate-issue-contract.mjs": {
-      "sha256": "7d831d293ace7d00e43a11a1cdaafebcd866ce7d4b3d0c85e781e8f0d8d940f3",
+      "sha256": "704e738a2baa5ddc826b1ef6bcbc852f49d3f6899c2ea5fd8df2f6f78b20b027",
       "executable": false
     },
     ".github/workflows/issue-contracts.yml": {
@@ -638,7 +957,7 @@
       "executable": false
     },
     "docs/agents/issue-tracker.md": {
-      "sha256": "afd6852a80185217bd28aa5cbe456bef1e85be25be7bd1fba382d5b8ee428325",
+      "sha256": "bcd5dd6c974b269c98f2b2a9ce81a979e33676f3442c8110bfa4f018fefde895",
       "executable": false
     },
     "vendor/marked/LICENSE": {
@@ -701,12 +1020,20 @@
       "sha256": "b89f24c60f8ad3ad1ed45590629e87661337931e858b84acfac5296a057430c2",
       "executable": false
     },
+    ".agents/skills/babysit/CREDITS.md": {
+      "sha256": "3e818ff6a36fad53ee4e9c72a190f4c4f8a01d27320561841414a188ad3b286a",
+      "executable": false
+    },
     ".agents/skills/babysit/SKILL.md": {
-      "sha256": "423fa02e5b9af190bead06d2875f53e4b33bce0ac331e7c48696d8d65132890e",
+      "sha256": "d5ad872bc16e66f328575704d65abc1cd60ef9b08e8214e6e8023421305292bf",
+      "executable": false
+    },
+    ".agents/skills/babysit/body-links.mjs": {
+      "sha256": "01c984d07a0e1395daa6a111634f8a222b498c5dcb75ce20969699a0f0f7641e",
       "executable": false
     },
     ".agents/skills/babysit/merge.mjs": {
-      "sha256": "5a85197626db69f130cc45d889b363e89cdd29c655ce9f2edcffd7d90c34f1da",
+      "sha256": "52ec42a2592256b82ca2ee3474e93604eaf2d82169dbc8c087bf877bc23551e1",
       "executable": false
     },
     ".agents/skills/babysit/platform.mjs": {
@@ -714,11 +1041,15 @@
       "executable": false
     },
     ".agents/skills/babysit/pull-request-reviewer.mjs": {
-      "sha256": "2d9a9c62876ac00ef87ad820c5dbb2fbcd852aa6590273875d445d99fe21eb49",
+      "sha256": "d2b3ecf236b1758f299577cfd81ccdec3ec0980e46209fbec0cd06e9060c2f4a",
       "executable": false
     },
     ".agents/skills/babysit/request.mjs": {
-      "sha256": "54760df3ef658781331b776b141d3992315cc304b6fb4bbc5103b11cc7175ca6",
+      "sha256": "a293d000f9c190481e345a25bfe01ec7b894f263c0bb03917dde1f35db0b50c7",
+      "executable": false
+    },
+    ".agents/skills/babysit/review-outcome.mjs": {
+      "sha256": "58632b2e8c8de4487204bdd14a5ff2208b6b824b53f49d3aa512ce606e940108",
       "executable": false
     },
     ".agents/skills/babysit/review-policy.mjs": {
@@ -730,19 +1061,27 @@
       "executable": false
     },
     ".agents/skills/babysit/trusted-review-config.mjs": {
-      "sha256": "f79d0065bffff1a8f5308cc769a730ff1b875db4e66761161ee16aaf6d6a19d4",
+      "sha256": "25d4cb7bf51366e305d2a741c0ebb4cf6f3dac510f2519e4d0f3977898821dc6",
       "executable": false
     },
     ".agents/skills/babysit/wait.mjs": {
-      "sha256": "22d2988b5424888821cb54245a3cc7a8a8490dde655a6f756ac73e5d0e07ea93",
+      "sha256": "f865d885a46d5943823eeca7407fab40bf9d5eea90ab0b5697a18c6d26610f30",
+      "executable": false
+    },
+    ".agents/skills/code-review/CREDITS.md": {
+      "sha256": "a8a1e5930513f2e4500ed539291ac173800a9e0cf55d9284d6fc4cf7cdf40476",
       "executable": false
     },
     ".agents/skills/code-review/SKILL.md": {
-      "sha256": "47f4e52c21694def9c7c11cbfbf891ca35eac7a93e395797515be3c8a409ae50",
+      "sha256": "609b4a6d8e730dcea7ab239b9268160033dd192857587e065b6af716885f7c6f",
       "executable": false
     },
     ".agents/skills/code-review/agents/openai.yaml": {
       "sha256": "8229ca854e11dc8e6aef2131ee03f31fb1561cf905fab9ccc325180cf3331352",
+      "executable": false
+    },
+    ".agents/skills/codebase-design/CREDITS.md": {
+      "sha256": "0a8a93ed13b6e8b65dd7c59a010c49558a1a670e4eb84b618976d2466e6437bc",
       "executable": false
     },
     ".agents/skills/codebase-design/DEEPENING.md": {
@@ -754,15 +1093,19 @@
       "executable": false
     },
     ".agents/skills/codebase-design/SKILL.md": {
-      "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+      "sha256": "ba1a4f9c57ba7f52e0e88b2149d1293495858bcf0993352cc7e0df193bfb67ea",
       "executable": false
     },
     ".agents/skills/codebase-design/agents/openai.yaml": {
       "sha256": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
       "executable": false
     },
+    ".agents/skills/diagnosing-bugs/CREDITS.md": {
+      "sha256": "9073d0c470ac0b79c9385ec2f7364bd477c0b1a4c3b9125b59602a77a817fa48",
+      "executable": false
+    },
     ".agents/skills/diagnosing-bugs/SKILL.md": {
-      "sha256": "9168404abda0967a5d32977e3498cd95fda6807018852f3de736a78357c82b40",
+      "sha256": "a621ef3ea8a515ac253d1784246a773dc437b164b9e6f4d8a17ae03d2ca35af2",
       "executable": false
     },
     ".agents/skills/diagnosing-bugs/agents/openai.yaml": {
@@ -774,7 +1117,11 @@
       "executable": false
     },
     ".agents/skills/domain-modeling/ADR-FORMAT.md": {
-      "sha256": "944c92aa790e8fbdc9199640b170979abb8a34ba8d0fe18c2a01a63bce140ca0",
+      "sha256": "2e88f5a78472481b3dddac68707686867eb4270bdbaca9a9458d70b039157b65",
+      "executable": false
+    },
+    ".agents/skills/domain-modeling/CREDITS.md": {
+      "sha256": "bbcc5a0d207d4c715189f3110887a379ca5e10787f9fdcf60bfb944aff1480ec",
       "executable": false
     },
     ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md": {
@@ -782,35 +1129,51 @@
       "executable": false
     },
     ".agents/skills/domain-modeling/SKILL.md": {
-      "sha256": "7b925d7b1e341a2eeae33ad68a8a8c0ab889a38ddd22a7598e4c240e5a7556a3",
+      "sha256": "f7515e306cdb182678b6968bcc52f83dfa4a21db661538f4df30b7ee2bbef904",
       "executable": false
     },
     ".agents/skills/domain-modeling/agents/openai.yaml": {
       "sha256": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
       "executable": false
     },
+    ".agents/skills/grill-with-docs/CREDITS.md": {
+      "sha256": "6bf2b0e20439662835b7ec5e8dff26c99f4e87876bdc7c355265aafb7c427b0d",
+      "executable": false
+    },
     ".agents/skills/grill-with-docs/SKILL.md": {
-      "sha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+      "sha256": "8cf85fcfe4d23acb4d1c50f98f760adbd526c0985551a9e53f34c07315775d0c",
       "executable": false
     },
     ".agents/skills/grill-with-docs/agents/openai.yaml": {
       "sha256": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
       "executable": false
     },
+    ".agents/skills/grilling/CREDITS.md": {
+      "sha256": "50702f66166d7fb00e555c44374c7d4be4a6d4a60f1b09e11b409b2c0b0bbf0e",
+      "executable": false
+    },
     ".agents/skills/grilling/SKILL.md": {
-      "sha256": "10ff989e7498b23b5acb49d5048f11dcd906757d2f79c5cdf8a00001381296f2",
+      "sha256": "550963b196dafccfb7b438e0772a04859e7c8f09e45fd62d43fdcde6a6104441",
       "executable": false
     },
     ".agents/skills/grilling/agents/openai.yaml": {
       "sha256": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
       "executable": false
     },
+    ".agents/skills/implement/CREDITS.md": {
+      "sha256": "55c3fdf5d679908d21398c292069abc547fe4430897c57a441f5e3afb015d18a",
+      "executable": false
+    },
     ".agents/skills/implement/SKILL.md": {
-      "sha256": "6d3fd9e83b8f36e5213854779db49b256a457a7ebb4a503e53fa7dcff696adc3",
+      "sha256": "c8ee4b891bd4a6ae5d1cb3f73d20f3bf980ce66a783706042339ebcc436ce436",
       "executable": false
     },
     ".agents/skills/implement/agents/openai.yaml": {
-      "sha256": "8970a8596ade0c28ab427f41a4ea242d6bdf6186c59ebf55e1238dbecaab79dc",
+      "sha256": "7d531e17370288bdf5eabb7a586d7c2de16c21db12afb91873685b6165c88db6",
+      "executable": false
+    },
+    ".agents/skills/improve-codebase-architecture/CREDITS.md": {
+      "sha256": "2cb8c96b72929b6cac2780d291f047a8ecb350a678add177159316619e2e2122",
       "executable": false
     },
     ".agents/skills/improve-codebase-architecture/HTML-REPORT.md": {
@@ -818,7 +1181,7 @@
       "executable": false
     },
     ".agents/skills/improve-codebase-architecture/SKILL.md": {
-      "sha256": "552240a5ab5cec6b67c15dd1ad6e9f6962b1bca6ce870059a8c2713760c20392",
+      "sha256": "96942b6f0b302b2101cb78ea1a7743aa4972a149caba3364a11fad7770b6dc47",
       "executable": false
     },
     ".agents/skills/improve-codebase-architecture/agents/openai.yaml": {
@@ -826,11 +1189,11 @@
       "executable": false
     },
     ".agents/skills/orchestrate/CREDITS.md": {
-      "sha256": "2761d0a558ac5fb535af4933b813a4deb40bc3849937deb01441a0e56a994dfd",
+      "sha256": "aef2eeb3e1c130c9d5cd6e2805b5480d18a96e6bafd1c1c1cdf0c2dcb545a476",
       "executable": false
     },
     ".agents/skills/orchestrate/SKILL.md": {
-      "sha256": "6b1fd3940665674ce19352f256054641a1c663b412d88a45dafca3bcd51b1043",
+      "sha256": "83dabd0a7a3a534558d939edd04dab5a395262c1f627fc88377f0712d4b2cb89",
       "executable": false
     },
     ".agents/skills/orchestrate/agents/openai.yaml": {
@@ -842,15 +1205,19 @@
       "executable": false
     },
     ".agents/skills/pr/CREDITS.md": {
-      "sha256": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497",
+      "sha256": "2631c4c0899decfed35bc7c4c930e069e91769490ddcd128e523602469db4962",
       "executable": false
     },
     ".agents/skills/pr/SKILL.md": {
-      "sha256": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd",
+      "sha256": "708ab786bb60e7b7c266375b00cebd3600b00e44b49c12d8e63b1d1868ce427e",
       "executable": false
     },
     ".agents/skills/pr/agents/openai.yaml": {
       "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+      "executable": false
+    },
+    ".agents/skills/prototype/CREDITS.md": {
+      "sha256": "54273a012bf62110fe7cf392f6ac3e512a7d4a0ac1f7dbccac7dbcc3805e571f",
       "executable": false
     },
     ".agents/skills/prototype/LOGIC.md": {
@@ -858,7 +1225,7 @@
       "executable": false
     },
     ".agents/skills/prototype/SKILL.md": {
-      "sha256": "714de632d116bb73f65cdb5a882db15b9369a6713b9a47c0fad827848f0bfbe3",
+      "sha256": "4b33a0a2f568f9518f58bfc0c2d62781801d33235cd88ba3eba26d5123daa703",
       "executable": false
     },
     ".agents/skills/prototype/UI.md": {
@@ -869,16 +1236,24 @@
       "sha256": "5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc",
       "executable": false
     },
+    ".agents/skills/research/CREDITS.md": {
+      "sha256": "306f99289f0dcc2da9437d7b3b4d51b06446e2b4ca8395dffd2bdcd80afc51c9",
+      "executable": false
+    },
     ".agents/skills/research/SKILL.md": {
-      "sha256": "985569f15739c713d6784887c3d186d4ef9ac85bec5ad9c068d25bf0739928e4",
+      "sha256": "5d4f569e95e0041f8160837f7fba3e0609df1d8594307109299dff8ecd7b05b1",
       "executable": false
     },
     ".agents/skills/research/agents/openai.yaml": {
       "sha256": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
       "executable": false
     },
+    ".agents/skills/tdd/CREDITS.md": {
+      "sha256": "a14fe58f53cd2351f8ad7fe609bb656a726606d001d64c13c8df4a7ea004e8b5",
+      "executable": false
+    },
     ".agents/skills/tdd/SKILL.md": {
-      "sha256": "93ea419b76e9caaf26153b828e984f7c3fb136f4caa67b14af95f32ea965a1cc",
+      "sha256": "afcc4328e87a9e77a2447c90e25b976af4086163b7affaa2fa4efa2d8baef2b9",
       "executable": false
     },
     ".agents/skills/tdd/agents/openai.yaml": {
@@ -893,16 +1268,24 @@
       "sha256": "859f9e592c188fda4fc7277dd180e4ce9c7a2e13f6efe1f6f29eccc9d28c106a",
       "executable": false
     },
+    ".agents/skills/to-spec/CREDITS.md": {
+      "sha256": "d03f2632fa36e602bcf0e9c38cb7f7fb18b19c821cf1186c1270103b477f264e",
+      "executable": false
+    },
     ".agents/skills/to-spec/SKILL.md": {
-      "sha256": "43ad9cf318e5e7d3d1fa360253a37021796dc87a0c2e595ad262661a10f85088",
+      "sha256": "f747048852302b2d5a5327d76da2ef5c193c9e937fbef0a2e22f8447e44e29d5",
       "executable": false
     },
     ".agents/skills/to-spec/agents/openai.yaml": {
       "sha256": "1c5b4d1e3d8e52287ef19cc2742fdbbfae1914ac75d33af3e4c8174f08cc55bb",
       "executable": false
     },
+    ".agents/skills/to-tickets/CREDITS.md": {
+      "sha256": "9db8d0779baae0285125baff989a039e6dcb9db11d21d3e667a6671e55441add",
+      "executable": false
+    },
     ".agents/skills/to-tickets/SKILL.md": {
-      "sha256": "5c9fba69845c2519b9b35b9af42ae5142c21f8ca15ac2123dc2722002c8058ae",
+      "sha256": "db4c14dc5d5e78db9e275634ef2284a225dd421106a97b8362d3ac4a84625c90",
       "executable": false
     },
     ".agents/skills/to-tickets/agents/openai.yaml": {
@@ -914,7 +1297,7 @@
       "executable": false
     },
     ".agents/skills/triage/CREDITS.md": {
-      "sha256": "b5c9d6514746fdfa842447874c09b9b49bf575b8e258f6d7b36280df76be1320",
+      "sha256": "837ca57f46f720fda1b1ae50ae7b1c0c7a5eceadc3df312974486d0953cc586a",
       "executable": false
     },
     ".agents/skills/triage/OUT-OF-SCOPE.md": {
@@ -922,7 +1305,7 @@
       "executable": false
     },
     ".agents/skills/triage/SKILL.md": {
-      "sha256": "2e12b157ddc6f2cdd2da182c2c7b7843e88d9942e0795fc010193c60f6bbc2a4",
+      "sha256": "bab14b50498f86a0629c6955fb5416f2c166cfe24239d33279dfdfb30187656b",
       "executable": false
     },
     ".agents/skills/triage/agents/openai.yaml": {
@@ -930,15 +1313,23 @@
       "executable": false
     },
     ".agents/skills/triage/ready.mjs": {
-      "sha256": "a471017ec0a7cf3e5c44753a04f5886e14d22b23667a8b739fc3544ee690dafb",
+      "sha256": "d35dbec41fd48778ef5e95a64e94b9482948b992456272827dd6f41a3ce02f54",
+      "executable": false
+    },
+    ".agents/skills/wayfinder/CREDITS.md": {
+      "sha256": "e1eea56ad12a8fa780b3d746f2108f421bf1a322c1a5c52c82466a12ecd5c933",
       "executable": false
     },
     ".agents/skills/wayfinder/SKILL.md": {
-      "sha256": "fee6e1d0c50f0e736b4ef8a599060c959afae904c9a97d82c97f049fcc3aa0f1",
+      "sha256": "89d8e3f68a5ef0e65f15ff94321dc7feeb22c9f03f5f32b874a6068bee9cb182",
       "executable": false
     },
     ".agents/skills/wayfinder/agents/openai.yaml": {
       "sha256": "88bc81a11a6d52ac67aeaa76b8b619e387020d47c5133a4dd4927fd15c4ad073",
+      "executable": false
+    },
+    ".agents/skills/writing-for-agents/CREDITS.md": {
+      "sha256": "f55ac668257fa933322d694da377d6a49b8b934c883eabec7732bbe53677a9e5",
       "executable": false
     },
     ".agents/skills/writing-for-agents/SKILL-MECHANICS.md": {
@@ -946,7 +1337,7 @@
       "executable": false
     },
     ".agents/skills/writing-for-agents/SKILL.md": {
-      "sha256": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a",
+      "sha256": "1fc09f935cc73c873ee164d400517a182c5c51b187716758993aaf3b66fc09af",
       "executable": false
     },
     ".agents/skills/writing-for-agents/agents/openai.yaml": {
@@ -962,7 +1353,7 @@
       "executable": false
     },
     "docs/agents/triage-labels.md": {
-      "sha256": "4f53c9b40ce2651e3611aa090eaedbd6dbc9b71ef8c5f7e65eac0d8263190d0d",
+      "sha256": "7103db589b82930dc1f0b7b6d291c5e1aa9bfc40c34354ae18279127573b23d7",
       "executable": false
     },
     "scripts/validate.mjs": {
@@ -980,50 +1371,61 @@
   },
   "skills": {
     ".agents/skills/babysit": [
+      "CREDITS.md",
       "SKILL.md",
+      "body-links.mjs",
       "merge.mjs",
       "platform.mjs",
       "pull-request-reviewer.mjs",
       "request.mjs",
+      "review-outcome.mjs",
       "review-policy.mjs",
       "reviewer.mjs",
       "trusted-review-config.mjs",
       "wait.mjs"
     ],
     ".agents/skills/code-review": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/codebase-design": [
+      "CREDITS.md",
       "DEEPENING.md",
       "DESIGN-IT-TWICE.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/diagnosing-bugs": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml",
       "scripts/hitl-loop.template.sh"
     ],
     ".agents/skills/domain-modeling": [
       "ADR-FORMAT.md",
+      "CREDITS.md",
       "GLOSSARY-FORMAT.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/grill-with-docs": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/grilling": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/implement": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/improve-codebase-architecture": [
+      "CREDITS.md",
       "HTML-REPORT.md",
       "SKILL.md",
       "agents/openai.yaml"
@@ -1040,26 +1442,31 @@
       "agents/openai.yaml"
     ],
     ".agents/skills/prototype": [
+      "CREDITS.md",
       "LOGIC.md",
       "SKILL.md",
       "UI.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/research": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/tdd": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml",
       "mocking.md",
       "tests.md"
     ],
     ".agents/skills/to-spec": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/to-tickets": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
@@ -1072,10 +1479,12 @@
       "ready.mjs"
     ],
     ".agents/skills/wayfinder": [
+      "CREDITS.md",
       "SKILL.md",
       "agents/openai.yaml"
     ],
     ".agents/skills/writing-for-agents": [
+      "CREDITS.md",
       "SKILL-MECHANICS.md",
       "SKILL.md",
       "agents/openai.yaml"
@@ -1239,12 +1648,12 @@
     {
       "format": "repo-standards/assessment/v3",
       "scope": {
-        "inspection": "sha256:fa714da41d174dcb4c6a3f15493f683d7af0fde82720765170b3fb4a0d486697",
-        "afterFixes": "sha256:421555cd1930eff8529ae7d92665fc779092f057ddb10568f30bacb77d97b2a8"
+        "inspection": "sha256:f00855186e1beb60b0a708aad822435b5920d3ac9073315981d3c11e6c07b0f7",
+        "afterFixes": "sha256:e9178e44e26d3dafb294bc7e8044715eccf3f28a98cec89b49520c8220c6737f"
       },
-      "run": "3655f1c4-8485-47a3-9cbb-f076051a9b72",
-      "selection": "sha256:6d92a1e677c5c62108c072720dd0749c5340d261c2283152c09fda549957d9c3",
-      "snapshot": "sha256:421555cd1930eff8529ae7d92665fc779092f057ddb10568f30bacb77d97b2a8",
+      "run": "cf5afe01-4405-45f6-a1ce-88320e8454e1",
+      "selection": "sha256:ccfc39018f1a1e7260d40bcc7eeaa930d5dd80a4acb722bb798c96ba8c748d38",
+      "snapshot": "sha256:e9178e44e26d3dafb294bc7e8044715eccf3f28a98cec89b49520c8220c6737f",
       "declarations": [
         {
           "id": "documentation",
@@ -1295,31 +1704,31 @@
         {
           "id": "github-repository-configuration",
           "status": "satisfied",
-          "explanation": "Public personal-account repository lutzseverino/minecraft-stream-guard-site; REPO_CANON_RUNS_ON is unset, so installed jobs use ubuntu-latest. Effective main rules: active strict ruleset 19059734 requires Validate site and validate, and active strict ruleset 26265811 requires PR metadata; both report current_user_can_bypass never. Squash-only merging is retained. No reviewer file or app-author policy declaration exists. Standard profile, no factory labels. This update makes no remote change beyond what adopt's setup verifies.",
+          "explanation": "Reviewed v0.22.0 GitHub guidance and delivery rules against this public standard-profile repository; no contextual file edits or policy decisions required.",
           "changedPaths": [],
           "evidence": [
-            ".github/workflows/pr-metadata.yml",
-            ".github/workflows/ci.yml",
-            ".repo-standards/rules/github-repository-configuration.md"
+            "gh repo view reports PUBLIC; gh variable list contains only REPO_CANON_UPDATES=true. REPO_CANON_RUNS_ON is absent/unset; this personal repository has no organization inheritance.",
+            "Canonical-label and PR integration fixes succeeded without any policy confirmation request. Reviewer and factory-review-policy files are absent and untouched.",
+            "Installed standard-profile GitHub rules apply current-head checks, review-thread replies, freshness and designated owner-review gates. Neither #21 nor the user task designates owner review; implementing agent owns merge."
           ],
           "scopeValidity": {
             "afterFixes": {
               "status": "valid",
-              "explanation": "Public personal-account repository lutzseverino/minecraft-stream-guard-site; REPO_CANON_RUNS_ON is unset, so installed jobs use ubuntu-latest. Effective main rules: active strict ruleset 19059734 requires Validate site and validate, and active strict ruleset 26265811 requires PR metadata; both report current_user_can_bypass never. Squash-only merging is retained. No reviewer file or app-author policy declaration exists. Standard profile, no factory labels. This update makes no remote change beyond what adopt's setup verifies.",
+              "explanation": "Empty content scope is intentional for remote configuration; reviewed after fixes and again before submission.",
               "evidence": [
-                ".github/workflows/pr-metadata.yml",
-                ".github/workflows/ci.yml",
-                ".repo-standards/rules/github-repository-configuration.md"
+                "gh repo view reports PUBLIC; gh variable list contains only REPO_CANON_UPDATES=true. REPO_CANON_RUNS_ON is absent/unset; this personal repository has no organization inheritance.",
+                "Canonical-label and PR integration fixes succeeded without any policy confirmation request. Reviewer and factory-review-policy files are absent and untouched.",
+                "Installed standard-profile GitHub rules apply current-head checks, review-thread replies, freshness and designated owner-review gates. Neither #21 nor the user task designates owner review; implementing agent owns merge."
               ],
               "additionalPaths": []
             },
             "current": {
               "status": "valid",
-              "explanation": "Public personal-account repository lutzseverino/minecraft-stream-guard-site; REPO_CANON_RUNS_ON is unset, so installed jobs use ubuntu-latest. Effective main rules: active strict ruleset 19059734 requires Validate site and validate, and active strict ruleset 26265811 requires PR metadata; both report current_user_can_bypass never. Squash-only merging is retained. No reviewer file or app-author policy declaration exists. Standard profile, no factory labels. This update makes no remote change beyond what adopt's setup verifies.",
+              "explanation": "Empty content scope is intentional for remote configuration; reviewed after fixes and again before submission.",
               "evidence": [
-                ".github/workflows/pr-metadata.yml",
-                ".github/workflows/ci.yml",
-                ".repo-standards/rules/github-repository-configuration.md"
+                "gh repo view reports PUBLIC; gh variable list contains only REPO_CANON_UPDATES=true. REPO_CANON_RUNS_ON is absent/unset; this personal repository has no organization inheritance.",
+                "Canonical-label and PR integration fixes succeeded without any policy confirmation request. Reviewer and factory-review-policy files are absent and untouched.",
+                "Installed standard-profile GitHub rules apply current-head checks, review-thread replies, freshness and designated owner-review gates. Neither #21 nor the user task designates owner review; implementing agent owns merge."
               ],
               "additionalPaths": []
             }
@@ -1518,13 +1927,67 @@
   "deferred": [],
   "reused": [
     {
-      "id": "scope:github-repository-configuration",
+      "id": "scope:documentation",
       "kind": "scope",
       "evidence": {
-        "discovery": "05f27e38f22870239eac4f15f63d9ff758c87ff3c8c5098dc7b8cd66a5685616",
-        "rules": "af92edb138cd5e7ff7b86263e07493675a931ee9c6f2ef7fcf90405c0e4b9a63",
-        "draft": "none",
-        "paths": []
+        "discovery": "6ddffc023dfc46f7d11f292a245f8b9ffeffb77dff2f102baa20256af1dc8bfc",
+        "rules": "33f5c3535f18ccf34e0222597fdee045ead0432c100e92ecaeef89c84b425a3b",
+        "draft": "decided-from",
+        "paths": [
+          ".agents/skills/frontend-design/SKILL.md",
+          ".agents/skills/implementation-governance/SKILL.md",
+          ".agents/skills/implementation-governance/references/change-kinds.md",
+          ".agents/skills/implementation-governance/references/contract-changes.md",
+          ".agents/skills/implementation-governance/references/conventions.md",
+          ".agents/skills/implementation-governance/references/escalation.md",
+          ".agents/skills/implementation-governance/references/extraction.md",
+          ".agents/skills/implementation-governance/references/materialization.md",
+          ".agents/skills/implementation-governance/references/overview.md",
+          ".agents/skills/implementation-governance/references/scoping.md",
+          ".agents/skills/implementation-governance/references/validation.md",
+          ".agents/skills/implementation-governance/references/workflow.md",
+          ".agents/skills/react-component-governance/SKILL.md",
+          ".agents/skills/react-component-governance/references/boundary-cases.md",
+          ".agents/skills/react-component-governance/references/classification.md",
+          ".agents/skills/react-component-governance/references/extraction.md",
+          ".agents/skills/react-component-governance/references/overview.md",
+          ".agents/skills/react-component-governance/references/ownership.md",
+          ".agents/skills/react-component-governance/references/packaging.md",
+          ".agents/skills/react-component-governance/references/patterns.md",
+          ".agents/skills/react-component-governance/references/roles.md",
+          ".agents/skills/react-component-governance/references/workflow.md",
+          ".agents/skills/shadcn/SKILL.md",
+          ".agents/skills/shadcn/cli.md",
+          ".agents/skills/shadcn/customization.md",
+          ".agents/skills/shadcn/mcp.md",
+          ".agents/skills/shadcn/registry.md",
+          ".agents/skills/shadcn/rules/base-vs-radix.md",
+          ".agents/skills/shadcn/rules/chat.md",
+          ".agents/skills/shadcn/rules/composition.md",
+          ".agents/skills/shadcn/rules/forms.md",
+          ".agents/skills/shadcn/rules/icons.md",
+          ".agents/skills/shadcn/rules/styling.md",
+          "docs/README.md",
+          "docs/agents/README.md",
+          "docs/agents/domain.md",
+          "docs/agents/issue-tracker.md",
+          "docs/agents/triage-labels.md",
+          "docs/development/README.md",
+          "docs/development/architecture/README.md",
+          "docs/development/architecture/architecture.md",
+          "docs/development/templates/README.md",
+          "docs/development/templates/decision.template.md",
+          "docs/development/templates/explanation.template.md",
+          "docs/development/templates/how-to.template.md",
+          "docs/development/templates/index.template.md",
+          "docs/development/templates/reference.template.md",
+          "docs/development/templates/tutorial.template.md",
+          "docs/usage/README.md",
+          "docs/usage/guides/README.md",
+          "docs/usage/guides/run-locally.md",
+          "docs/usage/reference/README.md",
+          "docs/usage/reference/live-feed.md"
+        ]
       }
     },
     {
@@ -1535,6 +1998,95 @@
         "rules": "6cc1cbca7a629ab74c4e93b83f400cade77159aeb1bd2502463eafedb63a24fc",
         "draft": "none",
         "paths": []
+      }
+    },
+    {
+      "id": "scope:typescript-astro-stack",
+      "kind": "scope",
+      "evidence": {
+        "discovery": "2c41b18bc7757bc2f6b4f26cdebec67f8c9c70b25ac636562a27843d8ba4c615",
+        "rules": "ef7f2b9a05d59cb8dda6ca41e58a4b09c841f117f592c678473c83894fc0910f",
+        "draft": "decided-from",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "README.md",
+          "components.json",
+          "index.html",
+          "package.json",
+          "pnpm-lock.yaml",
+          "registry-manifest.json",
+          "src/App.tsx",
+          "src/main.tsx",
+          "src/pages/stream-wall/stream-embed.tsx",
+          "src/pages/stream-wall/stream-tile.tsx",
+          "src/pages/stream-wall/stream-wall-page.tsx",
+          "src/theme/ThemeProvider.tsx",
+          "vite.config.ts"
+        ]
+      }
+    },
+    {
+      "id": "scope:typescript-node-stack",
+      "kind": "scope",
+      "evidence": {
+        "discovery": "d23ae9513f022862a8be9be8d8ca30ced7ed8febef21a27ab3b3e34cbfeba937",
+        "rules": "445cd0d96ebcd04d428d19498bf95c5a23447dbb5aade4cfbd61ac07fe2b6799",
+        "draft": "decided-from",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "README.md",
+          "components.json",
+          "index.html",
+          "package.json",
+          "pnpm-lock.yaml",
+          "registry-manifest.json",
+          "src/App.tsx",
+          "src/main.tsx",
+          "src/pages/stream-wall/stream-embed.tsx",
+          "src/pages/stream-wall/stream-tile.tsx",
+          "src/pages/stream-wall/stream-wall-page.tsx",
+          "src/theme/ThemeProvider.tsx",
+          "vite.config.ts"
+        ]
+      }
+    },
+    {
+      "id": "scope:typescript-vite-stack",
+      "kind": "scope",
+      "evidence": {
+        "discovery": "d26c9725c371c74235feef40d4cfae4d6e5c5ad4d6da13e69603155cfe06d03b",
+        "rules": "ef7f2b9a05d59cb8dda6ca41e58a4b09c841f117f592c678473c83894fc0910f",
+        "draft": "decided-from",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "README.md",
+          "components.json",
+          "index.html",
+          "package.json",
+          "pnpm-lock.yaml",
+          "registry-manifest.json",
+          "src/App.tsx",
+          "src/main.tsx",
+          "src/pages/stream-wall/stream-embed.tsx",
+          "src/pages/stream-wall/stream-tile.tsx",
+          "src/pages/stream-wall/stream-wall-page.tsx",
+          "src/theme/ThemeProvider.tsx",
+          "vite.config.ts"
+        ]
+      }
+    },
+    {
+      "id": "assessment:documentation",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "33f5c3535f18ccf34e0222597fdee045ead0432c100e92ecaeef89c84b425a3b"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:eebd9a797f40c9081bab4afab11e402649f10e2558eaceca2cb9789f8c79b35d"
+        }
       }
     },
     {
@@ -1592,6 +2144,62 @@
           "snapshot": "sha256:c8cddcc1981ee98a780e9d0201923b4c2e8d95a0b9a3d8b801f098eccddcbfe7"
         }
       }
+    },
+    {
+      "id": "assessment:repository-readme",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "2965277f0a8436f69dbeb1573dc2c905e519229ab38a26cda2599a0f11233952"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:207f0bb1138c2d291fb5e80a873fea7797ad524b0e2394f5dc2ed32445b3b69e"
+        }
+      }
+    },
+    {
+      "id": "assessment:typescript-astro-stack",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "guidance",
+          "sha256": "ca192cf5081f79e58dfb24f965c4d65603091a1fa57e0c4a9da35d2f3a4e379e"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89"
+        }
+      }
+    },
+    {
+      "id": "assessment:typescript-node-stack",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "guidance",
+          "sha256": "dc4a56fc443bd9e76fc753de632e4318cee6294c71422cdfb79d208a2ecda25c"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89"
+        }
+      }
+    },
+    {
+      "id": "assessment:typescript-vite-stack",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "ef7f2b9a05d59cb8dda6ca41e58a4b09c841f117f592c678473c83894fc0910f"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:d9c6255e05e5a7ce2133c7c36df69b6991444144d8113d2dacdb4162195a939a"
+        }
+      }
     }
   ],
   "assessedScopes": {
@@ -1607,15 +2215,19 @@
     "typescript-vite-stack": "sha256:d9c6255e05e5a7ce2133c7c36df69b6991444144d8113d2dacdb4162195a939a"
   },
   "impact": {
-    "derived": "Contextual update: the run asks for contextual work on documentation, github-repository-configuration, repository-readme, typescript-astro-stack, typescript-node-stack, typescript-vite-stack, which needs review before it is committed.",
+    "derived": "Contextual update: the run asks for contextual work on github-repository-configuration, which needs review before it is committed.",
     "releases": [
       {
-        "version": "v0.20.0",
+        "version": "v0.21.0",
+        "action": null
+      },
+      {
+        "version": "v0.22.0",
         "action": null
       }
     ],
     "steps": [
-      "Review the contextual work on documentation, github-repository-configuration, repository-readme, typescript-astro-stack, typescript-node-stack, typescript-vite-stack.",
+      "Review the contextual work on github-repository-configuration.",
       "Review and commit the update."
     ]
   }
