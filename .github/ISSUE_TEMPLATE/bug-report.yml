@@ -1,61 +1,35 @@
 name: Bug report
-description: Report reproducible behavior that differs from the expected result.
-title: "[Area] "
-labels: ["bug"]
+description: Describe a reproducible failure.
+labels: [bug, needs-triage]
 body:
-  - type: textarea
-    id: context
-    attributes:
-      label: Context
-      description: Briefly describe where and when the problem occurs.
-    validations:
-      required: true
   - type: textarea
     id: reproduction
     attributes:
-      label: Reproduction
-      description: Provide the smallest reliable sequence that demonstrates the problem.
-      placeholder: "1. ...\n2. ...\n3. ..."
+      label: Steps to reproduce
+      description: Give the smallest sequence or example that demonstrates the failure.
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
       label: Expected behavior
+      description: What should happen?
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
       label: Actual behavior
+      description: What happens instead? Include relevant error output.
     validations:
       required: true
   - type: textarea
     id: environment
     attributes:
       label: Environment
-      description: Include relevant versions, operating system, runtime, deployment, and configuration details.
-    validations:
-      required: true
+      description: Include relevant versions, platform, or configuration when known.
   - type: textarea
-    id: acceptance
+    id: context
     attributes:
-      label: Acceptance criteria
-      placeholder: "- [ ] Observable corrected behavior"
-    validations:
-      required: true
-  - type: textarea
-    id: validation
-    attributes:
-      label: Validation
-      description: List regression checks that should prove the fix.
-      placeholder: "- [ ] Automated regression test"
-    validations:
-      required: true
-  - type: textarea
-    id: notes
-    attributes:
-      label: Notes
-      description: Add logs, screenshots, links, or other context. Remove secrets and personal data.
-    validations:
-      required: false
+      label: Additional context
+      description: Add supporting links or details that help reproduce the failure.
