@@ -29,5 +29,5 @@ Documentation is organized by reader intent.
 
 ## Repository Materials
 
-- [Release notes](releases/)
+- [Release notes](https://github.com/lutzseverino/minecraft-stream-guard/releases)
 - [Marketplace copy](marketplace.md)

@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
 
       - name: Set up Java
         uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
@@ -48,12 +50,25 @@ jobs:
             echo "Tag ${TAG_VERSION} does not match pom.xml ${POM_VERSION}." >&2
             exit 1
           fi
-          if [[ ! -s "docs/releases/${TAG_VERSION}.md" ]]; then
-            echo "Missing non-empty release note: docs/releases/${TAG_VERSION}.md" >&2
-            exit 1
-          fi
 
           echo "version=${TAG_VERSION}" >> "${GITHUB_OUTPUT}"
+
+      - name: Read annotated tag release notes
+        id: changelog
+        shell: bash
+        run: |
+          set -euo pipefail
+          notes_file="${RUNNER_TEMP}/streamguard-release-notes.md"
+          bash .github/scripts/read-release-notes.sh "$GITHUB_REF_NAME" "$notes_file"
+          # A unique delimiter lets Markdown contain literal EOF lines.
+          delimiter="release_notes_$(cat /proc/sys/kernel/random/uuid)"
+          {
+            echo "body<<${delimiter}"
+            cat "$notes_file"
+            echo
+            echo "$delimiter"
+          } >> "$GITHUB_OUTPUT"
+
 
       - name: Build and test
         run: ./mvnw --batch-mode --no-transfer-progress verify
@@ -70,15 +85,6 @@ jobs:
             exit 1
           fi
 
-      - name: Read changelog
-        id: changelog
-        shell: bash
-        run: |
-          {
-            echo "body<<EOF"
-            cat "docs/releases/${{ steps.version.outputs.version }}.md"
-            echo "EOF"
-          } >> "${GITHUB_OUTPUT}"
 
       - name: Publish to GitHub and Modrinth
         uses: Kir-Antipov/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3
@@ -86,7 +92,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-tag: v${{ steps.version.outputs.version }}
           github-prerelease: false
-          github-generate-changelog: true
+          github-generate-changelog: false
 
           modrinth-id: stream-guard
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -96,7 +102,7 @@ jobs:
           files: target/StreamGuard-${{ steps.version.outputs.version }}.jar
           name: StreamGuard ${{ steps.version.outputs.version }}
           version: ${{ steps.version.outputs.version }}
-          changelog-file: docs/releases/${{ steps.version.outputs.version }}.md
+          changelog-file: ${{ runner.temp }}/streamguard-release-notes.md
           loaders: |
             paper
             spigot
