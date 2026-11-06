@@ -69,7 +69,6 @@ jobs:
             echo "$delimiter"
           } >> "$GITHUB_OUTPUT"
 
-
       - name: Build and test
         run: ./mvnw --batch-mode --no-transfer-progress verify
 
@@ -84,7 +83,6 @@ jobs:
             echo "Packaged plugin.yml ${PLUGIN_VERSION} does not match the release version." >&2
             exit 1
           fi
-
 
       - name: Publish to GitHub and Modrinth
         uses: Kir-Antipov/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3

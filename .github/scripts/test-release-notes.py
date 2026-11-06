@@ -56,6 +56,20 @@ class ReleaseNotesTest(unittest.TestCase):
                 self.assertIn("non-empty", result.stderr)
                 self.git("tag", "-d", "v1.0.0")
 
+    def test_signed_annotation_publishes_only_message(self):
+        notes = "Release notes\n\n- Fix behavior\n\n"
+        signature = "-----BEGIN PGP SIGNATURE-----\nfixture\n-----END PGP SIGNATURE-----\n"
+        self.annotated(notes + signature)
+        result = self.extract()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.output.read_text(), notes)
+
+    def test_rejects_signed_empty_annotation(self):
+        self.annotated("-----BEGIN PGP SIGNATURE-----\nfixture\n-----END PGP SIGNATURE-----\n")
+        result = self.extract()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("non-empty", result.stderr)
+
     def test_rejects_missing_tag(self):
         result = self.extract()
         self.assertNotEqual(result.returncode, 0)
