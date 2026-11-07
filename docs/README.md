@@ -1,33 +1,9 @@
 # Documentation
 
-Documentation is organized by reader intent.
-
-## Sections
-
-- `tutorials/` teaches through guided learning paths.
-- `how-to/` solves focused operational or implementation tasks.
-- `reference/` captures factual lookup material.
-- `explanation/` records concepts, rationale, and architecture.
-- `_templates/` contains starting points for new documents.
-
-## Writing Rules
-
-- Choose the section by reader intent, not by topic.
-- Keep documents durable and reader-oriented.
-- Keep examples concrete only when they clarify durable guidance.
-- Keep temporary plans and implementation checklists in issues.
-- Link new documents from the nearest section README.
-- Use the templates in `_templates/` when creating a new document.
+Find maintained usage and development documentation.
 
 ## Documents
 
-- [Tutorials](tutorials/README.md)
-- [How-To Guides](how-to/README.md)
-- [Reference](reference/README.md)
-- [Explanation](explanation/README.md)
-- [Templates](_templates/README.md)
-
-## Repository Materials
-
-- [Release notes](https://github.com/lutzseverino/minecraft-stream-guard/releases)
-- [Marketplace copy](marketplace.md)
+- [Agent configuration](agents/README.md): Agent workflow configuration.
+- [Usage](usage/README.md): Using, configuring, and integrating the plugin.
+- [Development](development/README.md): Building, testing, architecture, and maintenance.
