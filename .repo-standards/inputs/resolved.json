@@ -1,5 +1,5 @@
 {
-  "description": "The Repo Canon standards for every adopting repository",
+  "description": "The standard profile plus the factory's repository files and workflow rules, for a repository a factory serves",
   "declarations": [
     {
       "id": "agent-configuration-index",
@@ -93,6 +93,43 @@
       "kind": "file",
       "target": "docs/agents/domain.md",
       "exact": "docs/agents/domain.md"
+    },
+    {
+      "id": "factory-configuration",
+      "checks": [],
+      "fixes": [],
+      "kind": "file",
+      "target": ".factory/config.json",
+      "exact": ".factory/config.json"
+    },
+    {
+      "id": "factory-sandbox-image",
+      "checks": [],
+      "fixes": [],
+      "kind": "file",
+      "target": ".factory/Dockerfile",
+      "guidance": "guidance/factory-sandbox-image.md",
+      "rules": "rules/factory-sandbox-image.md"
+    },
+    {
+      "id": "factory-sandbox-image-workflow",
+      "checks": [],
+      "fixes": [],
+      "kind": "file",
+      "target": ".github/workflows/sandbox-image.yml",
+      "exact": ".github/workflows/sandbox-image.yml"
+    },
+    {
+      "id": "factory-workflow",
+      "checks": [],
+      "fixes": [],
+      "kind": "repository",
+      "guidance": "guidance/factory-workflow.md",
+      "rules": "rules/factory-workflow.md",
+      "targets": {
+        "paths": [],
+        "directories": []
+      }
     },
     {
       "id": "feature-request-template",
@@ -545,6 +582,14 @@
       "kind": "skill",
       "name": "domain-modeling",
       "source": ".agents/skills/domain-modeling"
+    },
+    {
+      "id": "skill-factory",
+      "checks": [],
+      "fixes": [],
+      "kind": "skill",
+      "name": "factory",
+      "source": ".agents/skills/factory"
     },
     {
       "id": "skill-grill-with-docs",

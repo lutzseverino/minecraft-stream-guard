@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "labels": {
+    "ready": "ready-for-agent",
+    "skip": "factory:skip",
+    "hold": "factory:hold",
+    "releaseHold": "factory:release-hold",
+    "running": "factory:running",
+    "failed": "factory:failed",
+    "needsInput": "factory:needs-input",
+    "paused": "factory:paused"
+  },
+  "modelLabelPrefix": "model:",
+  "skill": "implement",
+  "arguments": "#{issue}",
+  "contractResult": {
+    "marker": "repo-canon:issue-contract-state",
+    "author": "github-actions[bot]"
+  }
+}
