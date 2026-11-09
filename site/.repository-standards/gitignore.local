@@ -1,0 +1,14 @@
+# Additional frontend outputs and logs
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist-ssr/
+*.local
+
+# Local agent metadata
+.agents/*
+!.agents/skills/
+!.agents/skills/**
+skills-lock.json

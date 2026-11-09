@@ -1,0 +1,34 @@
+# Repo Canon-owned files (`.repo-standards/lock.json` `files`) and installed
+# resources.
+/.repo-standards/
+/.agents/
+/.claude/
+/vendor/
+/operations/
+/scripts/validate*.mjs
+/.github/scripts/validate*.mjs
+/AGENTS.md
+/CONTRIBUTING.md
+/docs/agents/
+/.github/ISSUE_TEMPLATE/
+/.github/PULL_REQUEST_TEMPLATE.md
+/.github/workflows/issue-contracts.yml
+/.github/workflows/pr-metadata.yml
+/.github/workflows/standards-update.yml
+/.repository-standards/
+/.repository-standards.json
+
+# Generated output: shadcn registry files and their manifest stay byte-exact.
+/src/components/ui/
+/src/hooks/
+/registry-manifest.json
+/dist/
+pnpm-lock.yaml
+
+# Outside the formatted scope: documentation, workflows and assets.
+*.md
+*.yml
+*.yaml
+!/pnpm-workspace.yaml
+/.github/
+/public/

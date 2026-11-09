@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Component Governance"
+  short_description: "Opinionated React component architecture guidance"
+  default_prompt: "Use $react-component-governance to decide whether React UI code should stay inline, become a local helper, become a component boundary, or become another boundary kind, then classify and package it consistently; pair with $implementation-governance when broader scope, validation, or escalation decisions matter."

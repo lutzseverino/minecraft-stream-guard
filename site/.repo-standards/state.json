@@ -1,0 +1,2028 @@
+{
+  "format": "repo-standards/state/v8",
+  "observations": [
+    {
+      "phase": "agent",
+      "scope": {
+        "documentation": {
+          "paths": [
+            "docs/README.md",
+            "docs/development/README.md",
+            "docs/development/architecture/README.md",
+            "docs/development/architecture/architecture.md",
+            "docs/development/templates/README.md",
+            "docs/development/templates/decision.template.md",
+            "docs/development/templates/explanation.template.md",
+            "docs/development/templates/how-to.template.md",
+            "docs/development/templates/index.template.md",
+            "docs/development/templates/reference.template.md",
+            "docs/development/templates/tutorial.template.md",
+            "docs/usage/README.md",
+            "docs/usage/guides/README.md",
+            "docs/usage/guides/run-locally.md",
+            "docs/usage/reference/README.md",
+            "docs/usage/reference/live-feed.md"
+          ],
+          "directories": []
+        },
+        "factory-sandbox-image": {
+          "paths": [
+            ".factory/Dockerfile"
+          ],
+          "directories": []
+        },
+        "factory-workflow": {
+          "paths": [],
+          "directories": []
+        },
+        "git-attributes": {
+          "paths": [
+            ".gitattributes"
+          ],
+          "directories": []
+        },
+        "github-repository-configuration": {
+          "paths": [],
+          "directories": []
+        },
+        "project-agent-guidance": {
+          "paths": [
+            "docs/agents/project.md"
+          ],
+          "directories": []
+        },
+        "project-readmes": {
+          "paths": [],
+          "directories": []
+        },
+        "repository-license": {
+          "paths": [
+            "LICENSE"
+          ],
+          "directories": []
+        },
+        "repository-readme": {
+          "paths": [
+            "README.md"
+          ],
+          "directories": []
+        },
+        "typescript-astro-stack": {
+          "paths": [],
+          "directories": []
+        },
+        "typescript-node-stack": {
+          "paths": [],
+          "directories": []
+        },
+        "typescript-vite-stack": {
+          "paths": [
+            "package.json"
+          ],
+          "directories": []
+        }
+      },
+      "before": "sha256:f182e23fad796ee0f96f5d8390f520db5d9ab15a954d09be6c8b16a83cf78205",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {
+        ".factory/Dockerfile": {
+          "before": {
+            "type": "missing"
+          },
+          "after": {
+            "type": "file",
+            "sha256": "91fa060a56d2e5c252322b2ded1ebabbb6506a47a769bf348e7e250141f9b789",
+            "executable": false
+          }
+        }
+      },
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "agent",
+      "scope": {
+        "documentation": {
+          "paths": [
+            "docs/README.md",
+            "docs/development/README.md",
+            "docs/development/architecture/README.md",
+            "docs/development/architecture/architecture.md",
+            "docs/development/templates/README.md",
+            "docs/development/templates/decision.template.md",
+            "docs/development/templates/explanation.template.md",
+            "docs/development/templates/how-to.template.md",
+            "docs/development/templates/index.template.md",
+            "docs/development/templates/reference.template.md",
+            "docs/development/templates/tutorial.template.md",
+            "docs/usage/README.md",
+            "docs/usage/guides/README.md",
+            "docs/usage/guides/run-locally.md",
+            "docs/usage/reference/README.md",
+            "docs/usage/reference/live-feed.md"
+          ],
+          "directories": []
+        },
+        "factory-sandbox-image": {
+          "paths": [
+            ".factory/Dockerfile"
+          ],
+          "directories": []
+        },
+        "factory-workflow": {
+          "paths": [],
+          "directories": []
+        },
+        "git-attributes": {
+          "paths": [
+            ".gitattributes"
+          ],
+          "directories": []
+        },
+        "github-repository-configuration": {
+          "paths": [],
+          "directories": []
+        },
+        "project-agent-guidance": {
+          "paths": [
+            "docs/agents/project.md"
+          ],
+          "directories": []
+        },
+        "project-readmes": {
+          "paths": [],
+          "directories": []
+        },
+        "repository-license": {
+          "paths": [
+            "LICENSE"
+          ],
+          "directories": []
+        },
+        "repository-readme": {
+          "paths": [
+            "README.md"
+          ],
+          "directories": []
+        },
+        "typescript-astro-stack": {
+          "paths": [],
+          "directories": []
+        },
+        "typescript-node-stack": {
+          "paths": [],
+          "directories": []
+        },
+        "typescript-vite-stack": {
+          "paths": [
+            "package.json"
+          ],
+          "directories": []
+        }
+      },
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "checks",
+      "scope": {
+        "documentation": {
+          "paths": [
+            "docs/README.md",
+            "docs/development/README.md",
+            "docs/development/architecture/README.md",
+            "docs/development/architecture/architecture.md",
+            "docs/development/templates/README.md",
+            "docs/development/templates/decision.template.md",
+            "docs/development/templates/explanation.template.md",
+            "docs/development/templates/how-to.template.md",
+            "docs/development/templates/index.template.md",
+            "docs/development/templates/reference.template.md",
+            "docs/development/templates/tutorial.template.md",
+            "docs/usage/README.md",
+            "docs/usage/guides/README.md",
+            "docs/usage/guides/run-locally.md",
+            "docs/usage/reference/README.md",
+            "docs/usage/reference/live-feed.md"
+          ],
+          "directories": []
+        }
+      },
+      "operation": {
+        "phase": "checks",
+        "declaration": "documentation",
+        "id": "documentation-navigation"
+      },
+      "operationIndex": 0,
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "checks",
+      "scope": {
+        "github-repository-configuration": {
+          "paths": [],
+          "directories": []
+        }
+      },
+      "operation": {
+        "phase": "checks",
+        "declaration": "github-repository-configuration",
+        "id": "pull-request-reviewer"
+      },
+      "operationIndex": 1,
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "checks",
+      "scope": {
+        "github-repository-configuration": {
+          "paths": [],
+          "directories": []
+        }
+      },
+      "operation": {
+        "phase": "checks",
+        "declaration": "github-repository-configuration",
+        "id": "factory-review-policy"
+      },
+      "operationIndex": 2,
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "checks",
+      "scope": {
+        "project-readmes": {
+          "paths": [],
+          "directories": []
+        }
+      },
+      "operation": {
+        "phase": "checks",
+        "declaration": "project-readmes",
+        "id": "project-readme-structure"
+      },
+      "operationIndex": 3,
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "checks",
+      "scope": {
+        "repository-readme": {
+          "paths": [
+            "README.md"
+          ],
+          "directories": []
+        }
+      },
+      "operation": {
+        "phase": "checks",
+        "declaration": "repository-readme",
+        "id": "repository-readme-structure"
+      },
+      "operationIndex": 4,
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "checks",
+      "scope": {
+        "typescript-vite-stack": {
+          "paths": [
+            "package.json"
+          ],
+          "directories": []
+        }
+      },
+      "operation": {
+        "phase": "checks",
+        "declaration": "typescript-vite-stack",
+        "id": "typescript-vite-stack-manifests"
+      },
+      "operationIndex": 5,
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    },
+    {
+      "phase": "agent",
+      "scope": {
+        "documentation": {
+          "paths": [
+            "docs/README.md",
+            "docs/development/README.md",
+            "docs/development/architecture/README.md",
+            "docs/development/architecture/architecture.md",
+            "docs/development/templates/README.md",
+            "docs/development/templates/decision.template.md",
+            "docs/development/templates/explanation.template.md",
+            "docs/development/templates/how-to.template.md",
+            "docs/development/templates/index.template.md",
+            "docs/development/templates/reference.template.md",
+            "docs/development/templates/tutorial.template.md",
+            "docs/usage/README.md",
+            "docs/usage/guides/README.md",
+            "docs/usage/guides/run-locally.md",
+            "docs/usage/reference/README.md",
+            "docs/usage/reference/live-feed.md"
+          ],
+          "directories": []
+        },
+        "factory-sandbox-image": {
+          "paths": [
+            ".factory/Dockerfile"
+          ],
+          "directories": []
+        },
+        "factory-workflow": {
+          "paths": [],
+          "directories": []
+        },
+        "git-attributes": {
+          "paths": [
+            ".gitattributes"
+          ],
+          "directories": []
+        },
+        "github-repository-configuration": {
+          "paths": [],
+          "directories": []
+        },
+        "project-agent-guidance": {
+          "paths": [
+            "docs/agents/project.md"
+          ],
+          "directories": []
+        },
+        "project-readmes": {
+          "paths": [],
+          "directories": []
+        },
+        "repository-license": {
+          "paths": [
+            "LICENSE"
+          ],
+          "directories": []
+        },
+        "repository-readme": {
+          "paths": [
+            "README.md"
+          ],
+          "directories": []
+        },
+        "typescript-astro-stack": {
+          "paths": [],
+          "directories": []
+        },
+        "typescript-node-stack": {
+          "paths": [],
+          "directories": []
+        },
+        "typescript-vite-stack": {
+          "paths": [
+            "package.json"
+          ],
+          "directories": []
+        }
+      },
+      "before": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "after": "sha256:91cf1845a601a3a159c7b84a1a7c30f53fd672d480ba31b5047aef066e2623c3",
+      "changes": {},
+      "boundaryChanges": {},
+      "violations": []
+    }
+  ],
+  "operations": [
+    {
+      "operation": {
+        "declaration": "documentation",
+        "phase": "checks",
+        "id": "documentation-navigation"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "Documentation navigation is valid; content placement and usefulness still require maintainer or agent review."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/0.stdout",
+      "stderr": ".repo-standards/local/operations/0.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "github-repository-configuration",
+        "phase": "checks",
+        "id": "pull-request-reviewer"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "No pull request reviewer is configured."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/1.stdout",
+      "stderr": ".repo-standards/local/operations/1.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "github-repository-configuration",
+        "phase": "checks",
+        "id": "factory-review-policy"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "No factory review policy is configured."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/2.stdout",
+      "stderr": ".repo-standards/local/operations/2.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "project-readmes",
+        "phase": "checks",
+        "id": "project-readme-structure"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "Project README structure and shared setup and contribution links are valid for 0 concrete targets; Project membership, purpose, commands, configuration, documentation, and duplication of shared instructions still require maintainer or agent review."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/3.stdout",
+      "stderr": ".repo-standards/local/operations/3.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "repository-readme",
+        "phase": "checks",
+        "id": "repository-readme-structure"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "Repository README structure is valid; factual content still requires maintainer or agent review."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/4.stdout",
+      "stderr": ".repo-standards/local/operations/4.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "typescript-vite-stack",
+        "phase": "checks",
+        "id": "typescript-vite-stack-manifests"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "The typescript-vite stack manifest facts are valid for 1 Project; framework, React, Tailwind, TypeScript and test-runner majors, actual astro check/ui:check execution by validate, CI coverage, Setup and validation, integrity, wrappers and theme behavior still require contextual assessment."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/5.stdout",
+      "stderr": ".repo-standards/local/operations/5.stderr"
+    }
+  ],
+  "retryHistory": [],
+  "changeSet": [
+    {
+      "path": ".agents/skills/babysit/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/babysit/merge.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/factory/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/factory/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/references/close.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/references/launches.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/references/templates.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/orchestrate/wait.mjs",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/research/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/research/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/to-tickets/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/to-tickets/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/triage/AGENT-BRIEF.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/triage/CREDITS.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".agents/skills/triage/SKILL.md",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".claude/skills/factory",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".factory/Dockerfile",
+      "phases": [
+        "agent"
+      ]
+    },
+    {
+      "path": ".factory/config.json",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": ".github/workflows/sandbox-image.yml",
+      "phases": [
+        "installation"
+      ]
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "phases": [
+        "installation"
+      ]
+    }
+  ],
+  "lastComplete": {
+    "run": "97c11191-ee77-43a2-87b3-a9eda2512ff6",
+    "inspection": "sha256:2e0615ffc2e132b54db9b86200a6f04aa42f8ff9e24ceb9cbb7d9597e3efcb0c",
+    "completedAt": "2026-11-07T07:09:25.101Z",
+    "head": "c033f71a221ef791dc5e39365a30740188baeb46"
+  },
+  "baselines": {
+    "docs/agents/README.md": {
+      "sha256": "ec642abe47a6e67e2d7a6d030a7daf762f97e1b39a655b415f5905514d37f8f9",
+      "executable": false
+    },
+    "AGENTS.md": {
+      "sha256": "ddc8a1fecde13610ba656ee98c9d2cb128b15b7fc20e9068beb0eef9eaf4ba1b",
+      "executable": false
+    },
+    ".github/ISSUE_TEMPLATE/bug-report.yml": {
+      "sha256": "5fca3bab67073fdb827cd5eb88d9c413ac1e1df2891a85c7938420dcb1e3dfed",
+      "executable": false
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "11b73a9e8afa9310ed260d64bd2b284c86ddb0cbc8c23abb84186ad7512ca700",
+      "executable": false
+    },
+    "docs/agents/domain.md": {
+      "sha256": "593a7042218689f1d24df89df14eaf0a20e19e0d0a7d479a01947ac78f0784b9",
+      "executable": false
+    },
+    ".factory/config.json": {
+      "sha256": "93ce08eec563aa8f79469713ed41bc8f7d5017c67b3de7a9cff05913e325cbfd",
+      "executable": false
+    },
+    ".github/workflows/sandbox-image.yml": {
+      "sha256": "598ab9931a8cfc63a3e1d2487fb151eca9b134a5e9a4e3bfa20d4b87b96399b3",
+      "executable": false
+    },
+    ".github/ISSUE_TEMPLATE/feature-request.yml": {
+      "sha256": "d3df4f5c27dd7b7a22d0baec1a52a1dc3301c002549f8634392a3abd26566505",
+      "executable": false
+    },
+    ".github/scripts/validate.mjs": {
+      "sha256": "bab5f39ee6e1fdb423d90b19dec73b1226ed68ab90a804442a7503e9e9bd6bdc",
+      "executable": false
+    },
+    ".agents/skills/LICENSE.humanlayer-skills": {
+      "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+      "executable": false
+    },
+    ".github/ISSUE_TEMPLATE/implementation-ticket.yml": {
+      "sha256": "d452da0ad9e39173f681b699d3848a00ab3466b55be508cc3f36d7731083bff6",
+      "executable": false
+    },
+    "scripts/validate-issue-contract.mjs": {
+      "sha256": "704e738a2baa5ddc826b1ef6bcbc852f49d3f6899c2ea5fd8df2f6f78b20b027",
+      "executable": false
+    },
+    ".github/workflows/issue-contracts.yml": {
+      "sha256": "1734fd905c48e75b80c7a4db7518799c4ae5dbd0eecfef73b6025b0b777ad4f6",
+      "executable": false
+    },
+    "docs/agents/issue-tracker.md": {
+      "sha256": "bcd5dd6c974b269c98f2b2a9ce81a979e33676f3442c8110bfa4f018fefde895",
+      "executable": false
+    },
+    "vendor/marked/LICENSE": {
+      "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c",
+      "executable": false
+    },
+    "vendor/marked/marked.esm.js": {
+      "sha256": "2e70fea3ee49f98ab67ee395e5af51cc6bee4fafed15910da9ccb7f650df8014",
+      "executable": false
+    },
+    "vendor/marked/README.md": {
+      "sha256": "c1f9e95c649e297b482a842c72814efa04b0277f1a3a3c181e637d949b5bedc7",
+      "executable": false
+    },
+    ".agents/skills/LICENSE.mattpocock-skills": {
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "executable": false
+    },
+    "vendor/parse5/LICENSE.entities": {
+      "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164",
+      "executable": false
+    },
+    "vendor/parse5/LICENSE.parse5": {
+      "sha256": "8c535800331e1e4439835555b3f9edc7fe9dee2fab0d8bbbd5a982e8b8343d4d",
+      "executable": false
+    },
+    "vendor/parse5/parse5.esm.js": {
+      "sha256": "bdf861eb0bce411afe5fcc312c770c3fe18dac9b5296771d40217d52a6ae7a93",
+      "executable": false
+    },
+    "vendor/parse5/README.md": {
+      "sha256": "bb5904a74bace3cfbcf0f7f817f2a3f808a21f4d60c1b1b118e1464d6d096855",
+      "executable": false
+    },
+    "vendor/postern/postern.mjs": {
+      "sha256": "5203c7e825a065c33aaa02ea4b6dbe776704ccd55b220aee75eb82427a8b83d5",
+      "executable": false
+    },
+    "vendor/postern/LICENSE": {
+      "sha256": "a4b5f0efcfeb828c1b344150f3c93af8031174df6147219e00b6a0bd995db6ef",
+      "executable": false
+    },
+    "vendor/postern/README.md": {
+      "sha256": "08844d40cc709ee193871cefb2d92aed29c26f3e08654458ff6621f9b2715fe8",
+      "executable": false
+    },
+    ".github/scripts/validate-pr-metadata.mjs": {
+      "sha256": "386c3a830876da63e16d9e6591d2a0a4c56d57af10f4422c5240c0e3dde71f12",
+      "executable": false
+    },
+    ".github/workflows/pr-metadata.yml": {
+      "sha256": "4b39ef848f5aaf887d0fa2f4e154534b247318fe8b81b413baca2a58b0122dc1",
+      "executable": false
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "sha256": "7dcc5881eef1c342a08519750b9beae700f4620d1fdf23c2eb0d9b2dfaec5fd0",
+      "executable": false
+    },
+    "operations/lib/rendered-markdown.mjs": {
+      "sha256": "b89f24c60f8ad3ad1ed45590629e87661337931e858b84acfac5296a057430c2",
+      "executable": false
+    },
+    ".agents/skills/babysit/CREDITS.md": {
+      "sha256": "4284efe010cd760409f7d34f0d41bced50d7e013a65e25e3ed9f979289a8f485",
+      "executable": false
+    },
+    ".agents/skills/babysit/SKILL.md": {
+      "sha256": "b8163e5d72cd85b87458b204181959afe57ec2a4ce01046a9c360fadba7c911f",
+      "executable": false
+    },
+    ".agents/skills/babysit/body-links.mjs": {
+      "sha256": "01c984d07a0e1395daa6a111634f8a222b498c5dcb75ce20969699a0f0f7641e",
+      "executable": false
+    },
+    ".agents/skills/babysit/merge.mjs": {
+      "sha256": "881b28cb5a89acfbbb642fbf42106e3af80ce2af1ee9080f7c2eec37b45d63b5",
+      "executable": false
+    },
+    ".agents/skills/babysit/platform.mjs": {
+      "sha256": "fc6fdbf5129dea3335ea340882806d7e9ee908f8b4dc72d10873c7637efc1fe3",
+      "executable": false
+    },
+    ".agents/skills/babysit/pull-request-reviewer.mjs": {
+      "sha256": "d2b3ecf236b1758f299577cfd81ccdec3ec0980e46209fbec0cd06e9060c2f4a",
+      "executable": false
+    },
+    ".agents/skills/babysit/request.mjs": {
+      "sha256": "a293d000f9c190481e345a25bfe01ec7b894f263c0bb03917dde1f35db0b50c7",
+      "executable": false
+    },
+    ".agents/skills/babysit/review-outcome.mjs": {
+      "sha256": "58632b2e8c8de4487204bdd14a5ff2208b6b824b53f49d3aa512ce606e940108",
+      "executable": false
+    },
+    ".agents/skills/babysit/review-policy.mjs": {
+      "sha256": "71d74c31b19e16e066ce58106443b34a6de727c6aa46e171deb1e4069bc03f1c",
+      "executable": false
+    },
+    ".agents/skills/babysit/reviewer.mjs": {
+      "sha256": "580098ac88a2be873d271dd7107cfcb8b0ab1ab059ccb39236f73e4f4eec3508",
+      "executable": false
+    },
+    ".agents/skills/babysit/trusted-review-config.mjs": {
+      "sha256": "25d4cb7bf51366e305d2a741c0ebb4cf6f3dac510f2519e4d0f3977898821dc6",
+      "executable": false
+    },
+    ".agents/skills/babysit/wait.mjs": {
+      "sha256": "f865d885a46d5943823eeca7407fab40bf9d5eea90ab0b5697a18c6d26610f30",
+      "executable": false
+    },
+    ".agents/skills/code-review/CREDITS.md": {
+      "sha256": "a8a1e5930513f2e4500ed539291ac173800a9e0cf55d9284d6fc4cf7cdf40476",
+      "executable": false
+    },
+    ".agents/skills/code-review/SKILL.md": {
+      "sha256": "609b4a6d8e730dcea7ab239b9268160033dd192857587e065b6af716885f7c6f",
+      "executable": false
+    },
+    ".agents/skills/code-review/agents/openai.yaml": {
+      "sha256": "8229ca854e11dc8e6aef2131ee03f31fb1561cf905fab9ccc325180cf3331352",
+      "executable": false
+    },
+    ".agents/skills/codebase-design/CREDITS.md": {
+      "sha256": "0a8a93ed13b6e8b65dd7c59a010c49558a1a670e4eb84b618976d2466e6437bc",
+      "executable": false
+    },
+    ".agents/skills/codebase-design/DEEPENING.md": {
+      "sha256": "f3dd099ce99289bd213914d8ee3e2429b78309c3957ca4583f7659551b1d53c1",
+      "executable": false
+    },
+    ".agents/skills/codebase-design/DESIGN-IT-TWICE.md": {
+      "sha256": "52b52e75655a27aea59c6966b410bac82448968ad46ef1ebb9f07c274e3ae010",
+      "executable": false
+    },
+    ".agents/skills/codebase-design/SKILL.md": {
+      "sha256": "ba1a4f9c57ba7f52e0e88b2149d1293495858bcf0993352cc7e0df193bfb67ea",
+      "executable": false
+    },
+    ".agents/skills/codebase-design/agents/openai.yaml": {
+      "sha256": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
+      "executable": false
+    },
+    ".agents/skills/diagnosing-bugs/CREDITS.md": {
+      "sha256": "9073d0c470ac0b79c9385ec2f7364bd477c0b1a4c3b9125b59602a77a817fa48",
+      "executable": false
+    },
+    ".agents/skills/diagnosing-bugs/SKILL.md": {
+      "sha256": "a621ef3ea8a515ac253d1784246a773dc437b164b9e6f4d8a17ae03d2ca35af2",
+      "executable": false
+    },
+    ".agents/skills/diagnosing-bugs/agents/openai.yaml": {
+      "sha256": "3e430dbe4334a87597488c060cb3dc3786bb00c9182877d6f5ec41f62490e90b",
+      "executable": false
+    },
+    ".agents/skills/diagnosing-bugs/scripts/hitl-loop.template.sh": {
+      "sha256": "35103539fc36873eea36074769ad454f9379d6fc8b2dc0e26ce987fd3bfe5503",
+      "executable": false
+    },
+    ".agents/skills/domain-modeling/ADR-FORMAT.md": {
+      "sha256": "2e88f5a78472481b3dddac68707686867eb4270bdbaca9a9458d70b039157b65",
+      "executable": false
+    },
+    ".agents/skills/domain-modeling/CREDITS.md": {
+      "sha256": "bbcc5a0d207d4c715189f3110887a379ca5e10787f9fdcf60bfb944aff1480ec",
+      "executable": false
+    },
+    ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md": {
+      "sha256": "21dcc40cdec8e151a829b98ab1517c1867bc444e3665134a98c6983411996801",
+      "executable": false
+    },
+    ".agents/skills/domain-modeling/SKILL.md": {
+      "sha256": "f7515e306cdb182678b6968bcc52f83dfa4a21db661538f4df30b7ee2bbef904",
+      "executable": false
+    },
+    ".agents/skills/domain-modeling/agents/openai.yaml": {
+      "sha256": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
+      "executable": false
+    },
+    ".agents/skills/factory/CREDITS.md": {
+      "sha256": "84f85448b6dbe4baeb6ff2761a1069c598dfba5fddab41ece9acd4bab74fab5d",
+      "executable": false
+    },
+    ".agents/skills/factory/SKILL.md": {
+      "sha256": "3745e29861b411e396a97242cce87a9858a6451603efd53fdf364d017d4e768a",
+      "executable": false
+    },
+    ".agents/skills/grill-with-docs/CREDITS.md": {
+      "sha256": "6bf2b0e20439662835b7ec5e8dff26c99f4e87876bdc7c355265aafb7c427b0d",
+      "executable": false
+    },
+    ".agents/skills/grill-with-docs/SKILL.md": {
+      "sha256": "8cf85fcfe4d23acb4d1c50f98f760adbd526c0985551a9e53f34c07315775d0c",
+      "executable": false
+    },
+    ".agents/skills/grill-with-docs/agents/openai.yaml": {
+      "sha256": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
+      "executable": false
+    },
+    ".agents/skills/grilling/CREDITS.md": {
+      "sha256": "50702f66166d7fb00e555c44374c7d4be4a6d4a60f1b09e11b409b2c0b0bbf0e",
+      "executable": false
+    },
+    ".agents/skills/grilling/SKILL.md": {
+      "sha256": "550963b196dafccfb7b438e0772a04859e7c8f09e45fd62d43fdcde6a6104441",
+      "executable": false
+    },
+    ".agents/skills/grilling/agents/openai.yaml": {
+      "sha256": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
+      "executable": false
+    },
+    ".agents/skills/implement/CREDITS.md": {
+      "sha256": "55c3fdf5d679908d21398c292069abc547fe4430897c57a441f5e3afb015d18a",
+      "executable": false
+    },
+    ".agents/skills/implement/SKILL.md": {
+      "sha256": "c8ee4b891bd4a6ae5d1cb3f73d20f3bf980ce66a783706042339ebcc436ce436",
+      "executable": false
+    },
+    ".agents/skills/implement/agents/openai.yaml": {
+      "sha256": "7d531e17370288bdf5eabb7a586d7c2de16c21db12afb91873685b6165c88db6",
+      "executable": false
+    },
+    ".agents/skills/improve-codebase-architecture/CREDITS.md": {
+      "sha256": "2cb8c96b72929b6cac2780d291f047a8ecb350a678add177159316619e2e2122",
+      "executable": false
+    },
+    ".agents/skills/improve-codebase-architecture/HTML-REPORT.md": {
+      "sha256": "581e8bb5a521e46bbda8ca7e19b15948bed882187108092ebb90c62513b77528",
+      "executable": false
+    },
+    ".agents/skills/improve-codebase-architecture/SKILL.md": {
+      "sha256": "96942b6f0b302b2101cb78ea1a7743aa4972a149caba3364a11fad7770b6dc47",
+      "executable": false
+    },
+    ".agents/skills/improve-codebase-architecture/agents/openai.yaml": {
+      "sha256": "c8cb20f68ebf0edb4e497bc11ae5fcaa196004e661cd189015b04f4109ced7f1",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/CREDITS.md": {
+      "sha256": "aef2eeb3e1c130c9d5cd6e2805b5480d18a96e6bafd1c1c1cdf0c2dcb545a476",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/SKILL.md": {
+      "sha256": "c3b8518d2474f63f6031e7730108c3ea1929293d9cd0f97b5d6f10ae332afe97",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/agents/openai.yaml": {
+      "sha256": "8fa9f8f0710336e9e9a32915436647c3f5c3bfa9a2acdbdcaf613daba800bf6c",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/references/close.md": {
+      "sha256": "3e9bceb96009a826f75425484f2e0dc0d87dae4a200f10046a60895587f4939e",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/references/launches.md": {
+      "sha256": "1a66c90f6fc9ac5b24a608e172f86bbe7176db9020aef7064fcf701d9f91958e",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/references/templates.md": {
+      "sha256": "bb75b934eba8d4f9133b8186c94da5934e12511037b193f60ceb95bd147757d7",
+      "executable": false
+    },
+    ".agents/skills/orchestrate/wait.mjs": {
+      "sha256": "43f0771dda265ac4fe077a2d61981a0b0bad3ed04327cb12aa1a00d08e391fea",
+      "executable": false
+    },
+    ".agents/skills/pr/CREDITS.md": {
+      "sha256": "2631c4c0899decfed35bc7c4c930e069e91769490ddcd128e523602469db4962",
+      "executable": false
+    },
+    ".agents/skills/pr/SKILL.md": {
+      "sha256": "708ab786bb60e7b7c266375b00cebd3600b00e44b49c12d8e63b1d1868ce427e",
+      "executable": false
+    },
+    ".agents/skills/pr/agents/openai.yaml": {
+      "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+      "executable": false
+    },
+    ".agents/skills/prototype/CREDITS.md": {
+      "sha256": "54273a012bf62110fe7cf392f6ac3e512a7d4a0ac1f7dbccac7dbcc3805e571f",
+      "executable": false
+    },
+    ".agents/skills/prototype/LOGIC.md": {
+      "sha256": "f61c7d249e786a79ef289018901c348271e1798dd0b0bc5607b5c6f4d4a01ab9",
+      "executable": false
+    },
+    ".agents/skills/prototype/SKILL.md": {
+      "sha256": "4b33a0a2f568f9518f58bfc0c2d62781801d33235cd88ba3eba26d5123daa703",
+      "executable": false
+    },
+    ".agents/skills/prototype/UI.md": {
+      "sha256": "723211e878acbc7b6ff09755263f3295cde724ba902ff0064da41eed51d45ad3",
+      "executable": false
+    },
+    ".agents/skills/prototype/agents/openai.yaml": {
+      "sha256": "5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc",
+      "executable": false
+    },
+    ".agents/skills/research/CREDITS.md": {
+      "sha256": "dfcf4abd977f776c90835e96ac1975cb73ce07beaf6d9267b068b00347e24e2a",
+      "executable": false
+    },
+    ".agents/skills/research/SKILL.md": {
+      "sha256": "1da8bfeee51fcce27717f64fae5a2869ee50852a6c90247fcada8c3f6bd88de7",
+      "executable": false
+    },
+    ".agents/skills/research/agents/openai.yaml": {
+      "sha256": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
+      "executable": false
+    },
+    ".agents/skills/tdd/CREDITS.md": {
+      "sha256": "a14fe58f53cd2351f8ad7fe609bb656a726606d001d64c13c8df4a7ea004e8b5",
+      "executable": false
+    },
+    ".agents/skills/tdd/SKILL.md": {
+      "sha256": "afcc4328e87a9e77a2447c90e25b976af4086163b7affaa2fa4efa2d8baef2b9",
+      "executable": false
+    },
+    ".agents/skills/tdd/agents/openai.yaml": {
+      "sha256": "ea6f01cf1b8c06a4b0f5b649d74b1b8ce8685e72af1b38d70d877693e092af0b",
+      "executable": false
+    },
+    ".agents/skills/tdd/mocking.md": {
+      "sha256": "3ceb807fdf4a47d6a93d4d9a891e5ba6d362a6247bd08adc451feebfc17361ef",
+      "executable": false
+    },
+    ".agents/skills/tdd/tests.md": {
+      "sha256": "859f9e592c188fda4fc7277dd180e4ce9c7a2e13f6efe1f6f29eccc9d28c106a",
+      "executable": false
+    },
+    ".agents/skills/to-spec/CREDITS.md": {
+      "sha256": "d03f2632fa36e602bcf0e9c38cb7f7fb18b19c821cf1186c1270103b477f264e",
+      "executable": false
+    },
+    ".agents/skills/to-spec/SKILL.md": {
+      "sha256": "f747048852302b2d5a5327d76da2ef5c193c9e937fbef0a2e22f8447e44e29d5",
+      "executable": false
+    },
+    ".agents/skills/to-spec/agents/openai.yaml": {
+      "sha256": "1c5b4d1e3d8e52287ef19cc2742fdbbfae1914ac75d33af3e4c8174f08cc55bb",
+      "executable": false
+    },
+    ".agents/skills/to-tickets/CREDITS.md": {
+      "sha256": "7b8b593530943d59d040ecb098ea85943ba63f3d0ddbe0e17dfbff29770db67e",
+      "executable": false
+    },
+    ".agents/skills/to-tickets/SKILL.md": {
+      "sha256": "2b646c55cab35dbd57e81a8bec93d6003062383cdb351c05f7116981044f30e1",
+      "executable": false
+    },
+    ".agents/skills/to-tickets/agents/openai.yaml": {
+      "sha256": "21bc6215fffcd7614e9f772bb1760e87cc5fc7dcc707e7d282bc9414267a6090",
+      "executable": false
+    },
+    ".agents/skills/triage/AGENT-BRIEF.md": {
+      "sha256": "52ce495dc1dc49dd88c87739ef14e32817300740459879f859b4ac2ba4124d57",
+      "executable": false
+    },
+    ".agents/skills/triage/CREDITS.md": {
+      "sha256": "774ab7899fb01f533c6a2e3483b72cab9ad2a1f446168a2c706c7b79be8fbc41",
+      "executable": false
+    },
+    ".agents/skills/triage/OUT-OF-SCOPE.md": {
+      "sha256": "1fbf9b432130c6380aa65813b55553cfda150309b27c595e183f8e335b8a190d",
+      "executable": false
+    },
+    ".agents/skills/triage/SKILL.md": {
+      "sha256": "82d874e0b651ef36794b8ed608460c042a5d5767d72be49a0cbffd40901c0471",
+      "executable": false
+    },
+    ".agents/skills/triage/agents/openai.yaml": {
+      "sha256": "2e683717720cf456d165d0bb1a68bb600d0b6a8ccb61841c172e50d26f95351c",
+      "executable": false
+    },
+    ".agents/skills/triage/ready.mjs": {
+      "sha256": "d35dbec41fd48778ef5e95a64e94b9482948b992456272827dd6f41a3ce02f54",
+      "executable": false
+    },
+    ".agents/skills/wayfinder/CREDITS.md": {
+      "sha256": "e1eea56ad12a8fa780b3d746f2108f421bf1a322c1a5c52c82466a12ecd5c933",
+      "executable": false
+    },
+    ".agents/skills/wayfinder/SKILL.md": {
+      "sha256": "89d8e3f68a5ef0e65f15ff94321dc7feeb22c9f03f5f32b874a6068bee9cb182",
+      "executable": false
+    },
+    ".agents/skills/wayfinder/agents/openai.yaml": {
+      "sha256": "88bc81a11a6d52ac67aeaa76b8b619e387020d47c5133a4dd4927fd15c4ad073",
+      "executable": false
+    },
+    ".agents/skills/writing-for-agents/CREDITS.md": {
+      "sha256": "f55ac668257fa933322d694da377d6a49b8b934c883eabec7732bbe53677a9e5",
+      "executable": false
+    },
+    ".agents/skills/writing-for-agents/SKILL-MECHANICS.md": {
+      "sha256": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+      "executable": false
+    },
+    ".agents/skills/writing-for-agents/SKILL.md": {
+      "sha256": "1fc09f935cc73c873ee164d400517a182c5c51b187716758993aaf3b66fc09af",
+      "executable": false
+    },
+    ".agents/skills/writing-for-agents/agents/openai.yaml": {
+      "sha256": "eacb24b2a618cfb81dacb0416f4fdd75ddf3a8060f8ddb99aae1b1e301907e4b",
+      "executable": false
+    },
+    ".github/ISSUE_TEMPLATE/specification.yml": {
+      "sha256": "77b6359750ff03695a1dc19ee121e664787f4a6954cd9847277ab40fb6b22dfd",
+      "executable": false
+    },
+    ".github/workflows/standards-update.yml": {
+      "sha256": "0a83bd932b528b37f817acfeae56cfc35728a95ecd373e868bc8dceecfbb1226",
+      "executable": false
+    },
+    "docs/agents/triage-labels.md": {
+      "sha256": "7103db589b82930dc1f0b7b6d291c5e1aa9bfc40c34354ae18279127573b23d7",
+      "executable": false
+    },
+    "scripts/validate.mjs": {
+      "sha256": "daeedb8713e64e0334ede3825297ec6338a85ee8051c0dc0385f5533373ecc32",
+      "executable": false
+    },
+    ".agents/skills/repository-standards/SKILL.md": {
+      "sha256": "4e331d32a27f003027cfbcfce376f49c8e0743142dc6cd653fe7e31052f61450",
+      "executable": false
+    },
+    ".agents/skills/repository-standards/agents/openai.yaml": {
+      "sha256": "8619a54e8c098122a7f3881394f84ca89b684366e848233a29ad18b6ec363935",
+      "executable": false
+    }
+  },
+  "skills": {
+    ".agents/skills/babysit": [
+      "CREDITS.md",
+      "SKILL.md",
+      "body-links.mjs",
+      "merge.mjs",
+      "platform.mjs",
+      "pull-request-reviewer.mjs",
+      "request.mjs",
+      "review-outcome.mjs",
+      "review-policy.mjs",
+      "reviewer.mjs",
+      "trusted-review-config.mjs",
+      "wait.mjs"
+    ],
+    ".agents/skills/code-review": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/codebase-design": [
+      "CREDITS.md",
+      "DEEPENING.md",
+      "DESIGN-IT-TWICE.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/diagnosing-bugs": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml",
+      "scripts/hitl-loop.template.sh"
+    ],
+    ".agents/skills/domain-modeling": [
+      "ADR-FORMAT.md",
+      "CREDITS.md",
+      "GLOSSARY-FORMAT.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/factory": [
+      "CREDITS.md",
+      "SKILL.md"
+    ],
+    ".agents/skills/grill-with-docs": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/grilling": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/implement": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/improve-codebase-architecture": [
+      "CREDITS.md",
+      "HTML-REPORT.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/orchestrate": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml",
+      "references/close.md",
+      "references/launches.md",
+      "references/templates.md",
+      "wait.mjs"
+    ],
+    ".agents/skills/pr": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/prototype": [
+      "CREDITS.md",
+      "LOGIC.md",
+      "SKILL.md",
+      "UI.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/research": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/tdd": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml",
+      "mocking.md",
+      "tests.md"
+    ],
+    ".agents/skills/to-spec": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/to-tickets": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/triage": [
+      "AGENT-BRIEF.md",
+      "CREDITS.md",
+      "OUT-OF-SCOPE.md",
+      "SKILL.md",
+      "agents/openai.yaml",
+      "ready.mjs"
+    ],
+    ".agents/skills/wayfinder": [
+      "CREDITS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/writing-for-agents": [
+      "CREDITS.md",
+      "SKILL-MECHANICS.md",
+      "SKILL.md",
+      "agents/openai.yaml"
+    ],
+    ".agents/skills/repository-standards": [
+      "SKILL.md",
+      "agents/openai.yaml"
+    ]
+  },
+  "links": {
+    ".claude/skills/repository-standards": "../../.agents/skills/repository-standards",
+    ".claude/skills/babysit": "../../.agents/skills/babysit",
+    ".claude/skills/code-review": "../../.agents/skills/code-review",
+    ".claude/skills/codebase-design": "../../.agents/skills/codebase-design",
+    ".claude/skills/diagnosing-bugs": "../../.agents/skills/diagnosing-bugs",
+    ".claude/skills/domain-modeling": "../../.agents/skills/domain-modeling",
+    ".claude/skills/factory": "../../.agents/skills/factory",
+    ".claude/skills/grill-with-docs": "../../.agents/skills/grill-with-docs",
+    ".claude/skills/grilling": "../../.agents/skills/grilling",
+    ".claude/skills/implement": "../../.agents/skills/implement",
+    ".claude/skills/improve-codebase-architecture": "../../.agents/skills/improve-codebase-architecture",
+    ".claude/skills/orchestrate": "../../.agents/skills/orchestrate",
+    ".claude/skills/pr": "../../.agents/skills/pr",
+    ".claude/skills/prototype": "../../.agents/skills/prototype",
+    ".claude/skills/research": "../../.agents/skills/research",
+    ".claude/skills/tdd": "../../.agents/skills/tdd",
+    ".claude/skills/to-spec": "../../.agents/skills/to-spec",
+    ".claude/skills/to-tickets": "../../.agents/skills/to-tickets",
+    ".claude/skills/triage": "../../.agents/skills/triage",
+    ".claude/skills/wayfinder": "../../.agents/skills/wayfinder",
+    ".claude/skills/writing-for-agents": "../../.agents/skills/writing-for-agents"
+  },
+  "checks": [
+    {
+      "operation": {
+        "declaration": "documentation",
+        "phase": "checks",
+        "id": "documentation-navigation"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "Documentation navigation is valid; content placement and usefulness still require maintainer or agent review."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/0.stdout",
+      "stderr": ".repo-standards/local/operations/0.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "github-repository-configuration",
+        "phase": "checks",
+        "id": "pull-request-reviewer"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "No pull request reviewer is configured."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/1.stdout",
+      "stderr": ".repo-standards/local/operations/1.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "github-repository-configuration",
+        "phase": "checks",
+        "id": "factory-review-policy"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "No factory review policy is configured."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/2.stdout",
+      "stderr": ".repo-standards/local/operations/2.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "project-readmes",
+        "phase": "checks",
+        "id": "project-readme-structure"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "Project README structure and shared setup and contribution links are valid for 0 concrete targets; Project membership, purpose, commands, configuration, documentation, and duplication of shared instructions still require maintainer or agent review."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/3.stdout",
+      "stderr": ".repo-standards/local/operations/3.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "repository-readme",
+        "phase": "checks",
+        "id": "repository-readme-structure"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "Repository README structure is valid; factual content still requires maintainer or agent review."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/4.stdout",
+      "stderr": ".repo-standards/local/operations/4.stderr"
+    },
+    {
+      "operation": {
+        "declaration": "typescript-vite-stack",
+        "phase": "checks",
+        "id": "typescript-vite-stack-manifests"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "timedOut": false
+      },
+      "result": {
+        "format": "repo-standards/result/v2",
+        "status": "passed",
+        "message": "The typescript-vite stack manifest facts are valid for 1 Project; framework, React, Tailwind, TypeScript and test-runner majors, actual astro check/ui:check execution by validate, CI coverage, Setup and validation, integrity, wrappers and theme behavior still require contextual assessment."
+      },
+      "error": null,
+      "stdout": ".repo-standards/local/operations/5.stdout",
+      "stderr": ".repo-standards/local/operations/5.stderr"
+    }
+  ],
+  "assessments": [
+    {
+      "format": "repo-standards/assessment/v3",
+      "scope": {
+        "inspection": "sha256:2e0615ffc2e132b54db9b86200a6f04aa42f8ff9e24ceb9cbb7d9597e3efcb0c",
+        "afterFixes": "sha256:cb95d5c7bd4b2f267652bd27727fbd50e9f4308f2a9c9a8b564fe58e35378209"
+      },
+      "run": "97c11191-ee77-43a2-87b3-a9eda2512ff6",
+      "selection": "sha256:8a02686fcb4388348f209c65983044ebff3ff2e3297973e67fc2d30a4b4e7431",
+      "snapshot": "sha256:7e47497714242b51c3870ac1254d280f524a50df5a8c32a85b083db2810c2144",
+      "declarations": [
+        {
+          "id": "documentation",
+          "status": "satisfied",
+          "explanation": "Documentation stays organized under usage, development and agents with one index per directory (pnpm check:docs: 21 files valid). The development guide's Setup and validation section now states pnpm 11 and Node.js 24/26, every validate step with its tool, and the accurate required checks (Validate site, validate, PR metadata); the obsolete 'tracked separately in #9' note is gone. The run-locally guide and the architecture document describe the pnpm commands and the components/app, components/ui and components/custom boundaries; no Biome, ESLint, npm or Radix reference remains. Skill Markdown under .agents stays skill material.",
+          "changedPaths": [],
+          "evidence": [
+            "docs/README.md",
+            "docs/usage/README.md",
+            "docs/usage/guides/run-locally.md",
+            "docs/development/README.md",
+            "docs/development/architecture/architecture.md"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "Every file under docs is covered or owned by another declaration (docs/agents); the moved old paths no longer exist and no new documentation file appeared outside the scope.",
+              "evidence": [
+                "docs/README.md",
+                "docs/development/README.md",
+                "docs/usage/README.md"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "Every file under docs is covered or owned by another declaration (docs/agents); the moved old paths no longer exist and no new documentation file appeared outside the scope.",
+              "evidence": [
+                "docs/README.md",
+                "docs/development/README.md",
+                "docs/usage/README.md"
+              ],
+              "additionalPaths": []
+            }
+          }
+        },
+        {
+          "id": "factory-sandbox-image",
+          "status": "satisfied",
+          "explanation": "Debian Node 24 and global pnpm 11.28.9 match development guide. PNPM_CONFIG_STORE_DIR=/tmp/pnpm-store explicitly places cache outside bind-mounted /workspace regardless of pnpm default mount-point selection. All users can create this sandbox-local store under /tmp; no home-dependent config, credentials, user/entrypoint, project dependencies, context or agent tooling. Local fresh install/validate verifies setting; combined Docker execution remains pending owner rerun.",
+          "changedPaths": [
+            ".factory/Dockerfile"
+          ],
+          "evidence": [
+            ".factory/Dockerfile",
+            "package.json",
+            "docs/development/README.md",
+            ".agents/skills/babysit/SKILL.md"
+          ]
+        },
+        {
+          "id": "factory-workflow",
+          "status": "satisfied",
+          "explanation": "Installed repository-wide rules align with exact factory v2 config and issue-contract workflow. F0 published Scriptorium v3.0.1 compatibility at 5e7ecf2593cd534cfb9050a7385dbda71b5102f9; actual installed host verification and activation belong to L0 under the accepted brief, no host claim. D9/D11 already decline app-author exemption, so absent policy remains absent. Direct worker hands off to orchestrator for merge.",
+          "changedPaths": [],
+          "evidence": [
+            ".factory/config.json",
+            ".github/workflows/issue-contracts.yml",
+            ".repo-standards/rules/factory-workflow.md"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "Workflow governs work repository-wide and intentionally has no content scope.",
+              "evidence": [
+                ".factory/config.json",
+                ".repo-standards/rules/factory-workflow.md"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "Workflow governs work repository-wide and intentionally has no content scope.",
+              "evidence": [
+                ".factory/config.json",
+                ".repo-standards/rules/factory-workflow.md"
+              ],
+              "additionalPaths": []
+            }
+          }
+        },
+        {
+          "id": "git-attributes",
+          "status": "satisfied",
+          "explanation": "Reviewed exact installed code inventory: the validator scripts, rendered Markdown runtime and code in babysit, orchestrate, triage and diagnosing-bugs. Narrow attributes cover them; git check-attr reports set for installed code and unspecified for src/App.tsx, scripts/check-docs.mjs and the existing frontend-design skill. Existing attribute lines preserved.",
+          "changedPaths": [],
+          "evidence": [
+            ".gitattributes",
+            "scripts/validate.mjs",
+            ".agents/skills/orchestrate/wait.mjs"
+          ]
+        },
+        {
+          "id": "github-repository-configuration",
+          "status": "satisfied",
+          "explanation": "Reviewed v0.23.1 factory-profile GitHub rules: current-head checks, trusted review configuration, strict freshness and designated approval gates preserved. Remote setup explicitly deferred unauthenticated to L0. Worker hands off without merging under issue #23 and direct task.",
+          "changedPaths": [],
+          "evidence": [
+            "Read-only gh repo view reports PUBLIC; gh variable list contains REPO_CANON_UPDATES=true only. REPO_CANON_RUNS_ON unset; personal owner has no org inheritance.",
+            "Canonical labels and PR integration deferred: CLI gh isolated and unauthenticated. No reviewer or app-author policy file exists; D9/D11 decline opt-in.",
+            ".factory/config.json",
+            ".github/workflows/issue-contracts.yml"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "Empty content scope is intentional for remote configuration; reviewed after fixes and again before submission.",
+              "evidence": [
+                ".repo-standards/rules/github-repository-configuration.md"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "Empty content scope is intentional for remote configuration; reviewed after fixes and again before submission.",
+              "evidence": [
+                ".repo-standards/rules/github-repository-configuration.md"
+              ],
+              "additionalPaths": []
+            }
+          }
+        },
+        {
+          "id": "project-agent-guidance",
+          "status": "satisfied",
+          "explanation": "No useful additional repository-specific constraints: optional project.md remains absent. Real setup and validation live in docs/development/README.md; shared rules are not duplicated.",
+          "changedPaths": [],
+          "evidence": [
+            "AGENTS.md",
+            "docs/development/README.md"
+          ]
+        },
+        {
+          "id": "project-readmes",
+          "status": "satisfied",
+          "explanation": "The standalone root App uses the Repository README. Code organization directories and internal check script are not separate maintained Projects; there is no non-root Project to document.",
+          "changedPaths": [],
+          "evidence": [
+            "package.json",
+            "README.md",
+            "src/App.tsx",
+            "scripts/check-docs.mjs"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "The standalone root App uses the Repository README. Code organization directories and internal check script are not separate maintained Projects; there is no non-root Project to document.",
+              "evidence": [
+                "package.json",
+                "README.md",
+                "src/App.tsx",
+                "scripts/check-docs.mjs"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "The standalone root App uses the Repository README. Code organization directories and internal check script are not separate maintained Projects; there is no non-root Project to document.",
+              "evidence": [
+                "package.json",
+                "README.md",
+                "src/App.tsx",
+                "scripts/check-docs.mjs"
+              ],
+              "additionalPaths": []
+            }
+          }
+        },
+        {
+          "id": "repository-license",
+          "status": "satisfied",
+          "explanation": "Existing GPL-3.0-only license is preserved and agrees with package.json and the README license link.",
+          "changedPaths": [],
+          "evidence": [
+            "LICENSE",
+            "package.json",
+            "README.md"
+          ]
+        },
+        {
+          "id": "repository-readme",
+          "status": "satisfied",
+          "explanation": "The centered header keeps the title, the one-sentence description and the TypeScript 7 and Node.js 24 | 26 badges, which now match package.json. Installation gives the shortest pnpm path without version numbers in commands, Usage gives one example, the Development section points contributors to the guide and pnpm validate, and the Documentation, Contributing and License sections are link-only pointers.",
+          "changedPaths": [],
+          "evidence": [
+            "README.md",
+            "package.json",
+            "docs/development/README.md",
+            "LICENSE"
+          ]
+        },
+        {
+          "id": "typescript-astro-stack",
+          "status": "satisfied",
+          "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is not an Astro Site (no Astro dependency or configuration), and it now belongs to typescript-vite-stack; no other package.json exists, so no scope is valid.",
+          "changedPaths": [],
+          "evidence": [
+            "package.json",
+            "vite.config.ts",
+            "src/App.tsx"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is not an Astro Site (no Astro dependency or configuration), and it now belongs to typescript-vite-stack; no other package.json exists, so no scope is valid.",
+              "evidence": [
+                "package.json",
+                "vite.config.ts",
+                "src/App.tsx"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is not an Astro Site (no Astro dependency or configuration), and it now belongs to typescript-vite-stack; no other package.json exists, so no scope is valid.",
+              "evidence": [
+                "package.json",
+                "vite.config.ts",
+                "src/App.tsx"
+              ],
+              "additionalPaths": []
+            }
+          }
+        },
+        {
+          "id": "typescript-node-stack",
+          "status": "satisfied",
+          "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is not a Node Project, and it now belongs to typescript-vite-stack; no other package.json exists, so no scope is valid.",
+          "changedPaths": [],
+          "evidence": [
+            "package.json",
+            "vite.config.ts",
+            "src/App.tsx"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is not a Node Project, and it now belongs to typescript-vite-stack; no other package.json exists, so no scope is valid.",
+              "evidence": [
+                "package.json",
+                "vite.config.ts",
+                "src/App.tsx"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is not a Node Project, and it now belongs to typescript-vite-stack; no other package.json exists, so no scope is valid.",
+              "evidence": [
+                "package.json",
+                "vite.config.ts",
+                "src/App.tsx"
+              ],
+              "additionalPaths": []
+            }
+          }
+        },
+        {
+          "id": "typescript-vite-stack",
+          "status": "satisfied",
+          "explanation": "Majors (node_modules after pnpm install --frozen-lockfile): Vite 8.1.0 with @vitejs/plugin-react, React 19.2.7, Tailwind CSS 4.3.1, TypeScript 7.0.2, Vitest 5.0.5 for the existing tests, oxlint 1.90.0, Prettier 3.9.10; no ESLint or Biome. package.json pins packageManager pnpm@11.28.9 with one root pnpm-lock.yaml and no App npm lockfile; engines.node is ^24 || ^26. validate runs format:check, lint (oxlint --type-aware --deny-warnings), typecheck, test:run, check:architecture, check:docs, ui:check and build; it neither calls nor replaces scripts/validate.mjs. pnpm validate passed locally on Node 24.22.0 and its log shows 'ui:check passed (2 files)', so ui:check actually executes. dependency-cruiser parses with a private TypeScript 6.0.3 (pnpm-workspace.yaml packageExtensions) because dependency-cruiser 18 reads 0 modules under TypeScript 7; the App compiles with 7.0.2, deliberate api->app, page->ui and custom->app imports failed check:architecture under that toolchain (PR #16), and the development guide records the parser. shadcn: components.json was created by the pinned CLI with style base-nova, iconLibrary lucide, baseColor neutral, CSS variables and the old aliases; shadcn 4.23.0 is an exact devDependency; ui:add and ui:update invoke it through scripts/ui-registry.mjs. Integrity: registry-manifest.json hashes every file in src/components/ui; ui:check fails on changed, missing and unexpected files (controls in PR #16 and scripts/ui-registry.test.mjs); ui:add and ui:update stop when the output has already drifted; Prettier and oxlint ignore the generated directory. Wrappers: pages import only src/components/app (dependency-cruiser rule registry-components-only-through-app); AppButton, AppIconButton and AppTooltip hold shared invariants (telemetry typography, glass icon treatment, 250 ms delay, 300 ms skip window, 10 px offset, Escape propagation) and forward props, ref, className and composition through Base UI render; the YouTube link stays an <a> via render with nativeButton={false}. Custom provider glyphs live in src/components/custom with rule custom-components-stay-below-app. No effect is shared by every component of a kind, so no data-slot stylesheet rule is needed: the glass treatment applies only to icon buttons through AppIconButton. Theme: light tokens in :root and dark tokens in .dark in src/theme/tokens.css, no .light; ThemeProvider and the index.html boot script toggle only .dark, with dark the default and saved light/dark/system honoured before first paint (boot capture in PR #16). The colour theme is the App's own and unchanged. CI: .github/workflows/ci.yml runs pnpm validate on Node.js 24 and 26 shards behind the Validate site gate; on PR #16 a Node-26-only failure and a skipped matrix both failed the gate (runs 41221134404, 41221230388), and the merged main commit ae16c06 produced Validate site plus both shards (run 41232376247, success). Setup and validation in docs/development/README.md names pnpm 11, Node.js 24/26, every validate step and its tool, and the required checks. UI before/after evidence (six paired views, tooltip timing, keyboard and link semantics) is in PR #16's body; Space also activates the Base UI non-native link button, recorded there as a limit.",
+          "changedPaths": [],
+          "evidence": [
+            "package.json",
+            "pnpm-lock.yaml",
+            "pnpm-workspace.yaml",
+            "components.json",
+            "registry-manifest.json",
+            "scripts/ui-registry.mjs",
+            "scripts/ui-registry.test.mjs",
+            "dependency-cruiser.cjs",
+            ".oxlintrc.json",
+            ".prettierignore",
+            "src/components/app/app-tooltip.tsx",
+            "src/components/app/app-button.tsx",
+            "src/components/custom/provider-glyph.tsx",
+            "src/pages/stream-wall/stream-embed.tsx",
+            "src/theme/tokens.css",
+            "src/theme/ThemeProvider.tsx",
+            "index.html",
+            ".github/workflows/ci.yml",
+            "docs/development/README.md",
+            "src/App.tsx"
+          ],
+          "scopeValidity": {
+            "afterFixes": {
+              "status": "valid",
+              "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is the repository's only Project, a standalone root with workspace YAML holding settings only; no other package.json exists.",
+              "evidence": [
+                "package.json",
+                "pnpm-workspace.yaml",
+                "src/App.tsx",
+                "src/pages/stream-wall/stream-wall-page.tsx"
+              ],
+              "additionalPaths": []
+            },
+            "current": {
+              "status": "valid",
+              "explanation": "The root package.json is a client-rendered Vite 8 / React 19 App: the stream wall's selection, focused playback and keyboard handling are browser state (src/App.tsx, src/pages/stream-wall/stream-wall-page.tsx); owner classification on lutzseverino/repo-canon#560. It is the repository's only Project, a standalone root with workspace YAML holding settings only; no other package.json exists.",
+              "evidence": [
+                "package.json",
+                "pnpm-workspace.yaml",
+                "src/App.tsx",
+                "src/pages/stream-wall/stream-wall-page.tsx"
+              ],
+              "additionalPaths": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "declaration": "github-repository-configuration",
+      "id": "canonical-labels",
+      "reason": "GitHub label setup requires authenticated github.com access through gh; sign in with gh auth login --hostname github.com."
+    },
+    {
+      "declaration": "github-repository-configuration",
+      "id": "pull-request-integration",
+      "reason": "GitHub PR integration setup requires authenticated github.com access through gh; sign in with gh auth login --hostname github.com."
+    }
+  ],
+  "reused": [
+    {
+      "id": "scope:documentation",
+      "kind": "scope",
+      "evidence": {
+        "discovery": "6ddffc023dfc46f7d11f292a245f8b9ffeffb77dff2f102baa20256af1dc8bfc",
+        "rules": "33f5c3535f18ccf34e0222597fdee045ead0432c100e92ecaeef89c84b425a3b",
+        "draft": "decided-from",
+        "paths": [
+          ".agents/skills/frontend-design/SKILL.md",
+          ".agents/skills/implementation-governance/SKILL.md",
+          ".agents/skills/implementation-governance/references/change-kinds.md",
+          ".agents/skills/implementation-governance/references/contract-changes.md",
+          ".agents/skills/implementation-governance/references/conventions.md",
+          ".agents/skills/implementation-governance/references/escalation.md",
+          ".agents/skills/implementation-governance/references/extraction.md",
+          ".agents/skills/implementation-governance/references/materialization.md",
+          ".agents/skills/implementation-governance/references/overview.md",
+          ".agents/skills/implementation-governance/references/scoping.md",
+          ".agents/skills/implementation-governance/references/validation.md",
+          ".agents/skills/implementation-governance/references/workflow.md",
+          ".agents/skills/react-component-governance/SKILL.md",
+          ".agents/skills/react-component-governance/references/boundary-cases.md",
+          ".agents/skills/react-component-governance/references/classification.md",
+          ".agents/skills/react-component-governance/references/extraction.md",
+          ".agents/skills/react-component-governance/references/overview.md",
+          ".agents/skills/react-component-governance/references/ownership.md",
+          ".agents/skills/react-component-governance/references/packaging.md",
+          ".agents/skills/react-component-governance/references/patterns.md",
+          ".agents/skills/react-component-governance/references/roles.md",
+          ".agents/skills/react-component-governance/references/workflow.md",
+          ".agents/skills/shadcn/SKILL.md",
+          ".agents/skills/shadcn/cli.md",
+          ".agents/skills/shadcn/customization.md",
+          ".agents/skills/shadcn/mcp.md",
+          ".agents/skills/shadcn/registry.md",
+          ".agents/skills/shadcn/rules/base-vs-radix.md",
+          ".agents/skills/shadcn/rules/chat.md",
+          ".agents/skills/shadcn/rules/composition.md",
+          ".agents/skills/shadcn/rules/forms.md",
+          ".agents/skills/shadcn/rules/icons.md",
+          ".agents/skills/shadcn/rules/styling.md",
+          "docs/README.md",
+          "docs/agents/README.md",
+          "docs/agents/domain.md",
+          "docs/agents/issue-tracker.md",
+          "docs/agents/triage-labels.md",
+          "docs/development/README.md",
+          "docs/development/architecture/README.md",
+          "docs/development/architecture/architecture.md",
+          "docs/development/templates/README.md",
+          "docs/development/templates/decision.template.md",
+          "docs/development/templates/explanation.template.md",
+          "docs/development/templates/how-to.template.md",
+          "docs/development/templates/index.template.md",
+          "docs/development/templates/reference.template.md",
+          "docs/development/templates/tutorial.template.md",
+          "docs/usage/README.md",
+          "docs/usage/guides/README.md",
+          "docs/usage/guides/run-locally.md",
+          "docs/usage/reference/README.md",
+          "docs/usage/reference/live-feed.md"
+        ]
+      }
+    },
+    {
+      "id": "scope:project-readmes",
+      "kind": "scope",
+      "evidence": {
+        "discovery": "a2cf9e7206712b7b169ebcf901d40ded7fa655100b3afbcf825296e46291b47a",
+        "rules": "6cc1cbca7a629ab74c4e93b83f400cade77159aeb1bd2502463eafedb63a24fc",
+        "draft": "none",
+        "paths": []
+      }
+    },
+    {
+      "id": "assessment:documentation",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "33f5c3535f18ccf34e0222597fdee045ead0432c100e92ecaeef89c84b425a3b"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:eebd9a797f40c9081bab4afab11e402649f10e2558eaceca2cb9789f8c79b35d"
+        }
+      }
+    },
+    {
+      "id": "assessment:git-attributes",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "ce8397df1a7819e7d8af6b65f48686f6cc0d798c361734b00535fbd60f292dcd"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:6a5046db4d39da5ec368797b2dc00a20464bc8552da9a851c58618dd0972c5ba"
+        }
+      }
+    },
+    {
+      "id": "assessment:project-agent-guidance",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "d28524380c291296b805f43440d09b437bc60edd390068bfbf552cdb8b982a25"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:67b9c06fe3913237451f2af02f10eb806dfdb18131c8e2639a769e21c37c3c9b"
+        }
+      }
+    },
+    {
+      "id": "assessment:project-readmes",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "6cc1cbca7a629ab74c4e93b83f400cade77159aeb1bd2502463eafedb63a24fc"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89"
+        }
+      }
+    },
+    {
+      "id": "assessment:repository-license",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "0cae423be028b626f046212c2c7d6432a26ea454fa9917f8b37acdcf8601af2a"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:c8cddcc1981ee98a780e9d0201923b4c2e8d95a0b9a3d8b801f098eccddcbfe7"
+        }
+      }
+    },
+    {
+      "id": "assessment:repository-readme",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "2965277f0a8436f69dbeb1573dc2c905e519229ab38a26cda2599a0f11233952"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:207f0bb1138c2d291fb5e80a873fea7797ad524b0e2394f5dc2ed32445b3b69e"
+        }
+      }
+    },
+    {
+      "id": "assessment:typescript-astro-stack",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "guidance",
+          "sha256": "ca192cf5081f79e58dfb24f965c4d65603091a1fa57e0c4a9da35d2f3a4e379e"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89"
+        }
+      }
+    },
+    {
+      "id": "assessment:typescript-node-stack",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "guidance",
+          "sha256": "dc4a56fc443bd9e76fc753de632e4318cee6294c71422cdfb79d208a2ecda25c"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89"
+        }
+      }
+    },
+    {
+      "id": "assessment:typescript-vite-stack",
+      "kind": "assessment",
+      "evidence": {
+        "judgedAgainst": {
+          "kind": "rules",
+          "sha256": "ef7f2b9a05d59cb8dda6ca41e58a4b09c841f117f592c678473c83894fc0910f"
+        },
+        "scope": {
+          "basis": "declaration",
+          "snapshot": "sha256:d9c6255e05e5a7ce2133c7c36df69b6991444144d8113d2dacdb4162195a939a"
+        }
+      }
+    }
+  ],
+  "assessedScopes": {
+    "documentation": "sha256:eebd9a797f40c9081bab4afab11e402649f10e2558eaceca2cb9789f8c79b35d",
+    "factory-sandbox-image": "sha256:941fbcdc619f1844f76ea1cfe9eb19d92e8097d6d67f9c9225687277c884a172",
+    "factory-workflow": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89",
+    "git-attributes": "sha256:6a5046db4d39da5ec368797b2dc00a20464bc8552da9a851c58618dd0972c5ba",
+    "github-repository-configuration": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89",
+    "project-agent-guidance": "sha256:67b9c06fe3913237451f2af02f10eb806dfdb18131c8e2639a769e21c37c3c9b",
+    "project-readmes": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89",
+    "repository-license": "sha256:c8cddcc1981ee98a780e9d0201923b4c2e8d95a0b9a3d8b801f098eccddcbfe7",
+    "repository-readme": "sha256:207f0bb1138c2d291fb5e80a873fea7797ad524b0e2394f5dc2ed32445b3b69e",
+    "typescript-astro-stack": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89",
+    "typescript-node-stack": "sha256:f61bb6b747466f440a7bfe1ad8ac8d9c6cc81dd9a69aeeaef10fd61e5e7cfe89",
+    "typescript-vite-stack": "sha256:d9c6255e05e5a7ce2133c7c36df69b6991444144d8113d2dacdb4162195a939a"
+  },
+  "impact": {
+    "derived": "Contextual update: the run asks for contextual work on factory-sandbox-image, factory-workflow, github-repository-configuration, which needs review before it is committed. Remote setup was deferred for github-repository-configuration/canonical-labels, github-repository-configuration/pull-request-integration: resolve it and run adopt again to apply it.",
+    "releases": [
+      {
+        "version": "v0.22.1",
+        "action": null
+      },
+      {
+        "version": "v0.23.0",
+        "action": null
+      },
+      {
+        "version": "v0.23.1",
+        "action": null
+      }
+    ],
+    "steps": [
+      "Review the contextual work on factory-sandbox-image, factory-workflow, github-repository-configuration.",
+      "Resolve the remote setup for github-repository-configuration/canonical-labels, github-repository-configuration/pull-request-integration, then run adopt again to apply it.",
+      "Review and commit the update."
+    ]
+  }
+}

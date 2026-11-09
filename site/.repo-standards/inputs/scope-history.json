@@ -1,0 +1,5121 @@
+{
+  "format": "repo-standards/scope-history/v6",
+  "evidence": "historical",
+  "inspection": "sha256:2e0615ffc2e132b54db9b86200a6f04aa42f8ff9e24ceb9cbb7d9597e3efcb0c",
+  "resolved": {
+    "description": "The standard profile plus the factory's repository files and workflow rules, for a repository a factory serves",
+    "declarations": [
+      {
+        "id": "agent-configuration-index",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/README.md",
+        "exact": "docs/agents/README.md"
+      },
+      {
+        "id": "agent-guidance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "AGENTS.md",
+        "exact": "AGENTS.md"
+      },
+      {
+        "id": "bug-report-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/bug-report.yml",
+        "exact": ".github/ISSUE_TEMPLATE/bug-report.yml"
+      },
+      {
+        "id": "contribution-guidance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "CONTRIBUTING.md",
+        "exact": "CONTRIBUTING.md"
+      },
+      {
+        "id": "documentation",
+        "checks": [
+          {
+            "id": "documentation-navigation",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-documentation.mjs",
+              "resources": [
+                "operations/lib/rendered-markdown.mjs",
+                "operations/lib/local-markdown-links.mjs",
+                "operations/lib/documentation-model.mjs",
+                "operations/lib/entry-document.mjs",
+                "vendor/marked",
+                "vendor/parse5"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/documentation.md",
+        "rules": "rules/documentation.md",
+        "targets": {
+          "paths": [
+            "docs/README.md",
+            "docs/development/README.md",
+            "docs/development/architecture/README.md",
+            "docs/development/architecture/architecture.md",
+            "docs/development/templates/README.md",
+            "docs/development/templates/decision.template.md",
+            "docs/development/templates/explanation.template.md",
+            "docs/development/templates/how-to.template.md",
+            "docs/development/templates/index.template.md",
+            "docs/development/templates/reference.template.md",
+            "docs/development/templates/tutorial.template.md",
+            "docs/usage/README.md",
+            "docs/usage/guides/README.md",
+            "docs/usage/guides/run-locally.md",
+            "docs/usage/reference/README.md",
+            "docs/usage/reference/live-feed.md"
+          ],
+          "directories": []
+        }
+      },
+      {
+        "id": "domain-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/domain.md",
+        "exact": "docs/agents/domain.md"
+      },
+      {
+        "id": "factory-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".factory/config.json",
+        "exact": ".factory/config.json"
+      },
+      {
+        "id": "factory-sandbox-image",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".factory/Dockerfile",
+        "guidance": "guidance/factory-sandbox-image.md",
+        "rules": "rules/factory-sandbox-image.md"
+      },
+      {
+        "id": "factory-sandbox-image-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/sandbox-image.yml",
+        "exact": ".github/workflows/sandbox-image.yml"
+      },
+      {
+        "id": "factory-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/factory-workflow.md",
+        "rules": "rules/factory-workflow.md",
+        "targets": {
+          "paths": [],
+          "directories": []
+        }
+      },
+      {
+        "id": "feature-request-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/feature-request.yml",
+        "exact": ".github/ISSUE_TEMPLATE/feature-request.yml"
+      },
+      {
+        "id": "git-attributes",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".gitattributes",
+        "guidance": "guidance/git-attributes.md",
+        "rules": "rules/git-attributes.md"
+      },
+      {
+        "id": "github-repository-configuration",
+        "checks": [
+          {
+            "id": "pull-request-reviewer",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-pull-request-reviewer.mjs",
+              "resources": [
+                "operations/lib/pull-request-reviewer.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          },
+          {
+            "id": "factory-review-policy",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-factory-review-policy.mjs",
+              "resources": [
+                "operations/lib/review-policy.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [
+          {
+            "id": "canonical-labels",
+            "run": {
+              "executable": "node",
+              "script": "operations/setup-github-labels.mjs",
+              "resources": [
+                "operations/lib/github-operation.mjs",
+                "vendor/postern/postern.mjs",
+                "vendor/postern/LICENSE",
+                "vendor/postern/README.md",
+                "LICENSE",
+                "THIRD_PARTY_NOTICES.md",
+                "vendor/mattpocock-skills/LICENSE",
+                "vendor/humanlayer-skills/LICENSE",
+                "vendor/marked/LICENSE",
+                "vendor/parse5/LICENSE.parse5",
+                "vendor/parse5/LICENSE.entities"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30,
+            "remote-setup": {
+              "probe": {
+                "run": {
+                  "executable": "node",
+                  "script": "operations/probe-github-labels.mjs",
+                  "resources": [
+                    "operations/lib/github-operation.mjs",
+                    "vendor/postern/postern.mjs",
+                    "vendor/postern/LICENSE",
+                    "vendor/postern/README.md"
+                  ],
+                  "arguments": []
+                },
+                "prerequisite": {
+                  "version-arguments": [
+                    "--version"
+                  ],
+                  "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+                },
+                "timeout-seconds": 30
+              }
+            }
+          },
+          {
+            "id": "pull-request-integration",
+            "run": {
+              "executable": "node",
+              "script": "operations/setup-github-pr-integration.mjs",
+              "resources": [
+                "operations/lib/github-operation.mjs",
+                "vendor/postern/postern.mjs",
+                "vendor/postern/LICENSE",
+                "vendor/postern/README.md"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30,
+            "remote-setup": {
+              "probe": {
+                "run": {
+                  "executable": "node",
+                  "script": "operations/probe-github-pr-integration.mjs",
+                  "resources": [
+                    "operations/lib/github-operation.mjs",
+                    "vendor/postern/postern.mjs",
+                    "vendor/postern/LICENSE",
+                    "vendor/postern/README.md"
+                  ],
+                  "arguments": []
+                },
+                "prerequisite": {
+                  "version-arguments": [
+                    "--version"
+                  ],
+                  "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+                },
+                "timeout-seconds": 30
+              }
+            }
+          }
+        ],
+        "kind": "repository",
+        "guidance": "guidance/github-repository-configuration.md",
+        "rules": "rules/github-repository-configuration.md",
+        "targets": {
+          "paths": [],
+          "directories": []
+        }
+      },
+      {
+        "id": "github-validator-trigger",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/scripts/validate.mjs",
+        "exact": ".github/scripts/validate.mjs"
+      },
+      {
+        "id": "humanlayer-skills-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".agents/skills/LICENSE.humanlayer-skills",
+        "exact": "vendor/humanlayer-skills/LICENSE"
+      },
+      {
+        "id": "implementation-ticket-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/implementation-ticket.yml",
+        "exact": ".github/ISSUE_TEMPLATE/implementation-ticket.yml"
+      },
+      {
+        "id": "issue-contract-validator",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/validate-issue-contract.mjs",
+        "exact": "scripts/validate-issue-contract.mjs"
+      },
+      {
+        "id": "issue-contract-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/issue-contracts.yml",
+        "exact": ".github/workflows/issue-contracts.yml"
+      },
+      {
+        "id": "issue-tracker-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/issue-tracker.md",
+        "exact": "docs/agents/issue-tracker.md"
+      },
+      {
+        "id": "marked-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/marked/LICENSE",
+        "exact": "vendor/marked/LICENSE"
+      },
+      {
+        "id": "marked-parser",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/marked/marked.esm.js",
+        "exact": "vendor/marked/marked.esm.js"
+      },
+      {
+        "id": "marked-provenance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/marked/README.md",
+        "exact": "vendor/marked/README.md"
+      },
+      {
+        "id": "mattpocock-skills-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".agents/skills/LICENSE.mattpocock-skills",
+        "exact": "vendor/mattpocock-skills/LICENSE"
+      },
+      {
+        "id": "parse5-entities-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/LICENSE.entities",
+        "exact": "vendor/parse5/LICENSE.entities"
+      },
+      {
+        "id": "parse5-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/LICENSE.parse5",
+        "exact": "vendor/parse5/LICENSE.parse5"
+      },
+      {
+        "id": "parse5-parser",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/parse5.esm.js",
+        "exact": "vendor/parse5/parse5.esm.js"
+      },
+      {
+        "id": "parse5-provenance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/README.md",
+        "exact": "vendor/parse5/README.md"
+      },
+      {
+        "id": "postern-bundle",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/postern/postern.mjs",
+        "exact": "vendor/postern/postern.mjs"
+      },
+      {
+        "id": "postern-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/postern/LICENSE",
+        "exact": "vendor/postern/LICENSE"
+      },
+      {
+        "id": "postern-provenance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/postern/README.md",
+        "exact": "vendor/postern/README.md"
+      },
+      {
+        "id": "pr-metadata-validator",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/scripts/validate-pr-metadata.mjs",
+        "exact": ".github/scripts/validate-pr-metadata.mjs"
+      },
+      {
+        "id": "pr-metadata-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/pr-metadata.yml",
+        "exact": ".github/workflows/pr-metadata.yml"
+      },
+      {
+        "id": "project-agent-guidance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/project.md",
+        "guidance": "guidance/project-agent-guidance.md",
+        "rules": "rules/project-agent-guidance.md"
+      },
+      {
+        "id": "project-readmes",
+        "checks": [
+          {
+            "id": "project-readme-structure",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-project-readmes.mjs",
+              "resources": [
+                "operations/lib/rendered-markdown.mjs",
+                "operations/lib/local-markdown-links.mjs",
+                "vendor/marked",
+                "vendor/parse5"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/project-readmes.md",
+        "rules": "rules/project-readmes.md",
+        "targets": {
+          "paths": [],
+          "directories": []
+        }
+      },
+      {
+        "id": "pull-request-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/PULL_REQUEST_TEMPLATE.md",
+        "exact": ".github/PULL_REQUEST_TEMPLATE.md"
+      },
+      {
+        "id": "rendered-markdown-runtime",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "operations/lib/rendered-markdown.mjs",
+        "exact": "operations/lib/rendered-markdown.mjs"
+      },
+      {
+        "id": "repository-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "LICENSE",
+        "guidance": "guidance/repository-license.md",
+        "rules": "rules/repository-license.md"
+      },
+      {
+        "id": "repository-readme",
+        "checks": [
+          {
+            "id": "repository-readme-structure",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-repository-readme.mjs",
+              "resources": [
+                "operations/lib/entry-document.mjs",
+                "operations/lib/rendered-markdown.mjs",
+                "operations/lib/local-markdown-links.mjs",
+                "vendor/marked",
+                "vendor/parse5"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "file",
+        "target": "README.md",
+        "guidance": "guidance/repository-readme.md",
+        "rules": "rules/repository-readme.md"
+      },
+      {
+        "id": "skill-babysit",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "babysit",
+        "source": ".agents/skills/babysit"
+      },
+      {
+        "id": "skill-code-review",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "code-review",
+        "source": ".agents/skills/code-review"
+      },
+      {
+        "id": "skill-codebase-design",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "codebase-design",
+        "source": ".agents/skills/codebase-design"
+      },
+      {
+        "id": "skill-diagnosing-bugs",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "diagnosing-bugs",
+        "source": ".agents/skills/diagnosing-bugs"
+      },
+      {
+        "id": "skill-domain-modeling",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "domain-modeling",
+        "source": ".agents/skills/domain-modeling"
+      },
+      {
+        "id": "skill-factory",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "factory",
+        "source": ".agents/skills/factory"
+      },
+      {
+        "id": "skill-grill-with-docs",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "grill-with-docs",
+        "source": ".agents/skills/grill-with-docs"
+      },
+      {
+        "id": "skill-grilling",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "grilling",
+        "source": ".agents/skills/grilling"
+      },
+      {
+        "id": "skill-implement",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "implement",
+        "source": ".agents/skills/implement"
+      },
+      {
+        "id": "skill-improve-codebase-architecture",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "improve-codebase-architecture",
+        "source": ".agents/skills/improve-codebase-architecture"
+      },
+      {
+        "id": "skill-orchestrate",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "orchestrate",
+        "source": ".agents/skills/orchestrate"
+      },
+      {
+        "id": "skill-pr",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "pr",
+        "source": ".agents/skills/pr"
+      },
+      {
+        "id": "skill-prototype",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "prototype",
+        "source": ".agents/skills/prototype"
+      },
+      {
+        "id": "skill-research",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "research",
+        "source": ".agents/skills/research"
+      },
+      {
+        "id": "skill-tdd",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "tdd",
+        "source": ".agents/skills/tdd"
+      },
+      {
+        "id": "skill-to-spec",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "to-spec",
+        "source": ".agents/skills/to-spec"
+      },
+      {
+        "id": "skill-to-tickets",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "to-tickets",
+        "source": ".agents/skills/to-tickets"
+      },
+      {
+        "id": "skill-triage",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "triage",
+        "source": ".agents/skills/triage"
+      },
+      {
+        "id": "skill-wayfinder",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "wayfinder",
+        "source": ".agents/skills/wayfinder"
+      },
+      {
+        "id": "skill-writing-for-agents",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "writing-for-agents",
+        "source": ".agents/skills/writing-for-agents"
+      },
+      {
+        "id": "specification-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/specification.yml",
+        "exact": ".github/ISSUE_TEMPLATE/specification.yml"
+      },
+      {
+        "id": "standards-update-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/standards-update.yml",
+        "exact": ".github/workflows/standards-update.yml"
+      },
+      {
+        "id": "triage-label-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/triage-labels.md",
+        "exact": "docs/agents/triage-labels.md"
+      },
+      {
+        "id": "typescript-astro-stack",
+        "checks": [],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/typescript-astro-stack.md",
+        "targets": {
+          "paths": [],
+          "directories": []
+        },
+        "no-scope": true
+      },
+      {
+        "id": "typescript-node-stack",
+        "checks": [],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/typescript-node-stack.md",
+        "targets": {
+          "paths": [],
+          "directories": []
+        },
+        "no-scope": true
+      },
+      {
+        "id": "typescript-vite-stack",
+        "checks": [
+          {
+            "id": "typescript-vite-stack-manifests",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-typescript-vite-stack.mjs",
+              "resources": [
+                "operations/lib/typescript-node-stack.mjs",
+                "operations/lib/stack-files.mjs",
+                "operations/lib/typescript-web-stack.mjs",
+                "operations/lib/stack-check.mjs",
+                "operations/lib/local-markdown-links.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/typescript-vite-stack.md",
+        "rules": "rules/typescript-web-stacks.md",
+        "targets": {
+          "paths": [
+            "package.json"
+          ],
+          "directories": []
+        }
+      },
+      {
+        "id": "validator-command",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/validate.mjs",
+        "exact": "scripts/validate.mjs"
+      }
+    ]
+  },
+  "sourceResolved": {
+    "description": "The standard profile plus the factory's repository files and workflow rules, for a repository a factory serves",
+    "declarations": [
+      {
+        "id": "agent-configuration-index",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/README.md",
+        "exact": "docs/agents/README.md"
+      },
+      {
+        "id": "agent-guidance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "AGENTS.md",
+        "exact": "AGENTS.md"
+      },
+      {
+        "id": "bug-report-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/bug-report.yml",
+        "exact": ".github/ISSUE_TEMPLATE/bug-report.yml"
+      },
+      {
+        "id": "contribution-guidance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "CONTRIBUTING.md",
+        "exact": "CONTRIBUTING.md"
+      },
+      {
+        "id": "documentation",
+        "checks": [
+          {
+            "id": "documentation-navigation",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-documentation.mjs",
+              "resources": [
+                "operations/lib/rendered-markdown.mjs",
+                "operations/lib/local-markdown-links.mjs",
+                "operations/lib/documentation-model.mjs",
+                "operations/lib/entry-document.mjs",
+                "vendor/marked",
+                "vendor/parse5"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/documentation.md",
+        "rules": "rules/documentation.md",
+        "discovery": "discovery/documentation.md",
+        "discovery-script": {
+          "run": {
+            "executable": "node",
+            "script": "discovery/draft-documentation-scope.mjs",
+            "resources": [
+              "standards.yaml",
+              "operations/lib/rendered-markdown.mjs",
+              "operations/lib/local-markdown-links.mjs",
+              "operations/lib/documentation-model.mjs",
+              "operations/lib/entry-document.mjs",
+              "vendor/marked",
+              "vendor/parse5"
+            ],
+            "arguments": []
+          },
+          "prerequisite": {
+            "version-arguments": [
+              "--version"
+            ],
+            "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          },
+          "timeout-seconds": 60
+        }
+      },
+      {
+        "id": "domain-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/domain.md",
+        "exact": "docs/agents/domain.md"
+      },
+      {
+        "id": "factory-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".factory/config.json",
+        "exact": ".factory/config.json"
+      },
+      {
+        "id": "factory-sandbox-image",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".factory/Dockerfile",
+        "guidance": "guidance/factory-sandbox-image.md",
+        "rules": "rules/factory-sandbox-image.md"
+      },
+      {
+        "id": "factory-sandbox-image-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/sandbox-image.yml",
+        "exact": ".github/workflows/sandbox-image.yml"
+      },
+      {
+        "id": "factory-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/factory-workflow.md",
+        "rules": "rules/factory-workflow.md",
+        "discovery": "discovery/factory-workflow.md"
+      },
+      {
+        "id": "feature-request-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/feature-request.yml",
+        "exact": ".github/ISSUE_TEMPLATE/feature-request.yml"
+      },
+      {
+        "id": "git-attributes",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".gitattributes",
+        "guidance": "guidance/git-attributes.md",
+        "rules": "rules/git-attributes.md"
+      },
+      {
+        "id": "github-repository-configuration",
+        "checks": [
+          {
+            "id": "pull-request-reviewer",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-pull-request-reviewer.mjs",
+              "resources": [
+                "operations/lib/pull-request-reviewer.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          },
+          {
+            "id": "factory-review-policy",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-factory-review-policy.mjs",
+              "resources": [
+                "operations/lib/review-policy.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [
+          {
+            "id": "canonical-labels",
+            "run": {
+              "executable": "node",
+              "script": "operations/setup-github-labels.mjs",
+              "resources": [
+                "operations/lib/github-operation.mjs",
+                "vendor/postern/postern.mjs",
+                "vendor/postern/LICENSE",
+                "vendor/postern/README.md",
+                "LICENSE",
+                "THIRD_PARTY_NOTICES.md",
+                "vendor/mattpocock-skills/LICENSE",
+                "vendor/humanlayer-skills/LICENSE",
+                "vendor/marked/LICENSE",
+                "vendor/parse5/LICENSE.parse5",
+                "vendor/parse5/LICENSE.entities"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30,
+            "remote-setup": {
+              "probe": {
+                "run": {
+                  "executable": "node",
+                  "script": "operations/probe-github-labels.mjs",
+                  "resources": [
+                    "operations/lib/github-operation.mjs",
+                    "vendor/postern/postern.mjs",
+                    "vendor/postern/LICENSE",
+                    "vendor/postern/README.md"
+                  ],
+                  "arguments": []
+                },
+                "prerequisite": {
+                  "version-arguments": [
+                    "--version"
+                  ],
+                  "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+                },
+                "timeout-seconds": 30
+              }
+            }
+          },
+          {
+            "id": "pull-request-integration",
+            "run": {
+              "executable": "node",
+              "script": "operations/setup-github-pr-integration.mjs",
+              "resources": [
+                "operations/lib/github-operation.mjs",
+                "vendor/postern/postern.mjs",
+                "vendor/postern/LICENSE",
+                "vendor/postern/README.md"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30,
+            "remote-setup": {
+              "probe": {
+                "run": {
+                  "executable": "node",
+                  "script": "operations/probe-github-pr-integration.mjs",
+                  "resources": [
+                    "operations/lib/github-operation.mjs",
+                    "vendor/postern/postern.mjs",
+                    "vendor/postern/LICENSE",
+                    "vendor/postern/README.md"
+                  ],
+                  "arguments": []
+                },
+                "prerequisite": {
+                  "version-arguments": [
+                    "--version"
+                  ],
+                  "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+                },
+                "timeout-seconds": 30
+              }
+            }
+          }
+        ],
+        "kind": "repository",
+        "guidance": "guidance/github-repository-configuration.md",
+        "rules": "rules/github-repository-configuration.md",
+        "discovery": "discovery/github-repository-configuration.md"
+      },
+      {
+        "id": "github-validator-trigger",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/scripts/validate.mjs",
+        "exact": ".github/scripts/validate.mjs"
+      },
+      {
+        "id": "humanlayer-skills-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".agents/skills/LICENSE.humanlayer-skills",
+        "exact": "vendor/humanlayer-skills/LICENSE"
+      },
+      {
+        "id": "implementation-ticket-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/implementation-ticket.yml",
+        "exact": ".github/ISSUE_TEMPLATE/implementation-ticket.yml"
+      },
+      {
+        "id": "issue-contract-validator",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/validate-issue-contract.mjs",
+        "exact": "scripts/validate-issue-contract.mjs"
+      },
+      {
+        "id": "issue-contract-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/issue-contracts.yml",
+        "exact": ".github/workflows/issue-contracts.yml"
+      },
+      {
+        "id": "issue-tracker-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/issue-tracker.md",
+        "exact": "docs/agents/issue-tracker.md"
+      },
+      {
+        "id": "marked-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/marked/LICENSE",
+        "exact": "vendor/marked/LICENSE"
+      },
+      {
+        "id": "marked-parser",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/marked/marked.esm.js",
+        "exact": "vendor/marked/marked.esm.js"
+      },
+      {
+        "id": "marked-provenance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/marked/README.md",
+        "exact": "vendor/marked/README.md"
+      },
+      {
+        "id": "mattpocock-skills-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".agents/skills/LICENSE.mattpocock-skills",
+        "exact": "vendor/mattpocock-skills/LICENSE"
+      },
+      {
+        "id": "parse5-entities-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/LICENSE.entities",
+        "exact": "vendor/parse5/LICENSE.entities"
+      },
+      {
+        "id": "parse5-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/LICENSE.parse5",
+        "exact": "vendor/parse5/LICENSE.parse5"
+      },
+      {
+        "id": "parse5-parser",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/parse5.esm.js",
+        "exact": "vendor/parse5/parse5.esm.js"
+      },
+      {
+        "id": "parse5-provenance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/parse5/README.md",
+        "exact": "vendor/parse5/README.md"
+      },
+      {
+        "id": "postern-bundle",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/postern/postern.mjs",
+        "exact": "vendor/postern/postern.mjs"
+      },
+      {
+        "id": "postern-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/postern/LICENSE",
+        "exact": "vendor/postern/LICENSE"
+      },
+      {
+        "id": "postern-provenance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "vendor/postern/README.md",
+        "exact": "vendor/postern/README.md"
+      },
+      {
+        "id": "pr-metadata-validator",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/scripts/validate-pr-metadata.mjs",
+        "exact": ".github/scripts/validate-pr-metadata.mjs"
+      },
+      {
+        "id": "pr-metadata-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/pr-metadata.yml",
+        "exact": ".github/workflows/pr-metadata.yml"
+      },
+      {
+        "id": "project-agent-guidance",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/project.md",
+        "guidance": "guidance/project-agent-guidance.md",
+        "rules": "rules/project-agent-guidance.md"
+      },
+      {
+        "id": "project-readmes",
+        "checks": [
+          {
+            "id": "project-readme-structure",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-project-readmes.mjs",
+              "resources": [
+                "operations/lib/rendered-markdown.mjs",
+                "operations/lib/local-markdown-links.mjs",
+                "vendor/marked",
+                "vendor/parse5"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/project-readmes.md",
+        "rules": "rules/project-readmes.md",
+        "discovery": "discovery/project-readmes.md"
+      },
+      {
+        "id": "pull-request-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/PULL_REQUEST_TEMPLATE.md",
+        "exact": ".github/PULL_REQUEST_TEMPLATE.md"
+      },
+      {
+        "id": "rendered-markdown-runtime",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "operations/lib/rendered-markdown.mjs",
+        "exact": "operations/lib/rendered-markdown.mjs"
+      },
+      {
+        "id": "repository-license",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "LICENSE",
+        "guidance": "guidance/repository-license.md",
+        "rules": "rules/repository-license.md"
+      },
+      {
+        "id": "repository-readme",
+        "checks": [
+          {
+            "id": "repository-readme-structure",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-repository-readme.mjs",
+              "resources": [
+                "operations/lib/entry-document.mjs",
+                "operations/lib/rendered-markdown.mjs",
+                "operations/lib/local-markdown-links.mjs",
+                "vendor/marked",
+                "vendor/parse5"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "file",
+        "target": "README.md",
+        "guidance": "guidance/repository-readme.md",
+        "rules": "rules/repository-readme.md"
+      },
+      {
+        "id": "skill-babysit",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "babysit",
+        "source": ".agents/skills/babysit"
+      },
+      {
+        "id": "skill-code-review",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "code-review",
+        "source": ".agents/skills/code-review"
+      },
+      {
+        "id": "skill-codebase-design",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "codebase-design",
+        "source": ".agents/skills/codebase-design"
+      },
+      {
+        "id": "skill-diagnosing-bugs",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "diagnosing-bugs",
+        "source": ".agents/skills/diagnosing-bugs"
+      },
+      {
+        "id": "skill-domain-modeling",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "domain-modeling",
+        "source": ".agents/skills/domain-modeling"
+      },
+      {
+        "id": "skill-factory",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "factory",
+        "source": ".agents/skills/factory"
+      },
+      {
+        "id": "skill-grill-with-docs",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "grill-with-docs",
+        "source": ".agents/skills/grill-with-docs"
+      },
+      {
+        "id": "skill-grilling",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "grilling",
+        "source": ".agents/skills/grilling"
+      },
+      {
+        "id": "skill-implement",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "implement",
+        "source": ".agents/skills/implement"
+      },
+      {
+        "id": "skill-improve-codebase-architecture",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "improve-codebase-architecture",
+        "source": ".agents/skills/improve-codebase-architecture"
+      },
+      {
+        "id": "skill-orchestrate",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "orchestrate",
+        "source": ".agents/skills/orchestrate"
+      },
+      {
+        "id": "skill-pr",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "pr",
+        "source": ".agents/skills/pr"
+      },
+      {
+        "id": "skill-prototype",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "prototype",
+        "source": ".agents/skills/prototype"
+      },
+      {
+        "id": "skill-research",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "research",
+        "source": ".agents/skills/research"
+      },
+      {
+        "id": "skill-tdd",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "tdd",
+        "source": ".agents/skills/tdd"
+      },
+      {
+        "id": "skill-to-spec",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "to-spec",
+        "source": ".agents/skills/to-spec"
+      },
+      {
+        "id": "skill-to-tickets",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "to-tickets",
+        "source": ".agents/skills/to-tickets"
+      },
+      {
+        "id": "skill-triage",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "triage",
+        "source": ".agents/skills/triage"
+      },
+      {
+        "id": "skill-wayfinder",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "wayfinder",
+        "source": ".agents/skills/wayfinder"
+      },
+      {
+        "id": "skill-writing-for-agents",
+        "checks": [],
+        "fixes": [],
+        "kind": "skill",
+        "name": "writing-for-agents",
+        "source": ".agents/skills/writing-for-agents"
+      },
+      {
+        "id": "specification-template",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/ISSUE_TEMPLATE/specification.yml",
+        "exact": ".github/ISSUE_TEMPLATE/specification.yml"
+      },
+      {
+        "id": "standards-update-workflow",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": ".github/workflows/standards-update.yml",
+        "exact": ".github/workflows/standards-update.yml"
+      },
+      {
+        "id": "triage-label-configuration",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "docs/agents/triage-labels.md",
+        "exact": "docs/agents/triage-labels.md"
+      },
+      {
+        "id": "typescript-astro-stack",
+        "checks": [
+          {
+            "id": "typescript-astro-stack-manifests",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-typescript-astro-stack.mjs",
+              "resources": [
+                "operations/lib/typescript-node-stack.mjs",
+                "operations/lib/stack-files.mjs",
+                "operations/lib/typescript-web-stack.mjs",
+                "operations/lib/stack-check.mjs",
+                "operations/lib/local-markdown-links.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/typescript-astro-stack.md",
+        "rules": "rules/typescript-web-stacks.md",
+        "discovery": "discovery/typescript-astro-stack.md",
+        "discovery-script": {
+          "run": {
+            "executable": "node",
+            "script": "discovery/draft-typescript-astro-stack-scope.mjs",
+            "resources": [
+              "operations/lib/typescript-node-stack.mjs",
+              "operations/lib/stack-files.mjs",
+              "operations/lib/typescript-web-stack.mjs",
+              "operations/lib/stack-scope.mjs",
+              "operations/lib/local-markdown-links.mjs"
+            ],
+            "arguments": []
+          },
+          "prerequisite": {
+            "version-arguments": [
+              "--version"
+            ],
+            "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          },
+          "timeout-seconds": 60
+        },
+        "optional": true
+      },
+      {
+        "id": "typescript-node-stack",
+        "checks": [
+          {
+            "id": "typescript-node-stack-manifests",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-typescript-node-stack.mjs",
+              "resources": [
+                "operations/lib/typescript-node-stack.mjs",
+                "operations/lib/local-markdown-links.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/typescript-node-stack.md",
+        "rules": "rules/typescript-node-stack.md",
+        "discovery": "discovery/typescript-node-stack.md",
+        "discovery-script": {
+          "run": {
+            "executable": "node",
+            "script": "discovery/draft-typescript-node-stack-scope.mjs",
+            "resources": [
+              "operations/lib/typescript-node-stack.mjs",
+              "operations/lib/stack-files.mjs",
+              "operations/lib/typescript-web-stack.mjs",
+              "operations/lib/stack-scope.mjs",
+              "operations/lib/local-markdown-links.mjs"
+            ],
+            "arguments": []
+          },
+          "prerequisite": {
+            "version-arguments": [
+              "--version"
+            ],
+            "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          },
+          "timeout-seconds": 60
+        },
+        "optional": true
+      },
+      {
+        "id": "typescript-vite-stack",
+        "checks": [
+          {
+            "id": "typescript-vite-stack-manifests",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-typescript-vite-stack.mjs",
+              "resources": [
+                "operations/lib/typescript-node-stack.mjs",
+                "operations/lib/stack-files.mjs",
+                "operations/lib/typescript-web-stack.mjs",
+                "operations/lib/stack-check.mjs",
+                "operations/lib/local-markdown-links.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          }
+        ],
+        "fixes": [],
+        "kind": "repository",
+        "guidance": "guidance/typescript-vite-stack.md",
+        "rules": "rules/typescript-web-stacks.md",
+        "discovery": "discovery/typescript-vite-stack.md",
+        "discovery-script": {
+          "run": {
+            "executable": "node",
+            "script": "discovery/draft-typescript-vite-stack-scope.mjs",
+            "resources": [
+              "operations/lib/typescript-node-stack.mjs",
+              "operations/lib/stack-files.mjs",
+              "operations/lib/typescript-web-stack.mjs",
+              "operations/lib/stack-scope.mjs",
+              "operations/lib/local-markdown-links.mjs"
+            ],
+            "arguments": []
+          },
+          "prerequisite": {
+            "version-arguments": [
+              "--version"
+            ],
+            "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          },
+          "timeout-seconds": 60
+        },
+        "optional": true
+      },
+      {
+        "id": "validator-command",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/validate.mjs",
+        "exact": "scripts/validate.mjs"
+      }
+    ]
+  },
+  "discovery": {
+    "identity": "sha256:253ea9d6ab26ef4076a7462dab16f9c050c6581ce9b759043942815f2950320f",
+    "proposal": {
+      "format": "repo-standards/scope/v2",
+      "declarations": [
+        {
+          "id": "documentation",
+          "coverage": "Drafted from the repository tree by `discovery/draft-documentation-scope.mjs`: every file Git keeps under the documentation root `docs`, a new index for each of its directories without one, the development guide, and the domain glossaries and context maps the rules identify. Paths other declarations own are left out, and so is each README.md outside the documentation roots. Link-repair files and move destinations enter when the work needs them. The earlier moves into docs/development and docs/usage are complete, so the old paths are gone. Installed skill Markdown under .agents stays skill material, not project documentation.",
+          "candidates": [
+            {
+              "path": ".agents/skills/frontend-design/SKILL.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/frontend-design/SKILL.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/SKILL.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/SKILL.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/change-kinds.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/change-kinds.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/contract-changes.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/contract-changes.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/conventions.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/conventions.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/escalation.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/escalation.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/extraction.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/extraction.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/materialization.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/materialization.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/overview.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/overview.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/scoping.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/scoping.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/validation.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/validation.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/implementation-governance/references/workflow.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/implementation-governance/references/workflow.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/SKILL.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/SKILL.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/boundary-cases.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/boundary-cases.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/classification.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/classification.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/extraction.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/extraction.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/overview.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/overview.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/ownership.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/ownership.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/packaging.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/packaging.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/patterns.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/patterns.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/roles.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/roles.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/react-component-governance/references/workflow.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/react-component-governance/references/workflow.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/SKILL.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/SKILL.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/cli.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/cli.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/customization.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/customization.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/mcp.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/mcp.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/registry.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/registry.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/rules/base-vs-radix.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/rules/base-vs-radix.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/rules/chat.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/rules/chat.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/rules/composition.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/rules/composition.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/rules/forms.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/rules/forms.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/rules/icons.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/rules/icons.md"
+              ]
+            },
+            {
+              "path": ".agents/skills/shadcn/rules/styling.md",
+              "decision": "exclude",
+              "reason": "Executable skill instructions or skill reference material, not project documentation.",
+              "evidence": [
+                ".agents/skills/shadcn/rules/styling.md"
+              ]
+            },
+            {
+              "path": "docs/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/README.md"
+              ]
+            },
+            {
+              "path": "docs/agents/README.md",
+              "decision": "exclude",
+              "reason": "Owned by the `agent-configuration-index` declaration.",
+              "evidence": [
+                "docs/agents/README.md"
+              ]
+            },
+            {
+              "path": "docs/agents/domain.md",
+              "decision": "exclude",
+              "reason": "Owned by the `domain-configuration` declaration.",
+              "evidence": [
+                "docs/agents/domain.md"
+              ]
+            },
+            {
+              "path": "docs/agents/issue-tracker.md",
+              "decision": "exclude",
+              "reason": "Owned by the `issue-tracker-configuration` declaration.",
+              "evidence": [
+                "docs/agents/issue-tracker.md"
+              ]
+            },
+            {
+              "path": "docs/agents/triage-labels.md",
+              "decision": "exclude",
+              "reason": "Owned by the `triage-label-configuration` declaration.",
+              "evidence": [
+                "docs/agents/triage-labels.md"
+              ]
+            },
+            {
+              "path": "docs/development/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/README.md"
+              ]
+            },
+            {
+              "path": "docs/development/architecture/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/architecture/README.md"
+              ]
+            },
+            {
+              "path": "docs/development/architecture/architecture.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/architecture/architecture.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/README.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/decision.template.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/decision.template.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/explanation.template.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/explanation.template.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/how-to.template.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/how-to.template.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/index.template.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/index.template.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/reference.template.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/reference.template.md"
+              ]
+            },
+            {
+              "path": "docs/development/templates/tutorial.template.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/development/templates/tutorial.template.md"
+              ]
+            },
+            {
+              "path": "docs/usage/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/usage/README.md"
+              ]
+            },
+            {
+              "path": "docs/usage/guides/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/usage/guides/README.md"
+              ]
+            },
+            {
+              "path": "docs/usage/guides/run-locally.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/usage/guides/run-locally.md"
+              ]
+            },
+            {
+              "path": "docs/usage/reference/README.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/usage/reference/README.md"
+              ]
+            },
+            {
+              "path": "docs/usage/reference/live-feed.md",
+              "decision": "include",
+              "reason": "A file under the documentation root `docs`.",
+              "evidence": [
+                "docs/usage/reference/live-feed.md"
+              ]
+            }
+          ],
+          "unresolved": []
+        },
+        {
+          "id": "factory-workflow",
+          "coverage": "Repository-wide factory delivery rules and contextual Node 24 / pnpm 11 toolchain. Direct bootstrap now; L0 separately activates host. No content paths.",
+          "candidates": [],
+          "unresolved": []
+        },
+        {
+          "id": "github-repository-configuration",
+          "coverage": "Remote GitHub setup for lutzseverino/minecraft-stream-guard-site is authorized by the adoption request. No project-content paths. Public repository; repository REPO_CANON_RUNS_ON absent (unset); personal account has no inherited organization runner variable.",
+          "candidates": [],
+          "unresolved": []
+        },
+        {
+          "id": "project-readmes",
+          "coverage": "One standalone root App uses the repository README. src subdirectories only organize its code; scripts/check-docs.mjs is internal validation, not an independent Project. No non-root Projects.",
+          "candidates": [],
+          "unresolved": []
+        },
+        {
+          "id": "typescript-astro-stack",
+          "coverage": "Drafted from manifests and workspace configuration by `discovery/draft-typescript-astro-stack-scope.mjs`: one `package.json` per Project, included when it matches the stack's manifest facts and excluded naming its differences otherwise. A maintained workspace root package is a Project alongside its members; a shared-only root is not. Uncertain root membership stays unresolved. A root package without workspace members is a Project. No Project is included in this draft, so it proposes no scope; unresolved questions must be settled before confirming membership.",
+          "candidates": [
+            {
+              "path": "package.json",
+              "decision": "exclude",
+              "reason": "Standalone root App: a client-rendered Vite 8 / React 19 stream wall (src/App.tsx, stream-wall-page.tsx) whose stream selection, focused playback and keyboard interactions are client state, not a content Site; owner classification as an App settled on lutzseverino/repo-canon#560 and recorded in #9's Agent Brief. It is not an Astro Site; it belongs to typescript-vite-stack.",
+              "evidence": [
+                ".github/workflows/ci.yml",
+                "README.md",
+                "components.json",
+                "index.html",
+                "package.json",
+                "pnpm-lock.yaml",
+                "registry-manifest.json",
+                "src/App.tsx",
+                "src/main.tsx",
+                "src/pages/stream-wall/stream-embed.tsx",
+                "src/pages/stream-wall/stream-tile.tsx",
+                "src/pages/stream-wall/stream-wall-page.tsx",
+                "src/theme/ThemeProvider.tsx",
+                "vite.config.ts"
+              ]
+            }
+          ],
+          "unresolved": [],
+          "noScope": true
+        },
+        {
+          "id": "typescript-node-stack",
+          "coverage": "Drafted from manifests and workspace configuration by `discovery/draft-typescript-node-stack-scope.mjs`: one `package.json` per Project, included when it matches the stack's manifest facts and excluded naming its differences otherwise. A maintained workspace root package is a Project alongside its members; a shared-only root is not. Uncertain root membership stays unresolved. A root package without workspace members is a Project. No Project is included in this draft, so it proposes no scope; unresolved questions must be settled before confirming membership.",
+          "candidates": [
+            {
+              "path": "package.json",
+              "decision": "exclude",
+              "reason": "Standalone root App: a client-rendered Vite 8 / React 19 stream wall (src/App.tsx, stream-wall-page.tsx) whose stream selection, focused playback and keyboard interactions are client state, not a content Site; owner classification as an App settled on lutzseverino/repo-canon#560 and recorded in #9's Agent Brief. It is not a Node Project; it belongs to typescript-vite-stack.",
+              "evidence": [
+                ".github/workflows/ci.yml",
+                "README.md",
+                "components.json",
+                "index.html",
+                "package.json",
+                "pnpm-lock.yaml",
+                "registry-manifest.json",
+                "src/App.tsx",
+                "src/main.tsx",
+                "src/pages/stream-wall/stream-embed.tsx",
+                "src/pages/stream-wall/stream-tile.tsx",
+                "src/pages/stream-wall/stream-wall-page.tsx",
+                "src/theme/ThemeProvider.tsx",
+                "vite.config.ts"
+              ]
+            }
+          ],
+          "unresolved": [],
+          "noScope": true
+        },
+        {
+          "id": "typescript-vite-stack",
+          "coverage": "Drafted from manifests and workspace configuration by `discovery/draft-typescript-vite-stack-scope.mjs`: one `package.json` per Project, included when it matches the stack's manifest facts and excluded naming its differences otherwise. A maintained workspace root package is a Project alongside its members; a shared-only root is not. Uncertain root membership stays unresolved. A root package without workspace members is a Project. The root package is the App's only Project and is included after #16 moved it onto the stack.",
+          "candidates": [
+            {
+              "path": "package.json",
+              "decision": "include",
+              "reason": "Standalone root App: a client-rendered Vite 8 / React 19 stream wall (src/App.tsx, stream-wall-page.tsx) whose stream selection, focused playback and keyboard interactions are client state, not a content Site; owner classification as an App settled on lutzseverino/repo-canon#560 and recorded in #9's Agent Brief. After #16 it uses pnpm 11.28.9, Node ^24 || ^26, TypeScript 7, Vitest 5, oxlint 1, Prettier 3, Tailwind 4, an exact shadcn 4.23.0 devDependency with base-nova, ui:add/ui:update/ui:check and a validate aggregate.",
+              "evidence": [
+                ".github/workflows/ci.yml",
+                "README.md",
+                "components.json",
+                "index.html",
+                "package.json",
+                "pnpm-lock.yaml",
+                "registry-manifest.json",
+                "src/App.tsx",
+                "src/main.tsx",
+                "src/pages/stream-wall/stream-embed.tsx",
+                "src/pages/stream-wall/stream-tile.tsx",
+                "src/pages/stream-wall/stream-wall-page.tsx",
+                "src/theme/ThemeProvider.tsx",
+                "vite.config.ts"
+              ]
+            }
+          ],
+          "unresolved": []
+        }
+      ]
+    },
+    "absence": [],
+    "named": {
+      "targets": {
+        "docs/README.md": {
+          "type": "file",
+          "sha256": "fd9043d9da82ef11ef34807d39ce2f497f4274b08eccd83c5b9b7a82124a0317",
+          "executable": false
+        },
+        "docs/development/README.md": {
+          "type": "file",
+          "sha256": "96fd5d2aaa78e42b1405060d36285a74664896eb55f2015e5c2edf4f0639e131",
+          "executable": false
+        },
+        "docs/development/architecture/README.md": {
+          "type": "file",
+          "sha256": "3ed8222b86e5674dcbc49f6190470e9e10fe7ff34fae039b0b2b99f439976950",
+          "executable": false
+        },
+        "docs/development/architecture/architecture.md": {
+          "type": "file",
+          "sha256": "a6e1b34f750f1b30eb16b263d815166e0f272f83c14b59912e61f43197387848",
+          "executable": false
+        },
+        "docs/development/templates/README.md": {
+          "type": "file",
+          "sha256": "a80ed31c14f3f8d90d272c009752ab3d6fa3816e8932982d60140043d0d85274",
+          "executable": false
+        },
+        "docs/development/templates/decision.template.md": {
+          "type": "file",
+          "sha256": "7eec18ee96ac660ff2ace9e25d889cc03a008517edddefcb05e15ad5e69c104d",
+          "executable": false
+        },
+        "docs/development/templates/explanation.template.md": {
+          "type": "file",
+          "sha256": "a728209a8673ddd6e38cb08177aceb7e7a940ab86cbdb22b7c9c0ed2061bc921",
+          "executable": false
+        },
+        "docs/development/templates/how-to.template.md": {
+          "type": "file",
+          "sha256": "6f25f76a9feaee4f54f195ca8c5574a8f51bdf46ef06911ada14fb03aeed14ee",
+          "executable": false
+        },
+        "docs/development/templates/index.template.md": {
+          "type": "file",
+          "sha256": "9bbe7c193104a2c73d93d0c3389745f73e571bc4aa5ee34dd44a9772a2732d7f",
+          "executable": false
+        },
+        "docs/development/templates/reference.template.md": {
+          "type": "file",
+          "sha256": "4e88f2ff02c0ff8191a8039381aac0dd5d73b9f0e0e1dc2e573080e4e41f4d41",
+          "executable": false
+        },
+        "docs/development/templates/tutorial.template.md": {
+          "type": "file",
+          "sha256": "248aaeb4ed190a3b6254831a7978942d4ed4dc4ad3e239a19810d263a662103a",
+          "executable": false
+        },
+        "docs/usage/README.md": {
+          "type": "file",
+          "sha256": "2655f7b7d1b2b6ab63e820058f2e62e97dadf337fe68bcc92147fc9eb23cbdf2",
+          "executable": false
+        },
+        "docs/usage/guides/README.md": {
+          "type": "file",
+          "sha256": "fd5f3905a3da73e2e0a03473e9356374fcba6eaeaa4ec50e07b425943bbb2680",
+          "executable": false
+        },
+        "docs/usage/guides/run-locally.md": {
+          "type": "file",
+          "sha256": "bf36529c84b6a8c320d7954b029f84b7a000a6fa482a1d6e13114a4f6418249e",
+          "executable": false
+        },
+        "docs/usage/reference/README.md": {
+          "type": "file",
+          "sha256": "885a1484617792c7b695cfd61773fe1df44709039ad1669a8b7532d13ccd1972",
+          "executable": false
+        },
+        "docs/usage/reference/live-feed.md": {
+          "type": "file",
+          "sha256": "8e93d6e48ce92c50f0ea1c186adb2296026db913942fbc77044a0fda15a42b06",
+          "executable": false
+        },
+        "package.json": {
+          "type": "file",
+          "sha256": "d570774eb4ca6544c2f28d17861a515e484db46dfd733dcdc35bedcddf0e1850",
+          "executable": false
+        }
+      }
+    },
+    "drafts": [
+      {
+        "id": "documentation",
+        "coverage": "Drafted from the repository tree by `discovery/draft-documentation-scope.mjs`: every file Git keeps under the documentation root `docs`, a new index for each of its directories without one, the development guide, and the domain glossaries and context maps the rules identify. Paths other declarations own are left out, and so is each README.md outside the documentation roots. Link-repair files and move destinations enter when the work needs them.",
+        "candidates": [
+          {
+            "path": "docs/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/README.md"
+            ]
+          },
+          {
+            "path": "docs/agents/README.md",
+            "decision": "exclude",
+            "reason": "Owned by the `agent-configuration-index` declaration.",
+            "evidence": [
+              "docs/agents/README.md"
+            ]
+          },
+          {
+            "path": "docs/agents/domain.md",
+            "decision": "exclude",
+            "reason": "Owned by the `domain-configuration` declaration.",
+            "evidence": [
+              "docs/agents/domain.md"
+            ]
+          },
+          {
+            "path": "docs/agents/issue-tracker.md",
+            "decision": "exclude",
+            "reason": "Owned by the `issue-tracker-configuration` declaration.",
+            "evidence": [
+              "docs/agents/issue-tracker.md"
+            ]
+          },
+          {
+            "path": "docs/agents/triage-labels.md",
+            "decision": "exclude",
+            "reason": "Owned by the `triage-label-configuration` declaration.",
+            "evidence": [
+              "docs/agents/triage-labels.md"
+            ]
+          },
+          {
+            "path": "docs/development/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/README.md"
+            ]
+          },
+          {
+            "path": "docs/development/architecture/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/architecture/README.md"
+            ]
+          },
+          {
+            "path": "docs/development/architecture/architecture.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/architecture/architecture.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/README.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/decision.template.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/decision.template.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/explanation.template.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/explanation.template.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/how-to.template.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/how-to.template.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/index.template.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/index.template.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/reference.template.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/reference.template.md"
+            ]
+          },
+          {
+            "path": "docs/development/templates/tutorial.template.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/templates/tutorial.template.md"
+            ]
+          },
+          {
+            "path": "docs/usage/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/usage/README.md"
+            ]
+          },
+          {
+            "path": "docs/usage/guides/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/usage/guides/README.md"
+            ]
+          },
+          {
+            "path": "docs/usage/guides/run-locally.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/usage/guides/run-locally.md"
+            ]
+          },
+          {
+            "path": "docs/usage/reference/README.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/usage/reference/README.md"
+            ]
+          },
+          {
+            "path": "docs/usage/reference/live-feed.md",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/usage/reference/live-feed.md"
+            ]
+          }
+        ],
+        "unresolved": [
+          "Which of these Markdown files under `.agents` are documentation this scope must cover, such as a document to move into a documentation category: `.agents/skills/frontend-design/SKILL.md`, `.agents/skills/implementation-governance/SKILL.md`, `.agents/skills/implementation-governance/references/change-kinds.md`, `.agents/skills/implementation-governance/references/contract-changes.md`, `.agents/skills/implementation-governance/references/conventions.md`, `.agents/skills/implementation-governance/references/escalation.md`, `.agents/skills/implementation-governance/references/extraction.md`, `.agents/skills/implementation-governance/references/materialization.md`, `.agents/skills/implementation-governance/references/overview.md`, `.agents/skills/implementation-governance/references/scoping.md`, `.agents/skills/implementation-governance/references/validation.md`, `.agents/skills/implementation-governance/references/workflow.md`, `.agents/skills/react-component-governance/SKILL.md`, `.agents/skills/react-component-governance/references/boundary-cases.md`, `.agents/skills/react-component-governance/references/classification.md`, `.agents/skills/react-component-governance/references/extraction.md`, `.agents/skills/react-component-governance/references/overview.md`, `.agents/skills/react-component-governance/references/ownership.md`, `.agents/skills/react-component-governance/references/packaging.md`, `.agents/skills/react-component-governance/references/patterns.md`, `.agents/skills/react-component-governance/references/roles.md`, `.agents/skills/react-component-governance/references/workflow.md`, `.agents/skills/shadcn/SKILL.md`, `.agents/skills/shadcn/cli.md`, `.agents/skills/shadcn/customization.md`, `.agents/skills/shadcn/mcp.md`, `.agents/skills/shadcn/registry.md`, `.agents/skills/shadcn/rules/base-vs-radix.md`, `.agents/skills/shadcn/rules/chat.md`, `.agents/skills/shadcn/rules/composition.md`, `.agents/skills/shadcn/rules/forms.md`, `.agents/skills/shadcn/rules/icons.md`, and `.agents/skills/shadcn/rules/styling.md`? Include each one, with its destination when it moves."
+        ]
+      },
+      {
+        "id": "typescript-astro-stack",
+        "coverage": "Drafted from manifests and workspace configuration by `discovery/draft-typescript-astro-stack-scope.mjs`: one `package.json` per Project, included when it matches the stack's manifest facts and excluded naming its differences otherwise. A maintained workspace root package is a Project alongside its members; a shared-only root is not. Uncertain root membership stays unresolved. A root package without workspace members is a Project. No Project is included in this draft, so it proposes no scope; unresolved questions must be settled before confirming membership.",
+        "candidates": [
+          {
+            "path": "package.json",
+            "decision": "exclude",
+            "reason": "Web candidate membership is unresolved: framework tools alone do not distinguish a Site from an App or select a stack. Do not use Node as a fallback.",
+            "evidence": [
+              ".agents/skills/babysit/body-links.mjs",
+              ".agents/skills/babysit/merge.mjs",
+              ".agents/skills/babysit/platform.mjs",
+              ".agents/skills/babysit/pull-request-reviewer.mjs",
+              ".agents/skills/babysit/request.mjs",
+              ".agents/skills/babysit/review-outcome.mjs",
+              ".agents/skills/babysit/review-policy.mjs",
+              ".agents/skills/babysit/reviewer.mjs",
+              ".agents/skills/babysit/trusted-review-config.mjs",
+              ".agents/skills/babysit/wait.mjs",
+              ".agents/skills/orchestrate/wait.mjs",
+              ".agents/skills/triage/ready.mjs",
+              ".github/scripts/validate-pr-metadata.mjs",
+              ".github/scripts/validate.mjs",
+              "README.md",
+              "dependency-cruiser.cjs",
+              "index.html",
+              "operations/lib/rendered-markdown.mjs",
+              "package.json",
+              "scripts/check-docs.mjs",
+              "scripts/ui-registry.mjs",
+              "scripts/ui-registry.test.mjs",
+              "scripts/validate-issue-contract.mjs",
+              "scripts/validate.mjs",
+              "src/App.tsx",
+              "src/api/embeds.test.ts",
+              "src/api/embeds.ts",
+              "src/api/live-feed.test.ts",
+              "src/api/live-feed.ts",
+              "src/components/app/app-button.tsx",
+              "src/components/app/app-icon-button.tsx",
+              "src/components/app/app-tooltip.tsx",
+              "src/components/custom/provider-glyph.tsx",
+              "src/components/ui/button.tsx",
+              "src/components/ui/tooltip.tsx",
+              "src/lib/utils.ts",
+              "src/main.tsx",
+              "src/pages/stream-wall/color-bars.tsx",
+              "src/pages/stream-wall/demo-feed.ts",
+              "src/pages/stream-wall/format.ts",
+              "src/pages/stream-wall/screen-overlay.tsx",
+              "src/pages/stream-wall/station-ident.tsx",
+              "src/pages/stream-wall/stream-embed.tsx",
+              "src/pages/stream-wall/stream-layout.test.ts",
+              "src/pages/stream-wall/stream-layout.ts",
+              "src/pages/stream-wall/stream-tile.tsx",
+              "src/pages/stream-wall/stream-wall-page.tsx",
+              "src/pages/stream-wall/tally-light.tsx",
+              "src/pages/stream-wall/use-live-feed.ts",
+              "src/pages/stream-wall/use-viewport-aspect.ts",
+              "src/pages/stream-wall/wall-status-screen.tsx",
+              "src/theme/ThemeProvider.tsx",
+              "src/vite-env.d.ts",
+              "vite.config.ts"
+            ]
+          }
+        ],
+        "unresolved": [
+          "Settle web membership of `package.json` from repository evidence; Web candidate membership is unresolved: framework tools alone do not distinguish a Site from an App or select a stack."
+        ],
+        "noScope": true
+      },
+      {
+        "id": "typescript-node-stack",
+        "coverage": "Drafted from manifests and workspace configuration by `discovery/draft-typescript-node-stack-scope.mjs`: one `package.json` per Project, included when it matches the stack's manifest facts and excluded naming its differences otherwise. A maintained workspace root package is a Project alongside its members; a shared-only root is not. Uncertain root membership stays unresolved. A root package without workspace members is a Project. No Project is included in this draft, so it proposes no scope; unresolved questions must be settled before confirming membership.",
+        "candidates": [
+          {
+            "path": "package.json",
+            "decision": "exclude",
+            "reason": "Web candidate membership is unresolved: framework tools alone do not distinguish a Site from an App or select a stack. Do not use Node as a fallback.",
+            "evidence": [
+              ".agents/skills/babysit/body-links.mjs",
+              ".agents/skills/babysit/merge.mjs",
+              ".agents/skills/babysit/platform.mjs",
+              ".agents/skills/babysit/pull-request-reviewer.mjs",
+              ".agents/skills/babysit/request.mjs",
+              ".agents/skills/babysit/review-outcome.mjs",
+              ".agents/skills/babysit/review-policy.mjs",
+              ".agents/skills/babysit/reviewer.mjs",
+              ".agents/skills/babysit/trusted-review-config.mjs",
+              ".agents/skills/babysit/wait.mjs",
+              ".agents/skills/orchestrate/wait.mjs",
+              ".agents/skills/triage/ready.mjs",
+              ".github/scripts/validate-pr-metadata.mjs",
+              ".github/scripts/validate.mjs",
+              "README.md",
+              "dependency-cruiser.cjs",
+              "index.html",
+              "operations/lib/rendered-markdown.mjs",
+              "package.json",
+              "scripts/check-docs.mjs",
+              "scripts/ui-registry.mjs",
+              "scripts/ui-registry.test.mjs",
+              "scripts/validate-issue-contract.mjs",
+              "scripts/validate.mjs",
+              "src/App.tsx",
+              "src/api/embeds.test.ts",
+              "src/api/embeds.ts",
+              "src/api/live-feed.test.ts",
+              "src/api/live-feed.ts",
+              "src/components/app/app-button.tsx",
+              "src/components/app/app-icon-button.tsx",
+              "src/components/app/app-tooltip.tsx",
+              "src/components/custom/provider-glyph.tsx",
+              "src/components/ui/button.tsx",
+              "src/components/ui/tooltip.tsx",
+              "src/lib/utils.ts",
+              "src/main.tsx",
+              "src/pages/stream-wall/color-bars.tsx",
+              "src/pages/stream-wall/demo-feed.ts",
+              "src/pages/stream-wall/format.ts",
+              "src/pages/stream-wall/screen-overlay.tsx",
+              "src/pages/stream-wall/station-ident.tsx",
+              "src/pages/stream-wall/stream-embed.tsx",
+              "src/pages/stream-wall/stream-layout.test.ts",
+              "src/pages/stream-wall/stream-layout.ts",
+              "src/pages/stream-wall/stream-tile.tsx",
+              "src/pages/stream-wall/stream-wall-page.tsx",
+              "src/pages/stream-wall/tally-light.tsx",
+              "src/pages/stream-wall/use-live-feed.ts",
+              "src/pages/stream-wall/use-viewport-aspect.ts",
+              "src/pages/stream-wall/wall-status-screen.tsx",
+              "src/theme/ThemeProvider.tsx",
+              "src/vite-env.d.ts",
+              "vite.config.ts"
+            ]
+          }
+        ],
+        "unresolved": [
+          "Settle web membership of `package.json` from repository evidence; Web candidate membership is unresolved: framework tools alone do not distinguish a Site from an App or select a stack."
+        ],
+        "noScope": true
+      },
+      {
+        "id": "typescript-vite-stack",
+        "coverage": "Drafted from manifests and workspace configuration by `discovery/draft-typescript-vite-stack-scope.mjs`: one `package.json` per Project, included when it matches the stack's manifest facts and excluded naming its differences otherwise. A maintained workspace root package is a Project alongside its members; a shared-only root is not. Uncertain root membership stays unresolved. A root package without workspace members is a Project. No Project is included in this draft, so it proposes no scope; unresolved questions must be settled before confirming membership.",
+        "candidates": [
+          {
+            "path": "package.json",
+            "decision": "exclude",
+            "reason": "Web candidate membership is unresolved: framework tools alone do not distinguish a Site from an App or select a stack. Do not use Node as a fallback.",
+            "evidence": [
+              ".agents/skills/babysit/body-links.mjs",
+              ".agents/skills/babysit/merge.mjs",
+              ".agents/skills/babysit/platform.mjs",
+              ".agents/skills/babysit/pull-request-reviewer.mjs",
+              ".agents/skills/babysit/request.mjs",
+              ".agents/skills/babysit/review-outcome.mjs",
+              ".agents/skills/babysit/review-policy.mjs",
+              ".agents/skills/babysit/reviewer.mjs",
+              ".agents/skills/babysit/trusted-review-config.mjs",
+              ".agents/skills/babysit/wait.mjs",
+              ".agents/skills/orchestrate/wait.mjs",
+              ".agents/skills/triage/ready.mjs",
+              ".github/scripts/validate-pr-metadata.mjs",
+              ".github/scripts/validate.mjs",
+              "README.md",
+              "dependency-cruiser.cjs",
+              "index.html",
+              "operations/lib/rendered-markdown.mjs",
+              "package.json",
+              "scripts/check-docs.mjs",
+              "scripts/ui-registry.mjs",
+              "scripts/ui-registry.test.mjs",
+              "scripts/validate-issue-contract.mjs",
+              "scripts/validate.mjs",
+              "src/App.tsx",
+              "src/api/embeds.test.ts",
+              "src/api/embeds.ts",
+              "src/api/live-feed.test.ts",
+              "src/api/live-feed.ts",
+              "src/components/app/app-button.tsx",
+              "src/components/app/app-icon-button.tsx",
+              "src/components/app/app-tooltip.tsx",
+              "src/components/custom/provider-glyph.tsx",
+              "src/components/ui/button.tsx",
+              "src/components/ui/tooltip.tsx",
+              "src/lib/utils.ts",
+              "src/main.tsx",
+              "src/pages/stream-wall/color-bars.tsx",
+              "src/pages/stream-wall/demo-feed.ts",
+              "src/pages/stream-wall/format.ts",
+              "src/pages/stream-wall/screen-overlay.tsx",
+              "src/pages/stream-wall/station-ident.tsx",
+              "src/pages/stream-wall/stream-embed.tsx",
+              "src/pages/stream-wall/stream-layout.test.ts",
+              "src/pages/stream-wall/stream-layout.ts",
+              "src/pages/stream-wall/stream-tile.tsx",
+              "src/pages/stream-wall/stream-wall-page.tsx",
+              "src/pages/stream-wall/tally-light.tsx",
+              "src/pages/stream-wall/use-live-feed.ts",
+              "src/pages/stream-wall/use-viewport-aspect.ts",
+              "src/pages/stream-wall/wall-status-screen.tsx",
+              "src/theme/ThemeProvider.tsx",
+              "src/vite-env.d.ts",
+              "vite.config.ts"
+            ]
+          }
+        ],
+        "unresolved": [
+          "Settle web membership of `package.json` from repository evidence; Web candidate membership is unresolved: framework tools alone do not distinguish a Site from an App or select a stack."
+        ],
+        "noScope": true
+      }
+    ],
+    "declarations": [
+      {
+        "id": "documentation",
+        "source": "discovery/documentation.md",
+        "sha256": "6ddffc023dfc46f7d11f292a245f8b9ffeffb77dff2f102baa20256af1dc8bfc",
+        "executable": false
+      },
+      {
+        "id": "factory-workflow",
+        "source": "discovery/factory-workflow.md",
+        "sha256": "6f8e546cfa909fd4fd090d8555de882d8a786975c088d649a490192f30ad3b7a",
+        "executable": false
+      },
+      {
+        "id": "github-repository-configuration",
+        "source": "discovery/github-repository-configuration.md",
+        "sha256": "05f27e38f22870239eac4f15f63d9ff758c87ff3c8c5098dc7b8cd66a5685616",
+        "executable": false
+      },
+      {
+        "id": "project-readmes",
+        "source": "discovery/project-readmes.md",
+        "sha256": "a2cf9e7206712b7b169ebcf901d40ded7fa655100b3afbcf825296e46291b47a",
+        "executable": false
+      },
+      {
+        "id": "typescript-astro-stack",
+        "source": "discovery/typescript-astro-stack.md",
+        "sha256": "2c41b18bc7757bc2f6b4f26cdebec67f8c9c70b25ac636562a27843d8ba4c615",
+        "executable": false
+      },
+      {
+        "id": "typescript-node-stack",
+        "source": "discovery/typescript-node-stack.md",
+        "sha256": "d23ae9513f022862a8be9be8d8ca30ced7ed8febef21a27ab3b3e34cbfeba937",
+        "executable": false
+      },
+      {
+        "id": "typescript-vite-stack",
+        "source": "discovery/typescript-vite-stack.md",
+        "sha256": "d26c9725c371c74235feef40d4cfae4d6e5c5ad4d6da13e69603155cfe06d03b",
+        "executable": false
+      }
+    ],
+    "observation": {
+      "files": {
+        ".agents/skills/LICENSE.humanlayer-skills": {
+          "type": "file",
+          "sha256": "5f13c18ea00ea5c1384f41745feeca774079164f7f59a92e4ac0899ad217b26f",
+          "executable": false
+        },
+        ".agents/skills/LICENSE.mattpocock-skills": {
+          "type": "file",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+          "executable": false
+        },
+        ".agents/skills/babysit/CREDITS.md": {
+          "type": "file",
+          "sha256": "3e818ff6a36fad53ee4e9c72a190f4c4f8a01d27320561841414a188ad3b286a",
+          "executable": false
+        },
+        ".agents/skills/babysit/SKILL.md": {
+          "type": "file",
+          "sha256": "d5ad872bc16e66f328575704d65abc1cd60ef9b08e8214e6e8023421305292bf",
+          "executable": false
+        },
+        ".agents/skills/babysit/body-links.mjs": {
+          "type": "file",
+          "sha256": "01c984d07a0e1395daa6a111634f8a222b498c5dcb75ce20969699a0f0f7641e",
+          "executable": false
+        },
+        ".agents/skills/babysit/merge.mjs": {
+          "type": "file",
+          "sha256": "52ec42a2592256b82ca2ee3474e93604eaf2d82169dbc8c087bf877bc23551e1",
+          "executable": false
+        },
+        ".agents/skills/babysit/platform.mjs": {
+          "type": "file",
+          "sha256": "fc6fdbf5129dea3335ea340882806d7e9ee908f8b4dc72d10873c7637efc1fe3",
+          "executable": false
+        },
+        ".agents/skills/babysit/pull-request-reviewer.mjs": {
+          "type": "file",
+          "sha256": "d2b3ecf236b1758f299577cfd81ccdec3ec0980e46209fbec0cd06e9060c2f4a",
+          "executable": false
+        },
+        ".agents/skills/babysit/request.mjs": {
+          "type": "file",
+          "sha256": "a293d000f9c190481e345a25bfe01ec7b894f263c0bb03917dde1f35db0b50c7",
+          "executable": false
+        },
+        ".agents/skills/babysit/review-outcome.mjs": {
+          "type": "file",
+          "sha256": "58632b2e8c8de4487204bdd14a5ff2208b6b824b53f49d3aa512ce606e940108",
+          "executable": false
+        },
+        ".agents/skills/babysit/review-policy.mjs": {
+          "type": "file",
+          "sha256": "71d74c31b19e16e066ce58106443b34a6de727c6aa46e171deb1e4069bc03f1c",
+          "executable": false
+        },
+        ".agents/skills/babysit/reviewer.mjs": {
+          "type": "file",
+          "sha256": "580098ac88a2be873d271dd7107cfcb8b0ab1ab059ccb39236f73e4f4eec3508",
+          "executable": false
+        },
+        ".agents/skills/babysit/trusted-review-config.mjs": {
+          "type": "file",
+          "sha256": "25d4cb7bf51366e305d2a741c0ebb4cf6f3dac510f2519e4d0f3977898821dc6",
+          "executable": false
+        },
+        ".agents/skills/babysit/wait.mjs": {
+          "type": "file",
+          "sha256": "f865d885a46d5943823eeca7407fab40bf9d5eea90ab0b5697a18c6d26610f30",
+          "executable": false
+        },
+        ".agents/skills/code-review/CREDITS.md": {
+          "type": "file",
+          "sha256": "a8a1e5930513f2e4500ed539291ac173800a9e0cf55d9284d6fc4cf7cdf40476",
+          "executable": false
+        },
+        ".agents/skills/code-review/SKILL.md": {
+          "type": "file",
+          "sha256": "609b4a6d8e730dcea7ab239b9268160033dd192857587e065b6af716885f7c6f",
+          "executable": false
+        },
+        ".agents/skills/code-review/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "8229ca854e11dc8e6aef2131ee03f31fb1561cf905fab9ccc325180cf3331352",
+          "executable": false
+        },
+        ".agents/skills/codebase-design/CREDITS.md": {
+          "type": "file",
+          "sha256": "0a8a93ed13b6e8b65dd7c59a010c49558a1a670e4eb84b618976d2466e6437bc",
+          "executable": false
+        },
+        ".agents/skills/codebase-design/DEEPENING.md": {
+          "type": "file",
+          "sha256": "f3dd099ce99289bd213914d8ee3e2429b78309c3957ca4583f7659551b1d53c1",
+          "executable": false
+        },
+        ".agents/skills/codebase-design/DESIGN-IT-TWICE.md": {
+          "type": "file",
+          "sha256": "52b52e75655a27aea59c6966b410bac82448968ad46ef1ebb9f07c274e3ae010",
+          "executable": false
+        },
+        ".agents/skills/codebase-design/SKILL.md": {
+          "type": "file",
+          "sha256": "ba1a4f9c57ba7f52e0e88b2149d1293495858bcf0993352cc7e0df193bfb67ea",
+          "executable": false
+        },
+        ".agents/skills/codebase-design/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
+          "executable": false
+        },
+        ".agents/skills/diagnosing-bugs/CREDITS.md": {
+          "type": "file",
+          "sha256": "9073d0c470ac0b79c9385ec2f7364bd477c0b1a4c3b9125b59602a77a817fa48",
+          "executable": false
+        },
+        ".agents/skills/diagnosing-bugs/SKILL.md": {
+          "type": "file",
+          "sha256": "a621ef3ea8a515ac253d1784246a773dc437b164b9e6f4d8a17ae03d2ca35af2",
+          "executable": false
+        },
+        ".agents/skills/diagnosing-bugs/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "3e430dbe4334a87597488c060cb3dc3786bb00c9182877d6f5ec41f62490e90b",
+          "executable": false
+        },
+        ".agents/skills/diagnosing-bugs/scripts/hitl-loop.template.sh": {
+          "type": "file",
+          "sha256": "35103539fc36873eea36074769ad454f9379d6fc8b2dc0e26ce987fd3bfe5503",
+          "executable": false
+        },
+        ".agents/skills/domain-modeling/ADR-FORMAT.md": {
+          "type": "file",
+          "sha256": "2e88f5a78472481b3dddac68707686867eb4270bdbaca9a9458d70b039157b65",
+          "executable": false
+        },
+        ".agents/skills/domain-modeling/CREDITS.md": {
+          "type": "file",
+          "sha256": "bbcc5a0d207d4c715189f3110887a379ca5e10787f9fdcf60bfb944aff1480ec",
+          "executable": false
+        },
+        ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md": {
+          "type": "file",
+          "sha256": "21dcc40cdec8e151a829b98ab1517c1867bc444e3665134a98c6983411996801",
+          "executable": false
+        },
+        ".agents/skills/domain-modeling/SKILL.md": {
+          "type": "file",
+          "sha256": "f7515e306cdb182678b6968bcc52f83dfa4a21db661538f4df30b7ee2bbef904",
+          "executable": false
+        },
+        ".agents/skills/domain-modeling/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
+          "executable": false
+        },
+        ".agents/skills/frontend-design/LICENSE.txt": {
+          "type": "file",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "executable": false
+        },
+        ".agents/skills/frontend-design/SKILL.md": {
+          "type": "file",
+          "sha256": "1608ea77fbb6fc30d13a97d12cfa8ebf31358d40f0dd97beed24829d6b3f45dd",
+          "executable": false
+        },
+        ".agents/skills/grill-with-docs/CREDITS.md": {
+          "type": "file",
+          "sha256": "6bf2b0e20439662835b7ec5e8dff26c99f4e87876bdc7c355265aafb7c427b0d",
+          "executable": false
+        },
+        ".agents/skills/grill-with-docs/SKILL.md": {
+          "type": "file",
+          "sha256": "8cf85fcfe4d23acb4d1c50f98f760adbd526c0985551a9e53f34c07315775d0c",
+          "executable": false
+        },
+        ".agents/skills/grill-with-docs/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
+          "executable": false
+        },
+        ".agents/skills/grilling/CREDITS.md": {
+          "type": "file",
+          "sha256": "50702f66166d7fb00e555c44374c7d4be4a6d4a60f1b09e11b409b2c0b0bbf0e",
+          "executable": false
+        },
+        ".agents/skills/grilling/SKILL.md": {
+          "type": "file",
+          "sha256": "550963b196dafccfb7b438e0772a04859e7c8f09e45fd62d43fdcde6a6104441",
+          "executable": false
+        },
+        ".agents/skills/grilling/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
+          "executable": false
+        },
+        ".agents/skills/implement/CREDITS.md": {
+          "type": "file",
+          "sha256": "55c3fdf5d679908d21398c292069abc547fe4430897c57a441f5e3afb015d18a",
+          "executable": false
+        },
+        ".agents/skills/implement/SKILL.md": {
+          "type": "file",
+          "sha256": "c8ee4b891bd4a6ae5d1cb3f73d20f3bf980ce66a783706042339ebcc436ce436",
+          "executable": false
+        },
+        ".agents/skills/implement/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "7d531e17370288bdf5eabb7a586d7c2de16c21db12afb91873685b6165c88db6",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/SKILL.md": {
+          "type": "file",
+          "sha256": "163b2f0934be447d7318c21ede357689ae80c61878dffd634e2f4f3b2d60cd2f",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "780c93af1ea9fa7ed80f38e36dc685ccb88e3847bc90bfd41e7fd64e89174a4a",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/change-kinds.md": {
+          "type": "file",
+          "sha256": "fb49d45ff20095d3d92d7b4ee17f4d64b4c5994950c321c18227d4d712976251",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/contract-changes.md": {
+          "type": "file",
+          "sha256": "a5af2dfaa1815bd0ad62d445de1ba16edfa98748d0fb84ac8501b0dbb69bd2df",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/conventions.md": {
+          "type": "file",
+          "sha256": "959964561f94fdf39305c459f8c2a7755b745d637ad2a367ef69e893e24172ac",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/escalation.md": {
+          "type": "file",
+          "sha256": "c04795f7ae20139e135dfb213c01e1ae345a32d9ffa4ee04cd4b7d042b8e19cc",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/extraction.md": {
+          "type": "file",
+          "sha256": "dff79976cb6084323a19c184417798fc46f1e74767c3ae34c988d61ecad8f7e8",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/materialization.md": {
+          "type": "file",
+          "sha256": "bc32a956492c402114b19bc931c335fd625504dd0512a9aa02e935ce9eba54d7",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/overview.md": {
+          "type": "file",
+          "sha256": "be0a43469a5429cec4c8213d824caea5360f1b0194c3f41c7bed3e2e192ef1fb",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/scoping.md": {
+          "type": "file",
+          "sha256": "9efa06124eb4417ce3db2e605f66acdc012dad1b2a9639c9354e863ced4cab9c",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/validation.md": {
+          "type": "file",
+          "sha256": "700bb9e8e013805ab7bcf3307d73c552c589e6fe8990c97b874ed524f0ef6cc0",
+          "executable": false
+        },
+        ".agents/skills/implementation-governance/references/workflow.md": {
+          "type": "file",
+          "sha256": "c40d37151c55b47eed102f93444164c2d9c44fa3d7cb42632a1f9b65b90d1fd5",
+          "executable": false
+        },
+        ".agents/skills/improve-codebase-architecture/CREDITS.md": {
+          "type": "file",
+          "sha256": "2cb8c96b72929b6cac2780d291f047a8ecb350a678add177159316619e2e2122",
+          "executable": false
+        },
+        ".agents/skills/improve-codebase-architecture/HTML-REPORT.md": {
+          "type": "file",
+          "sha256": "581e8bb5a521e46bbda8ca7e19b15948bed882187108092ebb90c62513b77528",
+          "executable": false
+        },
+        ".agents/skills/improve-codebase-architecture/SKILL.md": {
+          "type": "file",
+          "sha256": "96942b6f0b302b2101cb78ea1a7743aa4972a149caba3364a11fad7770b6dc47",
+          "executable": false
+        },
+        ".agents/skills/improve-codebase-architecture/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "c8cb20f68ebf0edb4e497bc11ae5fcaa196004e661cd189015b04f4109ced7f1",
+          "executable": false
+        },
+        ".agents/skills/orchestrate/CREDITS.md": {
+          "type": "file",
+          "sha256": "aef2eeb3e1c130c9d5cd6e2805b5480d18a96e6bafd1c1c1cdf0c2dcb545a476",
+          "executable": false
+        },
+        ".agents/skills/orchestrate/SKILL.md": {
+          "type": "file",
+          "sha256": "83dabd0a7a3a534558d939edd04dab5a395262c1f627fc88377f0712d4b2cb89",
+          "executable": false
+        },
+        ".agents/skills/orchestrate/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "8fa9f8f0710336e9e9a32915436647c3f5c3bfa9a2acdbdcaf613daba800bf6c",
+          "executable": false
+        },
+        ".agents/skills/orchestrate/wait.mjs": {
+          "type": "file",
+          "sha256": "3dff1616c2b4ba3dd481584a71852732f9fadf52d31a58ed4223b611e7cf17e9",
+          "executable": false
+        },
+        ".agents/skills/pr/CREDITS.md": {
+          "type": "file",
+          "sha256": "2631c4c0899decfed35bc7c4c930e069e91769490ddcd128e523602469db4962",
+          "executable": false
+        },
+        ".agents/skills/pr/SKILL.md": {
+          "type": "file",
+          "sha256": "708ab786bb60e7b7c266375b00cebd3600b00e44b49c12d8e63b1d1868ce427e",
+          "executable": false
+        },
+        ".agents/skills/pr/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+          "executable": false
+        },
+        ".agents/skills/prototype/CREDITS.md": {
+          "type": "file",
+          "sha256": "54273a012bf62110fe7cf392f6ac3e512a7d4a0ac1f7dbccac7dbcc3805e571f",
+          "executable": false
+        },
+        ".agents/skills/prototype/LOGIC.md": {
+          "type": "file",
+          "sha256": "f61c7d249e786a79ef289018901c348271e1798dd0b0bc5607b5c6f4d4a01ab9",
+          "executable": false
+        },
+        ".agents/skills/prototype/SKILL.md": {
+          "type": "file",
+          "sha256": "4b33a0a2f568f9518f58bfc0c2d62781801d33235cd88ba3eba26d5123daa703",
+          "executable": false
+        },
+        ".agents/skills/prototype/UI.md": {
+          "type": "file",
+          "sha256": "723211e878acbc7b6ff09755263f3295cde724ba902ff0064da41eed51d45ad3",
+          "executable": false
+        },
+        ".agents/skills/prototype/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/SKILL.md": {
+          "type": "file",
+          "sha256": "1c8b089dad046841f5e037793c4a6325bd6bc3c01f63775fa09ad4c8cdd21554",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "0e55166bdd31eb2aab213a053f1f4fd6271f24baa3c0d5bcc19529605a0011b9",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/boundary-cases.md": {
+          "type": "file",
+          "sha256": "6c8be17ca1aff3d171821df2310e0bf0cebc5d46658b7a64edb03737f0049da4",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/classification.md": {
+          "type": "file",
+          "sha256": "aed781648a6e254ef5289eb34f4236d6f761559f2d3b864ae0e26634e7be95e1",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/extraction.md": {
+          "type": "file",
+          "sha256": "68e6835456ed6ca9d35da4bbcf77494f4fbd91b0acf9cfcd71f6215bd10291d2",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/overview.md": {
+          "type": "file",
+          "sha256": "14355eb018e99aa37b916b71156393f15a877a369740d30df1b0cef11b6099f0",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/ownership.md": {
+          "type": "file",
+          "sha256": "a1f05f3483cc4ce714504d1d5af6f3befb68412aba333ecaa40545545d3289c4",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/packaging.md": {
+          "type": "file",
+          "sha256": "347143c7776817c9196eb8185b1b42f373812042845b02868af3eb9eb1a085c2",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/patterns.md": {
+          "type": "file",
+          "sha256": "c3dae79f007246a338fd13f9c6cdae2686f23cdd849b9aed90a1724dceff34bd",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/roles.md": {
+          "type": "file",
+          "sha256": "517fca1c0f27596035398ed549a9594384403372262c5c61d4849eea2cca33ea",
+          "executable": false
+        },
+        ".agents/skills/react-component-governance/references/workflow.md": {
+          "type": "file",
+          "sha256": "c0987a9ffc18df9dbda2df787c663fd3c900133cd6f33c7fd091da5f813ae63b",
+          "executable": false
+        },
+        ".agents/skills/repository-standards/SKILL.md": {
+          "type": "file",
+          "sha256": "4e331d32a27f003027cfbcfce376f49c8e0743142dc6cd653fe7e31052f61450",
+          "executable": false
+        },
+        ".agents/skills/repository-standards/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "8619a54e8c098122a7f3881394f84ca89b684366e848233a29ad18b6ec363935",
+          "executable": false
+        },
+        ".agents/skills/research/CREDITS.md": {
+          "type": "file",
+          "sha256": "306f99289f0dcc2da9437d7b3b4d51b06446e2b4ca8395dffd2bdcd80afc51c9",
+          "executable": false
+        },
+        ".agents/skills/research/SKILL.md": {
+          "type": "file",
+          "sha256": "5d4f569e95e0041f8160837f7fba3e0609df1d8594307109299dff8ecd7b05b1",
+          "executable": false
+        },
+        ".agents/skills/research/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
+          "executable": false
+        },
+        ".agents/skills/shadcn/SKILL.md": {
+          "type": "file",
+          "sha256": "a45cddd4511f8262df05b20506f4d52be8210a9ee05a13d9e36d4ee321bab593",
+          "executable": false
+        },
+        ".agents/skills/shadcn/agents/openai.yml": {
+          "type": "file",
+          "sha256": "35db91b1eef58b2abe01da9b88577de5a44e233b740cd93d692ddeeadd2afe4d",
+          "executable": false
+        },
+        ".agents/skills/shadcn/assets/shadcn-small.png": {
+          "type": "file",
+          "sha256": "0ecc62d682727f68fc4937eed19960c706714fa084d44f63028d611ae02bf3d7",
+          "executable": false
+        },
+        ".agents/skills/shadcn/assets/shadcn.png": {
+          "type": "file",
+          "sha256": "7d60ad6fec4d89a0d44ba5a3c9283d2fea0047af5467f9227040e20d927d39b7",
+          "executable": false
+        },
+        ".agents/skills/shadcn/cli.md": {
+          "type": "file",
+          "sha256": "a381e35bf36fe7bb851952c13707e01e82434fd7a4a4e53f6df26c6370838904",
+          "executable": false
+        },
+        ".agents/skills/shadcn/customization.md": {
+          "type": "file",
+          "sha256": "84c1d47168c4b8adb5840e4af30a4e373ae3377c1110478c8974f398dd63f5ba",
+          "executable": false
+        },
+        ".agents/skills/shadcn/evals/evals.json": {
+          "type": "file",
+          "sha256": "58aca2760b0cc5265bb575f76cd8eed344b88544314b8cb2cd53e0b8007dc936",
+          "executable": false
+        },
+        ".agents/skills/shadcn/mcp.md": {
+          "type": "file",
+          "sha256": "8d696b4e45b7d0e337367248513bd9acebe8f3bcfd7b748c775e5a337c8f38c8",
+          "executable": false
+        },
+        ".agents/skills/shadcn/registry.md": {
+          "type": "file",
+          "sha256": "4f239be36bd2b58e17047db1ca80ab7da00e15a8b73242e5e4d50d113c4caa05",
+          "executable": false
+        },
+        ".agents/skills/shadcn/rules/base-vs-radix.md": {
+          "type": "file",
+          "sha256": "2b2deb47d004285220c1fc6b38bb2edc2d0ccbcdafd031b0b189d5d8ed0d1ba8",
+          "executable": false
+        },
+        ".agents/skills/shadcn/rules/chat.md": {
+          "type": "file",
+          "sha256": "fcbc4eb29a3998fa3e24e9f7f1cbb2b9f33e98cb5b66a153eeccdb74e78f9612",
+          "executable": false
+        },
+        ".agents/skills/shadcn/rules/composition.md": {
+          "type": "file",
+          "sha256": "012d2a44373766fd9c13059ac1b971581fbe3982f2b1e92186a963c9990cfdcf",
+          "executable": false
+        },
+        ".agents/skills/shadcn/rules/forms.md": {
+          "type": "file",
+          "sha256": "29593e14381e34626f8e0e9c15c59f3394b92a0623af6a6ec94585400123853c",
+          "executable": false
+        },
+        ".agents/skills/shadcn/rules/icons.md": {
+          "type": "file",
+          "sha256": "d4a58266648872d9ee07d0c2368843a1cb88b8253b7f528dd7bda9d68b6c2535",
+          "executable": false
+        },
+        ".agents/skills/shadcn/rules/styling.md": {
+          "type": "file",
+          "sha256": "47bd2c3b6216b96af0ab169063a83dfef7f80c58536cf69445a6f4d22753326c",
+          "executable": false
+        },
+        ".agents/skills/tdd/CREDITS.md": {
+          "type": "file",
+          "sha256": "a14fe58f53cd2351f8ad7fe609bb656a726606d001d64c13c8df4a7ea004e8b5",
+          "executable": false
+        },
+        ".agents/skills/tdd/SKILL.md": {
+          "type": "file",
+          "sha256": "afcc4328e87a9e77a2447c90e25b976af4086163b7affaa2fa4efa2d8baef2b9",
+          "executable": false
+        },
+        ".agents/skills/tdd/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "ea6f01cf1b8c06a4b0f5b649d74b1b8ce8685e72af1b38d70d877693e092af0b",
+          "executable": false
+        },
+        ".agents/skills/tdd/mocking.md": {
+          "type": "file",
+          "sha256": "3ceb807fdf4a47d6a93d4d9a891e5ba6d362a6247bd08adc451feebfc17361ef",
+          "executable": false
+        },
+        ".agents/skills/tdd/tests.md": {
+          "type": "file",
+          "sha256": "859f9e592c188fda4fc7277dd180e4ce9c7a2e13f6efe1f6f29eccc9d28c106a",
+          "executable": false
+        },
+        ".agents/skills/to-spec/CREDITS.md": {
+          "type": "file",
+          "sha256": "d03f2632fa36e602bcf0e9c38cb7f7fb18b19c821cf1186c1270103b477f264e",
+          "executable": false
+        },
+        ".agents/skills/to-spec/SKILL.md": {
+          "type": "file",
+          "sha256": "f747048852302b2d5a5327d76da2ef5c193c9e937fbef0a2e22f8447e44e29d5",
+          "executable": false
+        },
+        ".agents/skills/to-spec/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "1c5b4d1e3d8e52287ef19cc2742fdbbfae1914ac75d33af3e4c8174f08cc55bb",
+          "executable": false
+        },
+        ".agents/skills/to-tickets/CREDITS.md": {
+          "type": "file",
+          "sha256": "9db8d0779baae0285125baff989a039e6dcb9db11d21d3e667a6671e55441add",
+          "executable": false
+        },
+        ".agents/skills/to-tickets/SKILL.md": {
+          "type": "file",
+          "sha256": "db4c14dc5d5e78db9e275634ef2284a225dd421106a97b8362d3ac4a84625c90",
+          "executable": false
+        },
+        ".agents/skills/to-tickets/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "21bc6215fffcd7614e9f772bb1760e87cc5fc7dcc707e7d282bc9414267a6090",
+          "executable": false
+        },
+        ".agents/skills/triage/AGENT-BRIEF.md": {
+          "type": "file",
+          "sha256": "846e20148f152a7bba0b32e780bb01532fd88857a3556ce7f0e920b3d64c5349",
+          "executable": false
+        },
+        ".agents/skills/triage/CREDITS.md": {
+          "type": "file",
+          "sha256": "837ca57f46f720fda1b1ae50ae7b1c0c7a5eceadc3df312974486d0953cc586a",
+          "executable": false
+        },
+        ".agents/skills/triage/OUT-OF-SCOPE.md": {
+          "type": "file",
+          "sha256": "1fbf9b432130c6380aa65813b55553cfda150309b27c595e183f8e335b8a190d",
+          "executable": false
+        },
+        ".agents/skills/triage/SKILL.md": {
+          "type": "file",
+          "sha256": "bab14b50498f86a0629c6955fb5416f2c166cfe24239d33279dfdfb30187656b",
+          "executable": false
+        },
+        ".agents/skills/triage/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "2e683717720cf456d165d0bb1a68bb600d0b6a8ccb61841c172e50d26f95351c",
+          "executable": false
+        },
+        ".agents/skills/triage/ready.mjs": {
+          "type": "file",
+          "sha256": "d35dbec41fd48778ef5e95a64e94b9482948b992456272827dd6f41a3ce02f54",
+          "executable": false
+        },
+        ".agents/skills/wayfinder/CREDITS.md": {
+          "type": "file",
+          "sha256": "e1eea56ad12a8fa780b3d746f2108f421bf1a322c1a5c52c82466a12ecd5c933",
+          "executable": false
+        },
+        ".agents/skills/wayfinder/SKILL.md": {
+          "type": "file",
+          "sha256": "89d8e3f68a5ef0e65f15ff94321dc7feeb22c9f03f5f32b874a6068bee9cb182",
+          "executable": false
+        },
+        ".agents/skills/wayfinder/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "88bc81a11a6d52ac67aeaa76b8b619e387020d47c5133a4dd4927fd15c4ad073",
+          "executable": false
+        },
+        ".agents/skills/writing-for-agents/CREDITS.md": {
+          "type": "file",
+          "sha256": "f55ac668257fa933322d694da377d6a49b8b934c883eabec7732bbe53677a9e5",
+          "executable": false
+        },
+        ".agents/skills/writing-for-agents/SKILL-MECHANICS.md": {
+          "type": "file",
+          "sha256": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+          "executable": false
+        },
+        ".agents/skills/writing-for-agents/SKILL.md": {
+          "type": "file",
+          "sha256": "1fc09f935cc73c873ee164d400517a182c5c51b187716758993aaf3b66fc09af",
+          "executable": false
+        },
+        ".agents/skills/writing-for-agents/agents/openai.yaml": {
+          "type": "file",
+          "sha256": "eacb24b2a618cfb81dacb0416f4fdd75ddf3a8060f8ddb99aae1b1e301907e4b",
+          "executable": false
+        },
+        ".claude/skills/babysit": {
+          "type": "symlink",
+          "target": "../../.agents/skills/babysit"
+        },
+        ".claude/skills/code-review": {
+          "type": "symlink",
+          "target": "../../.agents/skills/code-review"
+        },
+        ".claude/skills/codebase-design": {
+          "type": "symlink",
+          "target": "../../.agents/skills/codebase-design"
+        },
+        ".claude/skills/diagnosing-bugs": {
+          "type": "symlink",
+          "target": "../../.agents/skills/diagnosing-bugs"
+        },
+        ".claude/skills/domain-modeling": {
+          "type": "symlink",
+          "target": "../../.agents/skills/domain-modeling"
+        },
+        ".claude/skills/frontend-design": {
+          "type": "symlink",
+          "target": "../../.agents/skills/frontend-design"
+        },
+        ".claude/skills/grill-with-docs": {
+          "type": "symlink",
+          "target": "../../.agents/skills/grill-with-docs"
+        },
+        ".claude/skills/grilling": {
+          "type": "symlink",
+          "target": "../../.agents/skills/grilling"
+        },
+        ".claude/skills/implement": {
+          "type": "symlink",
+          "target": "../../.agents/skills/implement"
+        },
+        ".claude/skills/implementation-governance": {
+          "type": "symlink",
+          "target": "../../.agents/skills/implementation-governance"
+        },
+        ".claude/skills/improve-codebase-architecture": {
+          "type": "symlink",
+          "target": "../../.agents/skills/improve-codebase-architecture"
+        },
+        ".claude/skills/orchestrate": {
+          "type": "symlink",
+          "target": "../../.agents/skills/orchestrate"
+        },
+        ".claude/skills/pr": {
+          "type": "symlink",
+          "target": "../../.agents/skills/pr"
+        },
+        ".claude/skills/prototype": {
+          "type": "symlink",
+          "target": "../../.agents/skills/prototype"
+        },
+        ".claude/skills/react-component-governance": {
+          "type": "symlink",
+          "target": "../../.agents/skills/react-component-governance"
+        },
+        ".claude/skills/repository-standards": {
+          "type": "symlink",
+          "target": "../../.agents/skills/repository-standards"
+        },
+        ".claude/skills/research": {
+          "type": "symlink",
+          "target": "../../.agents/skills/research"
+        },
+        ".claude/skills/shadcn": {
+          "type": "symlink",
+          "target": "../../.agents/skills/shadcn"
+        },
+        ".claude/skills/tdd": {
+          "type": "symlink",
+          "target": "../../.agents/skills/tdd"
+        },
+        ".claude/skills/to-spec": {
+          "type": "symlink",
+          "target": "../../.agents/skills/to-spec"
+        },
+        ".claude/skills/to-tickets": {
+          "type": "symlink",
+          "target": "../../.agents/skills/to-tickets"
+        },
+        ".claude/skills/triage": {
+          "type": "symlink",
+          "target": "../../.agents/skills/triage"
+        },
+        ".claude/skills/wayfinder": {
+          "type": "symlink",
+          "target": "../../.agents/skills/wayfinder"
+        },
+        ".claude/skills/writing-for-agents": {
+          "type": "symlink",
+          "target": "../../.agents/skills/writing-for-agents"
+        },
+        ".editorconfig": {
+          "type": "file",
+          "sha256": "54c974276ed67d5a9609e474f006348d2e3cf00df0737c4e22d51e59f08c6618",
+          "executable": false
+        },
+        ".gitattributes": {
+          "type": "file",
+          "sha256": "dab10623720d9052622e2350338fd07618b09cf1dca64e56b25e0d48ce4b1312",
+          "executable": false
+        },
+        ".github/ISSUE_TEMPLATE/bug-report.yml": {
+          "type": "file",
+          "sha256": "5fca3bab67073fdb827cd5eb88d9c413ac1e1df2891a85c7938420dcb1e3dfed",
+          "executable": false
+        },
+        ".github/ISSUE_TEMPLATE/config.yml": {
+          "type": "file",
+          "sha256": "8b09e7df09fc7534371988062769ee427af2954a02c04c763e8a8005be0f2be4",
+          "executable": false
+        },
+        ".github/ISSUE_TEMPLATE/feature-request.yml": {
+          "type": "file",
+          "sha256": "d3df4f5c27dd7b7a22d0baec1a52a1dc3301c002549f8634392a3abd26566505",
+          "executable": false
+        },
+        ".github/ISSUE_TEMPLATE/implementation-ticket.yml": {
+          "type": "file",
+          "sha256": "d452da0ad9e39173f681b699d3848a00ab3466b55be508cc3f36d7731083bff6",
+          "executable": false
+        },
+        ".github/ISSUE_TEMPLATE/project-task.yml": {
+          "type": "file",
+          "sha256": "34b8d2499d7beca633cfa406c4def4d74fc4964b9a1827f66c1094a0e8c2e299",
+          "executable": false
+        },
+        ".github/ISSUE_TEMPLATE/specification.yml": {
+          "type": "file",
+          "sha256": "77b6359750ff03695a1dc19ee121e664787f4a6954cd9847277ab40fb6b22dfd",
+          "executable": false
+        },
+        ".github/PULL_REQUEST_TEMPLATE.md": {
+          "type": "file",
+          "sha256": "7dcc5881eef1c342a08519750b9beae700f4620d1fdf23c2eb0d9b2dfaec5fd0",
+          "executable": false
+        },
+        ".github/dependabot.yml": {
+          "type": "file",
+          "sha256": "39429b276c867762fa74f8f4ab0f261a9743e02653c1e1fcf23508f57424c078",
+          "executable": false
+        },
+        ".github/scripts/check-pr-policy.py": {
+          "type": "file",
+          "sha256": "b568d8ea1004829144b0e0630610bba035b0e94b4c34c90df1df5b69c9e37312",
+          "executable": false
+        },
+        ".github/scripts/validate-pr-metadata.mjs": {
+          "type": "file",
+          "sha256": "386c3a830876da63e16d9e6591d2a0a4c56d57af10f4422c5240c0e3dde71f12",
+          "executable": false
+        },
+        ".github/scripts/validate.mjs": {
+          "type": "file",
+          "sha256": "bab5f39ee6e1fdb423d90b19dec73b1226ed68ab90a804442a7503e9e9bd6bdc",
+          "executable": false
+        },
+        ".github/workflows/ci.yml": {
+          "type": "file",
+          "sha256": "bde1e5447d108e3009924d9f3bfd61f2800df89b24f617f92b636de0a3dc6304",
+          "executable": false
+        },
+        ".github/workflows/issue-contracts.yml": {
+          "type": "file",
+          "sha256": "1734fd905c48e75b80c7a4db7518799c4ae5dbd0eecfef73b6025b0b777ad4f6",
+          "executable": false
+        },
+        ".github/workflows/pr-metadata.yml": {
+          "type": "file",
+          "sha256": "4b39ef848f5aaf887d0fa2f4e154534b247318fe8b81b413baca2a58b0122dc1",
+          "executable": false
+        },
+        ".github/workflows/pr-policy.yml": {
+          "type": "file",
+          "sha256": "ff727b5159296af19a4bf342ddb2d143b02b93181d7da12b3426ad804b424099",
+          "executable": false
+        },
+        ".github/workflows/standards-update.yml": {
+          "type": "file",
+          "sha256": "0a83bd932b528b37f817acfeae56cfc35728a95ecd373e868bc8dceecfbb1226",
+          "executable": false
+        },
+        ".gitignore": {
+          "type": "file",
+          "sha256": "80b31037ea42dc324b4b259f5b6966dd94b728ccc6511a741bd527e5d4585a6f",
+          "executable": false
+        },
+        ".oxlintrc.json": {
+          "type": "file",
+          "sha256": "bc35b0fc849ad17647a5f0ce4eb089dd4af79089b7924a05855f1d095167ffc9",
+          "executable": false
+        },
+        ".prettierignore": {
+          "type": "file",
+          "sha256": "b120d48622b4ad6c0b92740ad3f8e1024d8f8b0d2a1d89f6ca16d50d4193837d",
+          "executable": false
+        },
+        ".prettierrc.json": {
+          "type": "file",
+          "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+          "executable": false
+        },
+        ".repository-standards.json": {
+          "type": "file",
+          "sha256": "4624165e110f128ba0f6ef1e8bcfc709a5d83574fd64ba314fba5b988dd843e2",
+          "executable": false
+        },
+        ".repository-standards/gitignore.local": {
+          "type": "file",
+          "sha256": "0c6be71b121394be130a53a3e6c75be561cec268b537af6f63b446f426921b53",
+          "executable": false
+        },
+        "AGENTS.md": {
+          "type": "file",
+          "sha256": "ddc8a1fecde13610ba656ee98c9d2cb128b15b7fc20e9068beb0eef9eaf4ba1b",
+          "executable": false
+        },
+        "CONTRIBUTING.md": {
+          "type": "file",
+          "sha256": "7339c01ea325a5537d74bedf311b671930a24c6b1134618565167e20ea2b18de",
+          "executable": false
+        },
+        "LICENSE": {
+          "type": "file",
+          "sha256": "e57f1c320b8cf8798a7d2ff83a6f9e06a33a03585f6e065fea97f1d86db84052",
+          "executable": false
+        },
+        "README.md": {
+          "type": "file",
+          "sha256": "340c24d1b93a95700be5b68c17742a30adf8bd97d38157f3b128cfdffdf2fb87",
+          "executable": false
+        },
+        "components.json": {
+          "type": "file",
+          "sha256": "156858e2da20785ac0f1853580c7e34d5b8496f519e8839d2176e85947d4f779",
+          "executable": false
+        },
+        "dependency-cruiser.cjs": {
+          "type": "file",
+          "sha256": "9060534d4815a95aaa9042893c1daeeb7450b86586ed961eb6e3fa12516762e6",
+          "executable": false
+        },
+        "docs/README.md": {
+          "type": "file",
+          "sha256": "fd9043d9da82ef11ef34807d39ce2f497f4274b08eccd83c5b9b7a82124a0317",
+          "executable": false
+        },
+        "docs/agents/README.md": {
+          "type": "file",
+          "sha256": "ec642abe47a6e67e2d7a6d030a7daf762f97e1b39a655b415f5905514d37f8f9",
+          "executable": false
+        },
+        "docs/agents/domain.md": {
+          "type": "file",
+          "sha256": "593a7042218689f1d24df89df14eaf0a20e19e0d0a7d479a01947ac78f0784b9",
+          "executable": false
+        },
+        "docs/agents/issue-tracker.md": {
+          "type": "file",
+          "sha256": "bcd5dd6c974b269c98f2b2a9ce81a979e33676f3442c8110bfa4f018fefde895",
+          "executable": false
+        },
+        "docs/agents/triage-labels.md": {
+          "type": "file",
+          "sha256": "7103db589b82930dc1f0b7b6d291c5e1aa9bfc40c34354ae18279127573b23d7",
+          "executable": false
+        },
+        "docs/development/README.md": {
+          "type": "file",
+          "sha256": "96fd5d2aaa78e42b1405060d36285a74664896eb55f2015e5c2edf4f0639e131",
+          "executable": false
+        },
+        "docs/development/architecture/README.md": {
+          "type": "file",
+          "sha256": "3ed8222b86e5674dcbc49f6190470e9e10fe7ff34fae039b0b2b99f439976950",
+          "executable": false
+        },
+        "docs/development/architecture/architecture.md": {
+          "type": "file",
+          "sha256": "a6e1b34f750f1b30eb16b263d815166e0f272f83c14b59912e61f43197387848",
+          "executable": false
+        },
+        "docs/development/templates/README.md": {
+          "type": "file",
+          "sha256": "a80ed31c14f3f8d90d272c009752ab3d6fa3816e8932982d60140043d0d85274",
+          "executable": false
+        },
+        "docs/development/templates/decision.template.md": {
+          "type": "file",
+          "sha256": "7eec18ee96ac660ff2ace9e25d889cc03a008517edddefcb05e15ad5e69c104d",
+          "executable": false
+        },
+        "docs/development/templates/explanation.template.md": {
+          "type": "file",
+          "sha256": "a728209a8673ddd6e38cb08177aceb7e7a940ab86cbdb22b7c9c0ed2061bc921",
+          "executable": false
+        },
+        "docs/development/templates/how-to.template.md": {
+          "type": "file",
+          "sha256": "6f25f76a9feaee4f54f195ca8c5574a8f51bdf46ef06911ada14fb03aeed14ee",
+          "executable": false
+        },
+        "docs/development/templates/index.template.md": {
+          "type": "file",
+          "sha256": "9bbe7c193104a2c73d93d0c3389745f73e571bc4aa5ee34dd44a9772a2732d7f",
+          "executable": false
+        },
+        "docs/development/templates/reference.template.md": {
+          "type": "file",
+          "sha256": "4e88f2ff02c0ff8191a8039381aac0dd5d73b9f0e0e1dc2e573080e4e41f4d41",
+          "executable": false
+        },
+        "docs/development/templates/tutorial.template.md": {
+          "type": "file",
+          "sha256": "248aaeb4ed190a3b6254831a7978942d4ed4dc4ad3e239a19810d263a662103a",
+          "executable": false
+        },
+        "docs/usage/README.md": {
+          "type": "file",
+          "sha256": "2655f7b7d1b2b6ab63e820058f2e62e97dadf337fe68bcc92147fc9eb23cbdf2",
+          "executable": false
+        },
+        "docs/usage/guides/README.md": {
+          "type": "file",
+          "sha256": "fd5f3905a3da73e2e0a03473e9356374fcba6eaeaa4ec50e07b425943bbb2680",
+          "executable": false
+        },
+        "docs/usage/guides/run-locally.md": {
+          "type": "file",
+          "sha256": "bf36529c84b6a8c320d7954b029f84b7a000a6fa482a1d6e13114a4f6418249e",
+          "executable": false
+        },
+        "docs/usage/reference/README.md": {
+          "type": "file",
+          "sha256": "885a1484617792c7b695cfd61773fe1df44709039ad1669a8b7532d13ccd1972",
+          "executable": false
+        },
+        "docs/usage/reference/live-feed.md": {
+          "type": "file",
+          "sha256": "8e93d6e48ce92c50f0ea1c186adb2296026db913942fbc77044a0fda15a42b06",
+          "executable": false
+        },
+        "index.html": {
+          "type": "file",
+          "sha256": "573e12360de7115ed8eb7f079a9513dce17420184e6d7cedb85d0a9ac63d4287",
+          "executable": false
+        },
+        "operations/lib/rendered-markdown.mjs": {
+          "type": "file",
+          "sha256": "b89f24c60f8ad3ad1ed45590629e87661337931e858b84acfac5296a057430c2",
+          "executable": false
+        },
+        "package.json": {
+          "type": "file",
+          "sha256": "d570774eb4ca6544c2f28d17861a515e484db46dfd733dcdc35bedcddf0e1850",
+          "executable": false
+        },
+        "pnpm-lock.yaml": {
+          "type": "file",
+          "sha256": "e8417170b92d6edfffdd8e68b519e45570e7a431e8f66b35fbd1c25a24f4d9ba",
+          "executable": false
+        },
+        "pnpm-workspace.yaml": {
+          "type": "file",
+          "sha256": "669f07fa1086362067498c76c5131686aa936e6b65856bd70153a7ab8fdd8a7e",
+          "executable": false
+        },
+        "public/screenshots/focused-stream.png": {
+          "type": "file",
+          "sha256": "da668fc1953b756fdf039b43a90d38fd9720dc38c33840fe9c13b2107a845115",
+          "executable": false
+        },
+        "public/screenshots/live-wall-grid.png": {
+          "type": "file",
+          "sha256": "6e49ac650ccfd809640aa42d2fee61d5156a4a5b44fdc9092b6e63a3e8a1c38b",
+          "executable": false
+        },
+        "public/screenshots/mobile-wall.png": {
+          "type": "file",
+          "sha256": "3c1fc2c996938ed5e3342be01842aff75fa6eab81c129df4e329dd133ae2eb63",
+          "executable": false
+        },
+        "registry-manifest.json": {
+          "type": "file",
+          "sha256": "96b050d92a0b390e24f037286293bd401592228ceec7de8fc4cf94ac5823be79",
+          "executable": false
+        },
+        "scripts/check-docs.mjs": {
+          "type": "file",
+          "sha256": "c6f76cc42c06acb76530d02eba0fbec1aea8da31bd363feae06cb5ba77395105",
+          "executable": false
+        },
+        "scripts/ui-registry.mjs": {
+          "type": "file",
+          "sha256": "7fecf77ecfca4696d4edb86a4b3c4526570c2cb437267eb64efd665eb374b016",
+          "executable": false
+        },
+        "scripts/ui-registry.test.mjs": {
+          "type": "file",
+          "sha256": "cbbeb024b4fe20e5c65cd63e00306a920689c23706c4bc9039be219f16a089c1",
+          "executable": false
+        },
+        "scripts/validate-issue-contract.mjs": {
+          "type": "file",
+          "sha256": "704e738a2baa5ddc826b1ef6bcbc852f49d3f6899c2ea5fd8df2f6f78b20b027",
+          "executable": false
+        },
+        "scripts/validate.mjs": {
+          "type": "file",
+          "sha256": "daeedb8713e64e0334ede3825297ec6338a85ee8051c0dc0385f5533373ecc32",
+          "executable": false
+        },
+        "src/App.tsx": {
+          "type": "file",
+          "sha256": "d8398bc9f0369d258eb9439ece7d4c58122e31d3e8df11270134adcd0cc815c5",
+          "executable": false
+        },
+        "src/api/embeds.test.ts": {
+          "type": "file",
+          "sha256": "43dd0fd38b5bf641fe8b2caf550db3096ffffe7b719bab1386c331dc9f6c6c01",
+          "executable": false
+        },
+        "src/api/embeds.ts": {
+          "type": "file",
+          "sha256": "76381259da0279a5d701efa19fd433d1e944587a5ec215fcbd57d8254404ac6f",
+          "executable": false
+        },
+        "src/api/live-feed.test.ts": {
+          "type": "file",
+          "sha256": "c825114440686b2a3107ac0dd011e89968ba19734440c208d00146b859919d26",
+          "executable": false
+        },
+        "src/api/live-feed.ts": {
+          "type": "file",
+          "sha256": "b8d6c8df565737289b9eedbd05bbec683cd6486927d646b142139f747eecd8f3",
+          "executable": false
+        },
+        "src/components/app/app-button.tsx": {
+          "type": "file",
+          "sha256": "a54f41f91a766115c2778aeedcd563125147edb65ad18434eddd1e83d8853e13",
+          "executable": false
+        },
+        "src/components/app/app-icon-button.tsx": {
+          "type": "file",
+          "sha256": "3fba7be904adfbd5ac27d72fed82f35d6ba0a281318f73cb8eb53e1a628c8c5a",
+          "executable": false
+        },
+        "src/components/app/app-tooltip.tsx": {
+          "type": "file",
+          "sha256": "c1e18a766867bc546708ae050069334c038cb2b45e52a2d3a302a66ed20c523b",
+          "executable": false
+        },
+        "src/components/custom/provider-glyph.tsx": {
+          "type": "file",
+          "sha256": "eb87c4599a8dfcb6fc13e8a6aec88784d03958417484e8750b5265e930c23bae",
+          "executable": false
+        },
+        "src/components/ui/button.tsx": {
+          "type": "file",
+          "sha256": "313353436d0fcc8e44ab470adb614b9fd013d28626f624328ea0d66d41a6c81b",
+          "executable": false
+        },
+        "src/components/ui/tooltip.tsx": {
+          "type": "file",
+          "sha256": "100101631756e1bebc1f1831e1642b26cd11a6a6c4affb6c638c42001dc14e83",
+          "executable": false
+        },
+        "src/index.css": {
+          "type": "file",
+          "sha256": "1f0c8ee69c533271e4b1cadd349dc09570a496346206369a703a5ec0f8a24794",
+          "executable": false
+        },
+        "src/lib/utils.ts": {
+          "type": "file",
+          "sha256": "55bbdc94cef3e0c8a8bba386e94f97228dd2c967fe61466fc565378890550c08",
+          "executable": false
+        },
+        "src/main.tsx": {
+          "type": "file",
+          "sha256": "9b578d6a01b2518dce0b0f1a480426758a60c5a623e580849b10b5e4573ea07b",
+          "executable": false
+        },
+        "src/pages/stream-wall/color-bars.tsx": {
+          "type": "file",
+          "sha256": "1493dd57b4c5750ea49186a5ecb934ab59b7b61d3c13bd8a4677682ebc42c891",
+          "executable": false
+        },
+        "src/pages/stream-wall/demo-feed.ts": {
+          "type": "file",
+          "sha256": "b420399c6f7bf7fbedf8f07b80687b7abd013b16463b086d90c32d905b34bac7",
+          "executable": false
+        },
+        "src/pages/stream-wall/format.ts": {
+          "type": "file",
+          "sha256": "b7016b7b8445b0d9075646d8090373f3246868509c860b7ec692f615acc0e037",
+          "executable": false
+        },
+        "src/pages/stream-wall/screen-overlay.tsx": {
+          "type": "file",
+          "sha256": "f68d6b09d151dd3a101d390081e833a30e6fe374ff580f5391e7d02f4e9c5e2c",
+          "executable": false
+        },
+        "src/pages/stream-wall/station-ident.tsx": {
+          "type": "file",
+          "sha256": "c24cee66dae370daa9a60445925618eff277ea4d23d84181534e7a265b848391",
+          "executable": false
+        },
+        "src/pages/stream-wall/stream-embed.tsx": {
+          "type": "file",
+          "sha256": "be41cf85debae8de90544e212efec8a84c248d74ad70493627b310069bc61144",
+          "executable": false
+        },
+        "src/pages/stream-wall/stream-layout.test.ts": {
+          "type": "file",
+          "sha256": "a3aef6cde0905616346d813a928d3df5058f46222adf8eb1f66669fab6545830",
+          "executable": false
+        },
+        "src/pages/stream-wall/stream-layout.ts": {
+          "type": "file",
+          "sha256": "41e23f013a1dfa7ed84fa8e0adc5912bdec6ce9feb56e52bac8fe02c26ba0e83",
+          "executable": false
+        },
+        "src/pages/stream-wall/stream-tile.tsx": {
+          "type": "file",
+          "sha256": "8f97da1fab605c894bb050ddf32c1219aab3e3ce6c2b946a2c6fca24a189e074",
+          "executable": false
+        },
+        "src/pages/stream-wall/stream-wall-page.tsx": {
+          "type": "file",
+          "sha256": "5c1651577f7181b5bd6da4ebf42d43800be7fb102b739f9c20dbae6cf786ffc1",
+          "executable": false
+        },
+        "src/pages/stream-wall/tally-light.tsx": {
+          "type": "file",
+          "sha256": "aefb573f048b5c561d1d7b7bca98ba03b8522f06a9c6995d654593bd7cbfd316",
+          "executable": false
+        },
+        "src/pages/stream-wall/use-live-feed.ts": {
+          "type": "file",
+          "sha256": "0032dd574b4309485063b58bb398c77e94b07838ac705f5c1870922a9d3449fb",
+          "executable": false
+        },
+        "src/pages/stream-wall/use-viewport-aspect.ts": {
+          "type": "file",
+          "sha256": "aa9686c887ed1b617832e34208230aa51f84994d6bee7f0c001c355bd0cb5432",
+          "executable": false
+        },
+        "src/pages/stream-wall/wall-status-screen.tsx": {
+          "type": "file",
+          "sha256": "ffe77713905e41139fbd74e4221ee8cc7135018ddb762c5bb4249ffa775430c3",
+          "executable": false
+        },
+        "src/theme/ThemeProvider.tsx": {
+          "type": "file",
+          "sha256": "0d5a7668a68c7333ac3128768c8cd770fb5e329dae352900b8cf165ffafbe051",
+          "executable": false
+        },
+        "src/theme/tokens.css": {
+          "type": "file",
+          "sha256": "7fa45c3eb82ae98101a65725d7c5391f91f24a5a32853b3a8744b6167d05c139",
+          "executable": false
+        },
+        "src/vite-env.d.ts": {
+          "type": "file",
+          "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+          "executable": false
+        },
+        "tsconfig.app.json": {
+          "type": "file",
+          "sha256": "2e6e22fc8cd0e995a6d82b34a14021e814339184be3e2f59199afd74e7f371e8",
+          "executable": false
+        },
+        "tsconfig.depcruise.json": {
+          "type": "file",
+          "sha256": "71f4a8781dec31f7f67cc44f1fe3c12c3e5a6e2fb142604e7ca75e9933abaad4",
+          "executable": false
+        },
+        "tsconfig.json": {
+          "type": "file",
+          "sha256": "5f2b69b8fdc63166a79e58723d05950b548480244503b85ac763107900d1f73d",
+          "executable": false
+        },
+        "tsconfig.node.json": {
+          "type": "file",
+          "sha256": "aa8fca06eaf8d0f72b7e1d08c6e52f0805dede97a5dea0dab91662662dee9b66",
+          "executable": false
+        },
+        "vendor/marked/LICENSE": {
+          "type": "file",
+          "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c",
+          "executable": false
+        },
+        "vendor/marked/README.md": {
+          "type": "file",
+          "sha256": "c1f9e95c649e297b482a842c72814efa04b0277f1a3a3c181e637d949b5bedc7",
+          "executable": false
+        },
+        "vendor/marked/marked.esm.js": {
+          "type": "file",
+          "sha256": "2e70fea3ee49f98ab67ee395e5af51cc6bee4fafed15910da9ccb7f650df8014",
+          "executable": false
+        },
+        "vendor/parse5/LICENSE.entities": {
+          "type": "file",
+          "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164",
+          "executable": false
+        },
+        "vendor/parse5/LICENSE.parse5": {
+          "type": "file",
+          "sha256": "8c535800331e1e4439835555b3f9edc7fe9dee2fab0d8bbbd5a982e8b8343d4d",
+          "executable": false
+        },
+        "vendor/parse5/README.md": {
+          "type": "file",
+          "sha256": "bb5904a74bace3cfbcf0f7f817f2a3f808a21f4d60c1b1b118e1464d6d096855",
+          "executable": false
+        },
+        "vendor/parse5/parse5.esm.js": {
+          "type": "file",
+          "sha256": "bdf861eb0bce411afe5fcc312c770c3fe18dac9b5296771d40217d52a6ae7a93",
+          "executable": false
+        },
+        "vendor/postern/LICENSE": {
+          "type": "file",
+          "sha256": "a4b5f0efcfeb828c1b344150f3c93af8031174df6147219e00b6a0bd995db6ef",
+          "executable": false
+        },
+        "vendor/postern/README.md": {
+          "type": "file",
+          "sha256": "08844d40cc709ee193871cefb2d92aed29c26f3e08654458ff6621f9b2715fe8",
+          "executable": false
+        },
+        "vendor/postern/postern.mjs": {
+          "type": "file",
+          "sha256": "5203c7e825a065c33aaa02ea4b6dbe776704ccd55b220aee75eb82427a8b83d5",
+          "executable": false
+        },
+        "vite.config.ts": {
+          "type": "file",
+          "sha256": "43eef76a7f99afdd7406d0e2ef5ba7dd62eb5f72a7daa69edd04aa9a07f0944e",
+          "executable": false
+        }
+      },
+      "inventories": {
+        ".": [
+          ".agents",
+          ".claude",
+          ".editorconfig",
+          ".gitattributes",
+          ".github",
+          ".gitignore",
+          ".oxlintrc.json",
+          ".prettierignore",
+          ".prettierrc.json",
+          ".repository-standards",
+          ".repository-standards.json",
+          "AGENTS.md",
+          "CONTRIBUTING.md",
+          "LICENSE",
+          "README.md",
+          "components.json",
+          "dependency-cruiser.cjs",
+          "docs",
+          "index.html",
+          "operations",
+          "package.json",
+          "pnpm-lock.yaml",
+          "pnpm-workspace.yaml",
+          "public",
+          "registry-manifest.json",
+          "scripts",
+          "src",
+          "tsconfig.app.json",
+          "tsconfig.depcruise.json",
+          "tsconfig.json",
+          "tsconfig.node.json",
+          "vendor",
+          "vite.config.ts"
+        ],
+        ".agents": [
+          ".agents/skills"
+        ],
+        ".agents/skills": [
+          ".agents/skills/LICENSE.humanlayer-skills",
+          ".agents/skills/LICENSE.mattpocock-skills",
+          ".agents/skills/babysit",
+          ".agents/skills/code-review",
+          ".agents/skills/codebase-design",
+          ".agents/skills/diagnosing-bugs",
+          ".agents/skills/domain-modeling",
+          ".agents/skills/frontend-design",
+          ".agents/skills/grill-with-docs",
+          ".agents/skills/grilling",
+          ".agents/skills/implement",
+          ".agents/skills/implementation-governance",
+          ".agents/skills/improve-codebase-architecture",
+          ".agents/skills/orchestrate",
+          ".agents/skills/pr",
+          ".agents/skills/prototype",
+          ".agents/skills/react-component-governance",
+          ".agents/skills/repository-standards",
+          ".agents/skills/research",
+          ".agents/skills/shadcn",
+          ".agents/skills/tdd",
+          ".agents/skills/to-spec",
+          ".agents/skills/to-tickets",
+          ".agents/skills/triage",
+          ".agents/skills/wayfinder",
+          ".agents/skills/writing-for-agents"
+        ],
+        ".agents/skills/babysit": [
+          ".agents/skills/babysit/CREDITS.md",
+          ".agents/skills/babysit/SKILL.md",
+          ".agents/skills/babysit/body-links.mjs",
+          ".agents/skills/babysit/merge.mjs",
+          ".agents/skills/babysit/platform.mjs",
+          ".agents/skills/babysit/pull-request-reviewer.mjs",
+          ".agents/skills/babysit/request.mjs",
+          ".agents/skills/babysit/review-outcome.mjs",
+          ".agents/skills/babysit/review-policy.mjs",
+          ".agents/skills/babysit/reviewer.mjs",
+          ".agents/skills/babysit/trusted-review-config.mjs",
+          ".agents/skills/babysit/wait.mjs"
+        ],
+        ".agents/skills/code-review": [
+          ".agents/skills/code-review/CREDITS.md",
+          ".agents/skills/code-review/SKILL.md",
+          ".agents/skills/code-review/agents"
+        ],
+        ".agents/skills/code-review/agents": [
+          ".agents/skills/code-review/agents/openai.yaml"
+        ],
+        ".agents/skills/codebase-design": [
+          ".agents/skills/codebase-design/CREDITS.md",
+          ".agents/skills/codebase-design/DEEPENING.md",
+          ".agents/skills/codebase-design/DESIGN-IT-TWICE.md",
+          ".agents/skills/codebase-design/SKILL.md",
+          ".agents/skills/codebase-design/agents"
+        ],
+        ".agents/skills/codebase-design/agents": [
+          ".agents/skills/codebase-design/agents/openai.yaml"
+        ],
+        ".agents/skills/diagnosing-bugs": [
+          ".agents/skills/diagnosing-bugs/CREDITS.md",
+          ".agents/skills/diagnosing-bugs/SKILL.md",
+          ".agents/skills/diagnosing-bugs/agents",
+          ".agents/skills/diagnosing-bugs/scripts"
+        ],
+        ".agents/skills/diagnosing-bugs/agents": [
+          ".agents/skills/diagnosing-bugs/agents/openai.yaml"
+        ],
+        ".agents/skills/diagnosing-bugs/scripts": [
+          ".agents/skills/diagnosing-bugs/scripts/hitl-loop.template.sh"
+        ],
+        ".agents/skills/domain-modeling": [
+          ".agents/skills/domain-modeling/ADR-FORMAT.md",
+          ".agents/skills/domain-modeling/CREDITS.md",
+          ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md",
+          ".agents/skills/domain-modeling/SKILL.md",
+          ".agents/skills/domain-modeling/agents"
+        ],
+        ".agents/skills/domain-modeling/agents": [
+          ".agents/skills/domain-modeling/agents/openai.yaml"
+        ],
+        ".agents/skills/frontend-design": [
+          ".agents/skills/frontend-design/LICENSE.txt",
+          ".agents/skills/frontend-design/SKILL.md"
+        ],
+        ".agents/skills/grill-with-docs": [
+          ".agents/skills/grill-with-docs/CREDITS.md",
+          ".agents/skills/grill-with-docs/SKILL.md",
+          ".agents/skills/grill-with-docs/agents"
+        ],
+        ".agents/skills/grill-with-docs/agents": [
+          ".agents/skills/grill-with-docs/agents/openai.yaml"
+        ],
+        ".agents/skills/grilling": [
+          ".agents/skills/grilling/CREDITS.md",
+          ".agents/skills/grilling/SKILL.md",
+          ".agents/skills/grilling/agents"
+        ],
+        ".agents/skills/grilling/agents": [
+          ".agents/skills/grilling/agents/openai.yaml"
+        ],
+        ".agents/skills/implement": [
+          ".agents/skills/implement/CREDITS.md",
+          ".agents/skills/implement/SKILL.md",
+          ".agents/skills/implement/agents"
+        ],
+        ".agents/skills/implement/agents": [
+          ".agents/skills/implement/agents/openai.yaml"
+        ],
+        ".agents/skills/implementation-governance": [
+          ".agents/skills/implementation-governance/SKILL.md",
+          ".agents/skills/implementation-governance/agents",
+          ".agents/skills/implementation-governance/references"
+        ],
+        ".agents/skills/implementation-governance/agents": [
+          ".agents/skills/implementation-governance/agents/openai.yaml"
+        ],
+        ".agents/skills/implementation-governance/references": [
+          ".agents/skills/implementation-governance/references/change-kinds.md",
+          ".agents/skills/implementation-governance/references/contract-changes.md",
+          ".agents/skills/implementation-governance/references/conventions.md",
+          ".agents/skills/implementation-governance/references/escalation.md",
+          ".agents/skills/implementation-governance/references/extraction.md",
+          ".agents/skills/implementation-governance/references/materialization.md",
+          ".agents/skills/implementation-governance/references/overview.md",
+          ".agents/skills/implementation-governance/references/scoping.md",
+          ".agents/skills/implementation-governance/references/validation.md",
+          ".agents/skills/implementation-governance/references/workflow.md"
+        ],
+        ".agents/skills/improve-codebase-architecture": [
+          ".agents/skills/improve-codebase-architecture/CREDITS.md",
+          ".agents/skills/improve-codebase-architecture/HTML-REPORT.md",
+          ".agents/skills/improve-codebase-architecture/SKILL.md",
+          ".agents/skills/improve-codebase-architecture/agents"
+        ],
+        ".agents/skills/improve-codebase-architecture/agents": [
+          ".agents/skills/improve-codebase-architecture/agents/openai.yaml"
+        ],
+        ".agents/skills/orchestrate": [
+          ".agents/skills/orchestrate/CREDITS.md",
+          ".agents/skills/orchestrate/SKILL.md",
+          ".agents/skills/orchestrate/agents",
+          ".agents/skills/orchestrate/wait.mjs"
+        ],
+        ".agents/skills/orchestrate/agents": [
+          ".agents/skills/orchestrate/agents/openai.yaml"
+        ],
+        ".agents/skills/pr": [
+          ".agents/skills/pr/CREDITS.md",
+          ".agents/skills/pr/SKILL.md",
+          ".agents/skills/pr/agents"
+        ],
+        ".agents/skills/pr/agents": [
+          ".agents/skills/pr/agents/openai.yaml"
+        ],
+        ".agents/skills/prototype": [
+          ".agents/skills/prototype/CREDITS.md",
+          ".agents/skills/prototype/LOGIC.md",
+          ".agents/skills/prototype/SKILL.md",
+          ".agents/skills/prototype/UI.md",
+          ".agents/skills/prototype/agents"
+        ],
+        ".agents/skills/prototype/agents": [
+          ".agents/skills/prototype/agents/openai.yaml"
+        ],
+        ".agents/skills/react-component-governance": [
+          ".agents/skills/react-component-governance/SKILL.md",
+          ".agents/skills/react-component-governance/agents",
+          ".agents/skills/react-component-governance/references"
+        ],
+        ".agents/skills/react-component-governance/agents": [
+          ".agents/skills/react-component-governance/agents/openai.yaml"
+        ],
+        ".agents/skills/react-component-governance/references": [
+          ".agents/skills/react-component-governance/references/boundary-cases.md",
+          ".agents/skills/react-component-governance/references/classification.md",
+          ".agents/skills/react-component-governance/references/extraction.md",
+          ".agents/skills/react-component-governance/references/overview.md",
+          ".agents/skills/react-component-governance/references/ownership.md",
+          ".agents/skills/react-component-governance/references/packaging.md",
+          ".agents/skills/react-component-governance/references/patterns.md",
+          ".agents/skills/react-component-governance/references/roles.md",
+          ".agents/skills/react-component-governance/references/workflow.md"
+        ],
+        ".agents/skills/repository-standards": [
+          ".agents/skills/repository-standards/SKILL.md",
+          ".agents/skills/repository-standards/agents"
+        ],
+        ".agents/skills/repository-standards/agents": [
+          ".agents/skills/repository-standards/agents/openai.yaml"
+        ],
+        ".agents/skills/research": [
+          ".agents/skills/research/CREDITS.md",
+          ".agents/skills/research/SKILL.md",
+          ".agents/skills/research/agents"
+        ],
+        ".agents/skills/research/agents": [
+          ".agents/skills/research/agents/openai.yaml"
+        ],
+        ".agents/skills/shadcn": [
+          ".agents/skills/shadcn/SKILL.md",
+          ".agents/skills/shadcn/agents",
+          ".agents/skills/shadcn/assets",
+          ".agents/skills/shadcn/cli.md",
+          ".agents/skills/shadcn/customization.md",
+          ".agents/skills/shadcn/evals",
+          ".agents/skills/shadcn/mcp.md",
+          ".agents/skills/shadcn/registry.md",
+          ".agents/skills/shadcn/rules"
+        ],
+        ".agents/skills/shadcn/agents": [
+          ".agents/skills/shadcn/agents/openai.yml"
+        ],
+        ".agents/skills/shadcn/assets": [
+          ".agents/skills/shadcn/assets/shadcn-small.png",
+          ".agents/skills/shadcn/assets/shadcn.png"
+        ],
+        ".agents/skills/shadcn/evals": [
+          ".agents/skills/shadcn/evals/evals.json"
+        ],
+        ".agents/skills/shadcn/rules": [
+          ".agents/skills/shadcn/rules/base-vs-radix.md",
+          ".agents/skills/shadcn/rules/chat.md",
+          ".agents/skills/shadcn/rules/composition.md",
+          ".agents/skills/shadcn/rules/forms.md",
+          ".agents/skills/shadcn/rules/icons.md",
+          ".agents/skills/shadcn/rules/styling.md"
+        ],
+        ".agents/skills/tdd": [
+          ".agents/skills/tdd/CREDITS.md",
+          ".agents/skills/tdd/SKILL.md",
+          ".agents/skills/tdd/agents",
+          ".agents/skills/tdd/mocking.md",
+          ".agents/skills/tdd/tests.md"
+        ],
+        ".agents/skills/tdd/agents": [
+          ".agents/skills/tdd/agents/openai.yaml"
+        ],
+        ".agents/skills/to-spec": [
+          ".agents/skills/to-spec/CREDITS.md",
+          ".agents/skills/to-spec/SKILL.md",
+          ".agents/skills/to-spec/agents"
+        ],
+        ".agents/skills/to-spec/agents": [
+          ".agents/skills/to-spec/agents/openai.yaml"
+        ],
+        ".agents/skills/to-tickets": [
+          ".agents/skills/to-tickets/CREDITS.md",
+          ".agents/skills/to-tickets/SKILL.md",
+          ".agents/skills/to-tickets/agents"
+        ],
+        ".agents/skills/to-tickets/agents": [
+          ".agents/skills/to-tickets/agents/openai.yaml"
+        ],
+        ".agents/skills/triage": [
+          ".agents/skills/triage/AGENT-BRIEF.md",
+          ".agents/skills/triage/CREDITS.md",
+          ".agents/skills/triage/OUT-OF-SCOPE.md",
+          ".agents/skills/triage/SKILL.md",
+          ".agents/skills/triage/agents",
+          ".agents/skills/triage/ready.mjs"
+        ],
+        ".agents/skills/triage/agents": [
+          ".agents/skills/triage/agents/openai.yaml"
+        ],
+        ".agents/skills/wayfinder": [
+          ".agents/skills/wayfinder/CREDITS.md",
+          ".agents/skills/wayfinder/SKILL.md",
+          ".agents/skills/wayfinder/agents"
+        ],
+        ".agents/skills/wayfinder/agents": [
+          ".agents/skills/wayfinder/agents/openai.yaml"
+        ],
+        ".agents/skills/writing-for-agents": [
+          ".agents/skills/writing-for-agents/CREDITS.md",
+          ".agents/skills/writing-for-agents/SKILL-MECHANICS.md",
+          ".agents/skills/writing-for-agents/SKILL.md",
+          ".agents/skills/writing-for-agents/agents"
+        ],
+        ".agents/skills/writing-for-agents/agents": [
+          ".agents/skills/writing-for-agents/agents/openai.yaml"
+        ],
+        ".claude": [
+          ".claude/skills"
+        ],
+        ".claude/skills": [
+          ".claude/skills/babysit",
+          ".claude/skills/code-review",
+          ".claude/skills/codebase-design",
+          ".claude/skills/diagnosing-bugs",
+          ".claude/skills/domain-modeling",
+          ".claude/skills/frontend-design",
+          ".claude/skills/grill-with-docs",
+          ".claude/skills/grilling",
+          ".claude/skills/implement",
+          ".claude/skills/implementation-governance",
+          ".claude/skills/improve-codebase-architecture",
+          ".claude/skills/orchestrate",
+          ".claude/skills/pr",
+          ".claude/skills/prototype",
+          ".claude/skills/react-component-governance",
+          ".claude/skills/repository-standards",
+          ".claude/skills/research",
+          ".claude/skills/shadcn",
+          ".claude/skills/tdd",
+          ".claude/skills/to-spec",
+          ".claude/skills/to-tickets",
+          ".claude/skills/triage",
+          ".claude/skills/wayfinder",
+          ".claude/skills/writing-for-agents"
+        ],
+        ".github": [
+          ".github/ISSUE_TEMPLATE",
+          ".github/PULL_REQUEST_TEMPLATE.md",
+          ".github/dependabot.yml",
+          ".github/scripts",
+          ".github/workflows"
+        ],
+        ".github/ISSUE_TEMPLATE": [
+          ".github/ISSUE_TEMPLATE/bug-report.yml",
+          ".github/ISSUE_TEMPLATE/config.yml",
+          ".github/ISSUE_TEMPLATE/feature-request.yml",
+          ".github/ISSUE_TEMPLATE/implementation-ticket.yml",
+          ".github/ISSUE_TEMPLATE/project-task.yml",
+          ".github/ISSUE_TEMPLATE/specification.yml"
+        ],
+        ".github/scripts": [
+          ".github/scripts/check-pr-policy.py",
+          ".github/scripts/validate-pr-metadata.mjs",
+          ".github/scripts/validate.mjs"
+        ],
+        ".github/workflows": [
+          ".github/workflows/ci.yml",
+          ".github/workflows/issue-contracts.yml",
+          ".github/workflows/pr-metadata.yml",
+          ".github/workflows/pr-policy.yml",
+          ".github/workflows/standards-update.yml"
+        ],
+        ".repository-standards": [
+          ".repository-standards/gitignore.local"
+        ],
+        "docs": [
+          "docs/README.md",
+          "docs/agents",
+          "docs/development",
+          "docs/usage"
+        ],
+        "docs/agents": [
+          "docs/agents/README.md",
+          "docs/agents/domain.md",
+          "docs/agents/issue-tracker.md",
+          "docs/agents/triage-labels.md"
+        ],
+        "docs/development": [
+          "docs/development/README.md",
+          "docs/development/architecture",
+          "docs/development/templates"
+        ],
+        "docs/development/architecture": [
+          "docs/development/architecture/README.md",
+          "docs/development/architecture/architecture.md"
+        ],
+        "docs/development/templates": [
+          "docs/development/templates/README.md",
+          "docs/development/templates/decision.template.md",
+          "docs/development/templates/explanation.template.md",
+          "docs/development/templates/how-to.template.md",
+          "docs/development/templates/index.template.md",
+          "docs/development/templates/reference.template.md",
+          "docs/development/templates/tutorial.template.md"
+        ],
+        "docs/usage": [
+          "docs/usage/README.md",
+          "docs/usage/guides",
+          "docs/usage/reference"
+        ],
+        "docs/usage/guides": [
+          "docs/usage/guides/README.md",
+          "docs/usage/guides/run-locally.md"
+        ],
+        "docs/usage/reference": [
+          "docs/usage/reference/README.md",
+          "docs/usage/reference/live-feed.md"
+        ],
+        "operations": [
+          "operations/lib"
+        ],
+        "operations/lib": [
+          "operations/lib/rendered-markdown.mjs"
+        ],
+        "public": [
+          "public/screenshots"
+        ],
+        "public/screenshots": [
+          "public/screenshots/focused-stream.png",
+          "public/screenshots/live-wall-grid.png",
+          "public/screenshots/mobile-wall.png"
+        ],
+        "scripts": [
+          "scripts/check-docs.mjs",
+          "scripts/ui-registry.mjs",
+          "scripts/ui-registry.test.mjs",
+          "scripts/validate-issue-contract.mjs",
+          "scripts/validate.mjs"
+        ],
+        "src": [
+          "src/App.tsx",
+          "src/api",
+          "src/components",
+          "src/index.css",
+          "src/lib",
+          "src/main.tsx",
+          "src/pages",
+          "src/theme",
+          "src/vite-env.d.ts"
+        ],
+        "src/api": [
+          "src/api/embeds.test.ts",
+          "src/api/embeds.ts",
+          "src/api/live-feed.test.ts",
+          "src/api/live-feed.ts"
+        ],
+        "src/components": [
+          "src/components/app",
+          "src/components/custom",
+          "src/components/ui"
+        ],
+        "src/components/app": [
+          "src/components/app/app-button.tsx",
+          "src/components/app/app-icon-button.tsx",
+          "src/components/app/app-tooltip.tsx"
+        ],
+        "src/components/custom": [
+          "src/components/custom/provider-glyph.tsx"
+        ],
+        "src/components/ui": [
+          "src/components/ui/button.tsx",
+          "src/components/ui/tooltip.tsx"
+        ],
+        "src/lib": [
+          "src/lib/utils.ts"
+        ],
+        "src/pages": [
+          "src/pages/stream-wall"
+        ],
+        "src/pages/stream-wall": [
+          "src/pages/stream-wall/color-bars.tsx",
+          "src/pages/stream-wall/demo-feed.ts",
+          "src/pages/stream-wall/format.ts",
+          "src/pages/stream-wall/screen-overlay.tsx",
+          "src/pages/stream-wall/station-ident.tsx",
+          "src/pages/stream-wall/stream-embed.tsx",
+          "src/pages/stream-wall/stream-layout.test.ts",
+          "src/pages/stream-wall/stream-layout.ts",
+          "src/pages/stream-wall/stream-tile.tsx",
+          "src/pages/stream-wall/stream-wall-page.tsx",
+          "src/pages/stream-wall/tally-light.tsx",
+          "src/pages/stream-wall/use-live-feed.ts",
+          "src/pages/stream-wall/use-viewport-aspect.ts",
+          "src/pages/stream-wall/wall-status-screen.tsx"
+        ],
+        "src/theme": [
+          "src/theme/ThemeProvider.tsx",
+          "src/theme/tokens.css"
+        ],
+        "vendor": [
+          "vendor/marked",
+          "vendor/parse5",
+          "vendor/postern"
+        ],
+        "vendor/marked": [
+          "vendor/marked/LICENSE",
+          "vendor/marked/README.md",
+          "vendor/marked/marked.esm.js"
+        ],
+        "vendor/parse5": [
+          "vendor/parse5/LICENSE.entities",
+          "vendor/parse5/LICENSE.parse5",
+          "vendor/parse5/README.md",
+          "vendor/parse5/parse5.esm.js"
+        ],
+        "vendor/postern": [
+          "vendor/postern/LICENSE",
+          "vendor/postern/README.md",
+          "vendor/postern/postern.mjs"
+        ]
+      },
+      "boundaries": {
+        ".agents": {
+          "type": "directory"
+        },
+        ".agents/skills": {
+          "type": "directory"
+        },
+        ".agents/skills/babysit": {
+          "type": "directory"
+        },
+        ".agents/skills/code-review": {
+          "type": "directory"
+        },
+        ".agents/skills/code-review/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/codebase-design": {
+          "type": "directory"
+        },
+        ".agents/skills/codebase-design/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/diagnosing-bugs": {
+          "type": "directory"
+        },
+        ".agents/skills/diagnosing-bugs/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/diagnosing-bugs/scripts": {
+          "type": "directory"
+        },
+        ".agents/skills/domain-modeling": {
+          "type": "directory"
+        },
+        ".agents/skills/domain-modeling/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/frontend-design": {
+          "type": "directory"
+        },
+        ".agents/skills/grill-with-docs": {
+          "type": "directory"
+        },
+        ".agents/skills/grill-with-docs/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/grilling": {
+          "type": "directory"
+        },
+        ".agents/skills/grilling/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/implement": {
+          "type": "directory"
+        },
+        ".agents/skills/implement/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/implementation-governance": {
+          "type": "directory"
+        },
+        ".agents/skills/implementation-governance/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/implementation-governance/references": {
+          "type": "directory"
+        },
+        ".agents/skills/improve-codebase-architecture": {
+          "type": "directory"
+        },
+        ".agents/skills/improve-codebase-architecture/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/orchestrate": {
+          "type": "directory"
+        },
+        ".agents/skills/orchestrate/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/pr": {
+          "type": "directory"
+        },
+        ".agents/skills/pr/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/prototype": {
+          "type": "directory"
+        },
+        ".agents/skills/prototype/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/react-component-governance": {
+          "type": "directory"
+        },
+        ".agents/skills/react-component-governance/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/react-component-governance/references": {
+          "type": "directory"
+        },
+        ".agents/skills/repository-standards": {
+          "type": "directory"
+        },
+        ".agents/skills/repository-standards/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/research": {
+          "type": "directory"
+        },
+        ".agents/skills/research/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/shadcn": {
+          "type": "directory"
+        },
+        ".agents/skills/shadcn/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/shadcn/assets": {
+          "type": "directory"
+        },
+        ".agents/skills/shadcn/evals": {
+          "type": "directory"
+        },
+        ".agents/skills/shadcn/rules": {
+          "type": "directory"
+        },
+        ".agents/skills/tdd": {
+          "type": "directory"
+        },
+        ".agents/skills/tdd/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/to-spec": {
+          "type": "directory"
+        },
+        ".agents/skills/to-spec/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/to-tickets": {
+          "type": "directory"
+        },
+        ".agents/skills/to-tickets/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/triage": {
+          "type": "directory"
+        },
+        ".agents/skills/triage/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/wayfinder": {
+          "type": "directory"
+        },
+        ".agents/skills/wayfinder/agents": {
+          "type": "directory"
+        },
+        ".agents/skills/writing-for-agents": {
+          "type": "directory"
+        },
+        ".agents/skills/writing-for-agents/agents": {
+          "type": "directory"
+        },
+        ".claude": {
+          "type": "directory"
+        },
+        ".claude/skills": {
+          "type": "directory"
+        },
+        ".github": {
+          "type": "directory"
+        },
+        ".github/ISSUE_TEMPLATE": {
+          "type": "directory"
+        },
+        ".github/scripts": {
+          "type": "directory"
+        },
+        ".github/workflows": {
+          "type": "directory"
+        },
+        ".repository-standards": {
+          "type": "directory"
+        },
+        "docs": {
+          "type": "directory"
+        },
+        "docs/agents": {
+          "type": "directory"
+        },
+        "docs/development": {
+          "type": "directory"
+        },
+        "docs/development/architecture": {
+          "type": "directory"
+        },
+        "docs/development/templates": {
+          "type": "directory"
+        },
+        "docs/usage": {
+          "type": "directory"
+        },
+        "docs/usage/guides": {
+          "type": "directory"
+        },
+        "docs/usage/reference": {
+          "type": "directory"
+        },
+        "operations": {
+          "type": "directory"
+        },
+        "operations/lib": {
+          "type": "directory"
+        },
+        "public": {
+          "type": "directory"
+        },
+        "public/screenshots": {
+          "type": "directory"
+        },
+        "scripts": {
+          "type": "directory"
+        },
+        "src": {
+          "type": "directory"
+        },
+        "src/api": {
+          "type": "directory"
+        },
+        "src/components": {
+          "type": "directory"
+        },
+        "src/components/app": {
+          "type": "directory"
+        },
+        "src/components/custom": {
+          "type": "directory"
+        },
+        "src/components/ui": {
+          "type": "directory"
+        },
+        "src/lib": {
+          "type": "directory"
+        },
+        "src/pages": {
+          "type": "directory"
+        },
+        "src/pages/stream-wall": {
+          "type": "directory"
+        },
+        "src/theme": {
+          "type": "directory"
+        },
+        "vendor": {
+          "type": "directory"
+        },
+        "vendor/marked": {
+          "type": "directory"
+        },
+        "vendor/parse5": {
+          "type": "directory"
+        },
+        "vendor/postern": {
+          "type": "directory"
+        }
+      },
+      "targets": {},
+      "settings": {
+        "core.ignorecase": null,
+        "core.precomposeunicode": null,
+        "core.filemode": "true",
+        "core.symlinks": null,
+        "core.sparsecheckout": null,
+        "core.sparsecheckoutcone": null
+      },
+      "ignores": {
+        "global": {
+          "type": "missing"
+        },
+        "info": {
+          "type": "file",
+          "sha256": "6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1",
+          "executable": false
+        },
+        ".gitignore": {
+          "type": "file",
+          "sha256": "80b31037ea42dc324b4b259f5b6966dd94b728ccc6511a741bd527e5d4585a6f",
+          "executable": false
+        },
+        ".agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/babysit/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/code-review/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/code-review/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/codebase-design/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/codebase-design/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/diagnosing-bugs/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/diagnosing-bugs/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/diagnosing-bugs/scripts/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/domain-modeling/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/domain-modeling/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/frontend-design/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/grill-with-docs/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/grill-with-docs/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/grilling/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/grilling/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/implement/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/implement/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/implementation-governance/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/implementation-governance/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/implementation-governance/references/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/improve-codebase-architecture/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/improve-codebase-architecture/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/orchestrate/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/orchestrate/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/pr/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/pr/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/prototype/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/prototype/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/react-component-governance/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/react-component-governance/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/react-component-governance/references/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/repository-standards/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/repository-standards/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/research/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/research/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/shadcn/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/shadcn/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/shadcn/assets/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/shadcn/evals/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/shadcn/rules/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/tdd/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/tdd/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/to-spec/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/to-spec/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/to-tickets/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/to-tickets/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/triage/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/triage/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/wayfinder/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/wayfinder/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/writing-for-agents/.gitignore": {
+          "type": "missing"
+        },
+        ".agents/skills/writing-for-agents/agents/.gitignore": {
+          "type": "missing"
+        },
+        ".claude/.gitignore": {
+          "type": "missing"
+        },
+        ".claude/skills/.gitignore": {
+          "type": "missing"
+        },
+        ".github/.gitignore": {
+          "type": "missing"
+        },
+        ".github/ISSUE_TEMPLATE/.gitignore": {
+          "type": "missing"
+        },
+        ".github/scripts/.gitignore": {
+          "type": "missing"
+        },
+        ".github/workflows/.gitignore": {
+          "type": "missing"
+        },
+        ".repository-standards/.gitignore": {
+          "type": "missing"
+        },
+        "docs/.gitignore": {
+          "type": "missing"
+        },
+        "docs/agents/.gitignore": {
+          "type": "missing"
+        },
+        "docs/development/.gitignore": {
+          "type": "missing"
+        },
+        "docs/development/architecture/.gitignore": {
+          "type": "missing"
+        },
+        "docs/development/templates/.gitignore": {
+          "type": "missing"
+        },
+        "docs/usage/.gitignore": {
+          "type": "missing"
+        },
+        "docs/usage/guides/.gitignore": {
+          "type": "missing"
+        },
+        "docs/usage/reference/.gitignore": {
+          "type": "missing"
+        },
+        "operations/.gitignore": {
+          "type": "missing"
+        },
+        "operations/lib/.gitignore": {
+          "type": "missing"
+        },
+        "public/.gitignore": {
+          "type": "missing"
+        },
+        "public/screenshots/.gitignore": {
+          "type": "missing"
+        },
+        "scripts/.gitignore": {
+          "type": "missing"
+        },
+        "src/.gitignore": {
+          "type": "missing"
+        },
+        "src/api/.gitignore": {
+          "type": "missing"
+        },
+        "src/components/.gitignore": {
+          "type": "missing"
+        },
+        "src/components/app/.gitignore": {
+          "type": "missing"
+        },
+        "src/components/custom/.gitignore": {
+          "type": "missing"
+        },
+        "src/components/ui/.gitignore": {
+          "type": "missing"
+        },
+        "src/lib/.gitignore": {
+          "type": "missing"
+        },
+        "src/pages/.gitignore": {
+          "type": "missing"
+        },
+        "src/pages/stream-wall/.gitignore": {
+          "type": "missing"
+        },
+        "src/theme/.gitignore": {
+          "type": "missing"
+        },
+        "vendor/.gitignore": {
+          "type": "missing"
+        },
+        "vendor/marked/.gitignore": {
+          "type": "missing"
+        },
+        "vendor/parse5/.gitignore": {
+          "type": "missing"
+        },
+        "vendor/postern/.gitignore": {
+          "type": "missing"
+        }
+      },
+      "limits": {
+        "paths": 20000,
+        "fileBytes": 8388608,
+        "totalBytes": 67108864,
+        "depth": 128
+      }
+    }
+  },
+  "scopeChanges": []
+}
