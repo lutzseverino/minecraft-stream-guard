@@ -29,7 +29,7 @@
         <google-java-format.version>1.35.0</google-java-format.version>
         <paper.api.version>1.20.1-R0.1-SNAPSHOT</paper.api.version>
         <junit.version>5.11.4</junit.version>
-        <spotless.version>3.4.0</spotless.version>
+        <spotless.version>3.11.0</spotless.version>
     </properties>
 
     <repositories>
