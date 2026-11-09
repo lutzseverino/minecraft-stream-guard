@@ -4,7 +4,7 @@
 
   [![TypeScript](https://img.shields.io/badge/TypeScript-7-blue)](https://www.typescriptlang.org/)
   [![Node.js 24 | 26](https://img.shields.io/badge/Node.js-24%20%7C%2026-green)](https://nodejs.org/)
-  [![CI](https://github.com/lutzseverino/minecraft-stream-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/lutzseverino/minecraft-stream-guard/actions/workflows/ci.yml)
+  [![CI](https://github.com/lutzseverino/minecraft-stream-guard/actions/workflows/site-ci.yml/badge.svg)](https://github.com/lutzseverino/minecraft-stream-guard/actions/workflows/site-ci.yml)
   [![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-2f3437)](LICENSE)
 </div>
 
