@@ -2,18 +2,20 @@ Contributor setup and maintenance guidance for StreamGuard Site.
 
 ## Setup and validation
 
-Use Node.js 24 or 26 and pnpm 11; `packageManager` in `package.json` pins the exact pnpm version. From `site/`, run `pnpm install` and `pnpm dev`.
+Use Node.js 24 or 26 and pnpm 11; `packageManager` in `package.json` pins the exact pnpm version. From `site/`, run `pnpm install --frozen-lockfile` and `pnpm dev`.
 
 Run `pnpm validate` before review. It runs, in order:
 
-- `format:check`: Prettier 3.
-- `lint`: oxlint 1, type-aware through `oxlint-tsgolint`, with warnings denied.
-- `typecheck`: TypeScript 7 (`tsc -b`).
-- `test:run`: Vitest 5.
-- `check:architecture`: dependency-cruiser module boundaries.
-- `check:docs`: documentation links and indexes.
-- `ui:check`: generated shadcn registry integrity.
-- `build`: the production Vite 8 build.
+| Check | Purpose |
+| --- | --- |
+| `format:check` | Prettier 3. |
+| `lint` | oxlint 1, type-aware with warnings denied. |
+| `typecheck` | TypeScript 7 (`tsc -b`). |
+| `test:run` | Vitest 5. |
+| `check:architecture` | dependency-cruiser boundaries. |
+| `check:docs` | Documentation links and indexes. |
+| `ui:check` | Generated shadcn registry integrity. |
+| `build` | Production Vite 8 build. |
 
 `pnpm build` creates `dist/`; `pnpm preview` serves it locally. `pnpm format` rewrites formatting. `validate` is the site's own aggregate; shared delivery checks live at the repository root. Run `bash scripts/check.sh` from that root to validate both components.
 
@@ -31,9 +33,10 @@ dependency-cruiser 18 reads TypeScript through the compiler API, which TypeScrip
 
 `components.json` uses the `base-nova` style (Base UI) with lucide icons. Generated output in `src/components/ui/` is never edited or formatted by hand. `registry-manifest.json` records each component and a SHA-256 of every generated file; `pnpm ui:check` fails on a changed, missing or unexpected file.
 
-- `pnpm ui:add <component>` adds components with the pinned shadcn CLI and records them.
-- `pnpm ui:update` refreshes only the recorded components and fails if the refresh creates unrecorded files.
-- Both stop before running the CLI when `ui:check` fails, so a hand edit or stray file never becomes the recorded baseline.
+`pnpm ui:add <component>` adds components with the pinned shadcn CLI and
+records them. `pnpm ui:update` refreshes only the recorded components and fails
+if the refresh creates unrecorded files. Both stop before running the CLI when
+`ui:check` fails, so a hand edit or stray file never becomes the recorded baseline.
 
 Pages use registry components through `src/components/app/`. Custom components the registry has no match for, such as the provider glyphs, live in `src/components/custom/`.
 

@@ -16,3 +16,6 @@ RUN apt-get update \
 
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="/opt/java/openjdk/bin:${PATH}"
+
+# The site and delivery checks use the same system-wide package manager as CI.
+RUN npm install --global pnpm@11.28.9

@@ -26,6 +26,18 @@
       "exact": ".github/ISSUE_TEMPLATE/bug-report.yml"
     },
     {
+      "id": "comments",
+      "checks": [],
+      "fixes": [],
+      "kind": "repository",
+      "guidance": "guidance/comments.md",
+      "rules": "rules/comments.md",
+      "targets": {
+        "paths": [],
+        "directories": []
+      }
+    },
+    {
       "id": "contribution-guidance",
       "checks": [],
       "fixes": [],
@@ -67,13 +79,8 @@
       "targets": {
         "paths": [
           "docs/README.md",
-          "docs/_templates/README.md",
-          "docs/_templates/decision.template.md",
-          "docs/_templates/explanation.template.md",
-          "docs/_templates/how-to.template.md",
-          "docs/_templates/index.template.md",
-          "docs/_templates/reference.template.md",
-          "docs/_templates/tutorial.template.md",
+          "docs/adr/0001-one-repository-per-project.md",
+          "docs/adr/README.md",
           "docs/development/README.md",
           "docs/development/architecture.md",
           "docs/development/templates/README.md",
@@ -83,19 +90,7 @@
           "docs/development/templates/index.template.md",
           "docs/development/templates/reference.template.md",
           "docs/development/templates/tutorial.template.md",
-          "docs/explanation/README.md",
-          "docs/explanation/architecture.md",
-          "docs/explanation/enforcement-model.md",
-          "docs/how-to/README.md",
-          "docs/how-to/configure-providers.md",
-          "docs/how-to/publish-live-feed.md",
-          "docs/marketplace.md",
-          "docs/reference/README.md",
-          "docs/reference/commands-and-permissions.md",
-          "docs/reference/configuration.md",
-          "docs/reference/versioning.md",
-          "docs/tutorials/README.md",
-          "docs/tutorials/install-and-configure.md",
+          "docs/development/verify-agent-sandbox.sh",
           "docs/usage/README.md",
           "docs/usage/explanation/README.md",
           "docs/usage/explanation/enforcement-model.md",
@@ -108,7 +103,23 @@
           "docs/usage/reference/configuration.md",
           "docs/usage/reference/versioning.md",
           "docs/usage/tutorials/README.md",
-          "docs/usage/tutorials/install-and-configure.md"
+          "docs/usage/tutorials/install-and-configure.md",
+          "site/docs/README.md",
+          "site/docs/development/README.md",
+          "site/docs/development/architecture/README.md",
+          "site/docs/development/architecture/architecture.md",
+          "site/docs/development/templates/README.md",
+          "site/docs/development/templates/decision.template.md",
+          "site/docs/development/templates/explanation.template.md",
+          "site/docs/development/templates/how-to.template.md",
+          "site/docs/development/templates/index.template.md",
+          "site/docs/development/templates/reference.template.md",
+          "site/docs/development/templates/tutorial.template.md",
+          "site/docs/usage/README.md",
+          "site/docs/usage/guides/README.md",
+          "site/docs/usage/guides/run-locally.md",
+          "site/docs/usage/reference/README.md",
+          "site/docs/usage/reference/live-feed.md"
         ],
         "directories": []
       }
@@ -148,7 +159,26 @@
     },
     {
       "id": "factory-workflow",
-      "checks": [],
+      "checks": [
+        {
+          "id": "factory-model-policy",
+          "run": {
+            "executable": "node",
+            "script": "operations/check-factory-model-policy.mjs",
+            "resources": [
+              "operations/lib/factory-model-policy.mjs"
+            ],
+            "arguments": []
+          },
+          "prerequisite": {
+            "version-arguments": [
+              "--version"
+            ],
+            "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          },
+          "timeout-seconds": 30
+        }
+      ],
       "fixes": [],
       "kind": "repository",
       "guidance": "guidance/factory-workflow.md",
@@ -184,7 +214,7 @@
             "executable": "node",
             "script": "operations/check-pull-request-reviewer.mjs",
             "resources": [
-              "operations/lib/pull-request-reviewer.mjs"
+              ".agents/skills/babysit/pull-request-reviewer.mjs"
             ],
             "arguments": []
           },
@@ -202,7 +232,7 @@
             "executable": "node",
             "script": "operations/check-factory-review-policy.mjs",
             "resources": [
-              "operations/lib/review-policy.mjs"
+              ".agents/skills/babysit/review-policy.mjs"
             ],
             "arguments": []
           },
@@ -509,7 +539,10 @@
       "guidance": "guidance/project-readmes.md",
       "rules": "rules/project-readmes.md",
       "targets": {
-        "paths": [],
+        "paths": [
+          "plugin/README.md",
+          "site/README.md"
+        ],
         "directories": []
       }
     },
@@ -683,6 +716,14 @@
       "source": ".agents/skills/research"
     },
     {
+      "id": "skill-review",
+      "checks": [],
+      "fixes": [],
+      "kind": "skill",
+      "name": "review",
+      "source": ".agents/skills/review"
+    },
+    {
       "id": "skill-tdd",
       "checks": [],
       "fixes": [],
@@ -780,15 +821,40 @@
     },
     {
       "id": "typescript-vite-stack",
-      "checks": [],
+      "checks": [
+        {
+          "id": "typescript-vite-stack-manifests",
+          "run": {
+            "executable": "node",
+            "script": "operations/check-typescript-vite-stack.mjs",
+            "resources": [
+              "operations/lib/typescript-node-stack.mjs",
+              "operations/lib/stack-files.mjs",
+              "operations/lib/typescript-web-stack.mjs",
+              "operations/lib/stack-check.mjs",
+              "operations/lib/local-markdown-links.mjs"
+            ],
+            "arguments": []
+          },
+          "prerequisite": {
+            "version-arguments": [
+              "--version"
+            ],
+            "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          },
+          "timeout-seconds": 30
+        }
+      ],
       "fixes": [],
       "kind": "repository",
       "guidance": "guidance/typescript-vite-stack.md",
+      "rules": "rules/typescript-web-stacks.md",
       "targets": {
-        "paths": [],
+        "paths": [
+          "site/package.json"
+        ],
         "directories": []
-      },
-      "no-scope": true
+      }
     },
     {
       "id": "validator-command",

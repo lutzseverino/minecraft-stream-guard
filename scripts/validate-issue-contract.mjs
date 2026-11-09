@@ -2,6 +2,7 @@
 
 import { setTimeout as wait } from "node:timers/promises";
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { PlatformError } from "../vendor/postern/postern.mjs";
 import { lexer } from "../vendor/marked/marked.esm.js";
 import {
@@ -12,7 +13,11 @@ import {
 
 // How the validator identifies an issue's contract kind and the parent its
 // `Parent` section names, with the issue Markdown parsing they rest on.
-const categoryLabels = new Set(["bug", "enhancement"]);
+// A triaged request's category, which its Agent Brief names and its one
+// `type:` label carries.
+const categories = new Set(["bug", "enhancement"]);
+const categoryLabel = (category) => `type:${category}`;
+const categoryLabels = new Set([...categories].map(categoryLabel));
 const wayfinderChildLabels = new Set([
   "wayfinder:research",
   "wayfinder:prototype",
@@ -113,14 +118,19 @@ export const resultFormat = "repo-canon/issue-contract-state/v1";
 const needsAttentionHeading = "## Issue contract needs attention";
 const structureCorrectedHeading = "## Issue contract structure corrected";
 const readinessRemovedHeading = "## Issue contract readiness removed";
-const readyLabels = new Set(["ready-for-agent", "ready-for-human"]);
-const workflowLabels = new Set([
-  "needs-triage",
-  "needs-info",
-  "ready-for-agent",
-  "ready-for-human",
-  "wontfix",
-]);
+// An open issue's workflow state is its one `state:` label, or the `wontfix`
+// outcome that closes it. Only `state:ready` is readiness, bound to a review;
+// the validator's own fallback is `state:triage`. The `triage` readiness
+// command applies this label.
+export const readyLabels = new Set(["state:ready"]);
+const fallbackState = "state:triage";
+const isWorkflowLabel = (label) =>
+  label.startsWith("state:") || label === "wontfix";
+// What closing an issue clears: its workflow state, owner gates and factory
+// machine state. `wontfix`, `type:`, `priority:`, `model:` and unrelated
+// labels stay.
+const isClearedOnClose = (label) =>
+  ["state:", "gate:", "factory:"].some((family) => label.startsWith(family));
 const missingLabelEventError =
   "The authoritative issue timeline does not contain the current readiness label event.";
 const agentBriefHeadingNames = new Set(["agent brief"]);
@@ -182,7 +192,9 @@ const wayfinderChildFields = new Set(["parent", "question"]);
 // - `permissions`: each looked-up login's repository `{ role }`, `null` when
 //   GitHub reports none, with an `error` when the lookup failed;
 // - `evaluatedAt`: the second the adapter decided in, which the result
-//   records.
+//   records;
+// - `triageResult`: the factory's triage result as `factoryTriageResult`
+//   reads it, `null` when only people grant readiness.
 // The timeline is read whenever the issue uses workflow state, permissions only
 // for a structurally complete contract, and `bodyRevision` only for a
 // direct-body contract. Permissions cover every actor on a readiness-label
@@ -202,11 +214,7 @@ export function decideIssueContract(snapshot) {
   if (snapshot.issue.state === "closed") {
     const removeLabels = (snapshot.issue.labels ?? [])
       .map(labelName)
-      .filter(
-        (label) =>
-          (workflowLabels.has(label) && label !== "wontfix") ||
-          label.startsWith("factory:"),
-      );
+      .filter(isClearedOnClose);
     return issueDecision({
       exitCode: 0,
       message:
@@ -337,6 +345,7 @@ export function decideIssueContract(snapshot) {
             label: readiness.label,
             reviewer: readiness.reviewer,
             reviewEventId: readiness.reviewEventId,
+            triageRun: readiness.triageRun,
           })
         : awaitingReviewFeedback(published, {
             reason: readiness.rejectionReason,
@@ -375,16 +384,31 @@ function revisionPublishedAt(recorded, previousFeedback, revision) {
   return firstPublication(recorded, previousFeedback);
 }
 
-// When the previous result's revision was first published.
+// When the previous result's revision was first published. Comments carry
+// their write time as `updated_at`, as GitHub's REST API names it, or as
+// `updatedAt`, as Postern's port does.
 function firstPublication(recorded, previousFeedback) {
-  return recorded.publishedAt ?? previousFeedback?.updated_at ?? null;
+  return (
+    recorded.publishedAt ??
+    previousFeedback?.updated_at ??
+    previousFeedback?.updatedAt ??
+    null
+  );
+}
+
+// Whether readiness applied at `time`, an ISO time to the second, follows the
+// revision notice of the result `{ comment, state }` that `issueContractResult`
+// reads: the notice was first published in a strictly earlier second. The
+// `triage` readiness command waits for the same barrier.
+export function noticePrecedes({ comment, state }, time) {
+  const publishedAt = state ? firstPublication(state, comment) : null;
+  return Boolean(publishedAt && time && publishedAt < time);
 }
 
 // Whether the snapshot's run is a human readiness trigger the timeline has not
-// recorded yet: a `labeled` event for a readiness label by a sender other than
-// `github-actions[bot]`, checked against the readiness label its re-fetched
-// issue carries, its own when present and otherwise the other, while that
-// label's latest recorded application, by anyone, is not the sender's or a
+// recorded yet: a `labeled` event for `state:ready` by a sender other than
+// `github-actions[bot]`, while its re-fetched issue still carries the label and
+// the label's latest recorded application, by anyone, is not the sender's or a
 // removal is the label's latest recorded change. While the latest feedback
 // awaits review, that application must also follow its observed event: the run
 // that wrote it already observed every one at or before it. A trigger whose
@@ -403,13 +427,11 @@ export function readinessTriggerUnrecorded(snapshot) {
   ) {
     return false;
   }
-  const carried = readinessLabels((issue.labels ?? []).map(labelName));
-  const label = carried.includes(trigger) ? trigger : carried[0];
-  if (!label) return false;
+  if (!(issue.labels ?? []).map(labelName).includes(trigger)) return false;
   const recorded = feedbackState(findFeedback(comments)?.body);
   const barrier =
     recorded?.status === "awaiting-review" ? recorded.observedEventId : null;
-  return !issueTimeline(snapshot).recordsApplication(label, sender, barrier);
+  return !issueTimeline(snapshot).recordsApplication(trigger, sender, barrier);
 }
 
 function issueDecision({
@@ -434,7 +456,7 @@ function assessStructure(snapshot) {
     : null;
   const states = (issue.labels ?? [])
     .map(labelName)
-    .filter((label) => workflowLabels.has(label) && !readyLabels.has(label));
+    .filter((label) => isWorkflowLabel(label) && !readyLabels.has(label));
   return validate({
     issue,
     wontfixSettled:
@@ -575,14 +597,14 @@ function validate({
       ["Steps to reproduce", "Expected behavior", "Actual behavior"],
       errors,
     );
-    validateTriagedLabels(labels, "bug", errors);
+    validateTriagedLabels(labels, categoryLabel("bug"), errors);
     requireAgentBriefForReadiness(labels, errors);
     return outcome("bug report", errors, labels, true);
   }
 
   if (contractKind === "feature request") {
     requireSections(sections, ["Problem", "Desired outcome"], errors);
-    validateTriagedLabels(labels, "enhancement", errors);
+    validateTriagedLabels(labels, categoryLabel("enhancement"), errors);
     requireAgentBriefForReadiness(labels, errors);
     return outcome("feature request", errors, labels, true);
   }
@@ -743,12 +765,14 @@ function labelName(label) {
 }
 
 function validateTriagedLabels(labels, expectedCategory, errors) {
-  const categories = [...labels].filter((label) => categoryLabels.has(label));
-  if (categories.length !== 1)
-    errors.push("Apply exactly one category label: `bug` or `enhancement`.");
+  const carried = [...labels].filter((label) => categoryLabels.has(label));
+  if (carried.length !== 1)
+    errors.push(
+      "Apply exactly one category label: `type:bug` or `type:enhancement`.",
+    );
   if (
     expectedCategory &&
-    (categories.length !== 1 || categories[0] !== expectedCategory)
+    (carried.length !== 1 || carried[0] !== expectedCategory)
   ) {
     errors.push(
       `Use the \`${expectedCategory}\` category for this issue form.`,
@@ -790,7 +814,7 @@ function validateAgentBrief(body, labels, errors) {
     );
   } else if (preamble !== "disclaimer-only") {
     errors.push(
-      "Start the Agent Brief comment with `> *This was generated by AI during triage.*`.",
+      "Start the Agent Brief comment with `> *This was generated by AI during triage.*`, the triage disclaimer in `.repo-standards/rules/comments.md#disclaimers`.",
     );
   }
   const fields = parseBriefFields(markdownSection(body, heading));
@@ -811,10 +835,12 @@ function validateAgentBrief(body, labels, errors) {
     }
   }
   const category = normalize(fields.get("category") ?? "");
-  if (category && !categoryLabels.has(category))
+  if (category && !categories.has(category))
     errors.push("Set the Agent Brief `Category` to `bug` or `enhancement`.");
-  if (category && !labels.has(category))
-    errors.push(`Apply the Agent Brief's \`${category}\` category label.`);
+  if (category && !labels.has(categoryLabel(category)))
+    errors.push(
+      `Apply the Agent Brief's \`${categoryLabel(category)}\` category label.`,
+    );
 }
 
 function markdownSection(markdown, heading) {
@@ -929,14 +955,6 @@ function assessReadiness({
   const observedEvent = timeline.latestObservedTransition();
   const observedEventId =
     observedEvent?.id == null ? null : String(observedEvent.id);
-  if (currentReadyLabels.length > 1) {
-    return {
-      valid: false,
-      observedEventId,
-      error: "Apply only one readiness label to an implementation contract.",
-    };
-  }
-
   const recorded = feedbackState(previousFeedback?.body);
   const deletedBrief = supersedingDeletedBrief(currentEvent, result);
   const sourceInvalidation =
@@ -993,11 +1011,15 @@ function assessReadiness({
         observedEventId,
         sourceInvalidation,
       };
-    const authority = reviewerAuthority(permissions, grant.reviewer);
+    const authority =
+      grant.reviewer === snapshot.triageResult?.author
+        ? triageAuthority(snapshot, result)
+        : reviewerAuthority(permissions, grant.reviewer);
     if (!authority.authorized) {
       const error = authority.error
         ? `Could not verify @${grant.reviewer}'s review authority: ${authority.error}`
-        : `@${grant.reviewer} is not authorized to grant readiness. Use a repository admin, maintainer, or collaborator with the triage role.`;
+        : (authority.refusal ??
+          `@${grant.reviewer} is not authorized to grant readiness. Use a repository admin, maintainer, or collaborator with the triage role.`);
       return {
         valid: false,
         observedEventId,
@@ -1013,6 +1035,7 @@ function assessReadiness({
       label: grant.label,
       reviewer: grant.reviewer,
       reviewEventId: grant.reviewEventId,
+      triageRun: authority.run ?? null,
       observedEventId,
       sourceInvalidation,
     };
@@ -1084,9 +1107,9 @@ function readinessGrant(
   const followsAwaitingRevision =
     recorded?.status === "awaiting-review" &&
     recorded.revision === revision &&
-    timeline.noticePrecedes(
-      firstPublication(recorded, previousFeedback),
-      labelEvent,
+    noticePrecedes(
+      { comment: previousFeedback, state: recorded },
+      labelEvent.created_at,
     ) &&
     timeline.follows(reviewEventId, recorded.observedEventId);
   const followsRevisionNotice =
@@ -1185,6 +1208,57 @@ function supersedingDeletedBrief(currentEvent, result) {
     : null;
 }
 
+// Readiness the factory's triage run applied. It counts when the
+// current contract is the Agent Brief the factory's account posted as that
+// run's triage result, which names the run on exactly one marked line, and the
+// run did not write the issue. An issue the factory's account opened names the
+// run that wrote it on one marked line too; without one, the writer is unknown.
+function triageAuthority({ issue, triageResult }, result) {
+  const { marker, author } = triageResult;
+  const brief = result.contract.comment;
+  const runs =
+    brief && (brief.user ?? brief.author)?.login === author
+      ? markedRuns(brief.body, marker)
+      : [];
+  const run = runs.length === 1 ? runs[0] : null;
+  if (!run)
+    return {
+      authorized: false,
+      refusal: `@${author}'s readiness is not backed by the factory's triage result for this revision.`,
+    };
+  if (issue.user?.login !== author) return { authorized: true, run };
+  const writers = markedRuns(issue.body, marker);
+  if (writers.length !== 1 || !writers[0])
+    return {
+      authorized: false,
+      refusal: `The factory opened this issue without naming the run that wrote it, so its triage run ${run} cannot accept the brief. A person must review it.`,
+    };
+  if (writers[0] === run)
+    return {
+      authorized: false,
+      refusal: `The factory's triage run ${run} wrote this issue, so it cannot accept the brief. A person must review it.`,
+    };
+  return { authorized: true, run };
+}
+
+// The run each line of `markdown` marked with the factory's triage-result
+// `marker` names, as `<!-- <marker> {"run":"<run>"} -->` on a line of its own,
+// or `null` for a marked line that names no run.
+function markedRuns(markdown, marker) {
+  const prefix = `<!-- ${marker} `;
+  return normalizeMarkdown(markdown ?? "")
+    .split("\n")
+    .filter((line) => line.startsWith(prefix) && line.endsWith(" -->"))
+    .map((line) => {
+      try {
+        const { run } = JSON.parse(line.slice(prefix.length, -4)) ?? {};
+        return typeof run === "string" && run.trim() ? run : null;
+      } catch {
+        return null;
+      }
+    });
+}
+
 function reviewerAuthority(permissions, login) {
   const permission =
     permissions && Object.hasOwn(permissions, login)
@@ -1279,15 +1353,15 @@ function readinessLabels(labels) {
 // The label writes that leave the issue one workflow state: the `kept` states
 // when the decision names them, otherwise the non-readiness state applied
 // latest. States the timeline cannot order yet all stay. An issue left with
-// none gets `needs-triage`, whether or not it has carried a state before.
+// none gets `state:triage`, whether or not it has carried a state before.
 function settledStates(labels, timeline, kept = null) {
-  const states = [...labels].filter((label) => workflowLabels.has(label));
+  const states = [...labels].filter(isWorkflowLabel);
   const staying =
     kept ??
     timeline.latestApplied(states.filter((label) => !readyLabels.has(label)));
   return {
     removeLabels: states.filter((label) => !staying.includes(label)),
-    addLabels: staying.length > 0 ? [] : ["needs-triage"],
+    addLabels: staying.length > 0 ? [] : [fallbackState],
   };
 }
 
@@ -1297,7 +1371,7 @@ function stateAppliedAfterReview(labels, reviewEventId, timeline) {
   return timeline.latestApplied(
     [...labels].filter(
       (label) =>
-        workflowLabels.has(label) &&
+        isWorkflowLabel(label) &&
         !readyLabels.has(label) &&
         !timeline.isValidatorFallback(label) &&
         timeline.appliedAfter(label, reviewEventId),
@@ -1311,6 +1385,12 @@ function isValidatorRemoval(candidate) {
     candidate.event === "unlabeled" &&
     candidate.actor?.login === "github-actions[bot]"
   );
+}
+
+// A readiness transition a result observes: any but the validator's own
+// removal.
+function isObservedTransition(candidate) {
+  return isReadinessTransition(candidate) && !isValidatorRemoval(candidate);
 }
 
 function isReadinessTransition(candidate) {
@@ -1424,14 +1504,8 @@ function issueTimeline({ event, issue, issueEvents }) {
     return issueEvents.findLast(isReadinessTransition) ?? null;
   }
 
-  // The latest readiness transition other than the validator's own removal.
   function latestObservedTransition() {
-    return (
-      issueEvents.findLast(
-        (candidate) =>
-          isReadinessTransition(candidate) && !isValidatorRemoval(candidate),
-      ) ?? null
-    );
+    return issueEvents.findLast(isObservedTransition) ?? null;
   }
 
   // Whether the label's latest recorded change is its application.
@@ -1476,16 +1550,6 @@ function issueTimeline({ event, issue, issueEvents }) {
       const earlier = position(earlierEventId);
       const later = position(laterEventId);
       return earlier !== null && later !== null && later > earlier;
-    },
-
-    // Whether the revision notice was first published in a strictly earlier
-    // second than the readiness label event.
-    noticePrecedes(publishedAt, labelEvent) {
-      return Boolean(
-        publishedAt &&
-        labelEvent.created_at &&
-        publishedAt < labelEvent.created_at,
-      );
     },
 
     // Whether a recorded review is still the latest readiness transition, or
@@ -1535,7 +1599,7 @@ function issueTimeline({ event, issue, issueEvents }) {
     // cannot establish the actor, so it still follows the ordering rule.
     isValidatorFallback(label) {
       return (
-        label === "needs-triage" &&
+        label === fallbackState &&
         latestChangeIsApplication(label) &&
         lastApplication(label)?.event.actor?.login === "github-actions[bot]"
       );
@@ -1665,7 +1729,7 @@ function awaitingReviewFeedback(
     rejectedCreationLabel,
   });
   const review =
-    "A repository admin, maintainer, or explicitly authorized triage-role collaborator must review this exact revision, then apply one readiness label. For an Agent Brief, wait for this revision notice before applying the label. Structural validation never grants readiness.";
+    "A repository admin, maintainer, or explicitly authorized triage-role collaborator must review this exact revision, then apply `state:ready`. For an Agent Brief, wait for this revision notice before applying the label. Structural validation never grants readiness.";
   if (reason && removedLabels.length > 0) {
     const labels = removedLabels.map((label) => `\`${label}\``).join(" and ");
     return `${state}\n${readinessRemovedHeading}\n\nReadiness was removed: ${reason}\n\nThe validator removed ${labels} from the ${published.kind} at revision \`${published.revision}\`, which has the required structure.\n\nA fresh authorized review is required to restore readiness. ${review}`;
@@ -1676,8 +1740,14 @@ function awaitingReviewFeedback(
   return `${state}\n## Issue contract awaiting review\n\nThe ${published.kind} has the required structure at revision \`${published.revision}\`.${explanation}\n\nA fresh authorized review is required. ${review}`;
 }
 
-function approvedFeedback(published, { label, reviewer, reviewEventId }) {
-  return `${resultLine({ ...published, status: "approved", label, reviewer, reviewEventId })}\n## Issue contract readiness recorded\n\nThe ${published.kind} at revision \`${published.revision}\` was reviewed by @${reviewer}, whose repository role authorizes triage, and is bound to \`${label}\`. Editing or replacing the contract or removing readiness invalidates this association.`;
+function approvedFeedback(
+  published,
+  { label, reviewer, reviewEventId, triageRun },
+) {
+  const review = triageRun
+    ? `was accepted by the factory's triage run ${triageRun}, whose result @${reviewer} posted,`
+    : `was reviewed by @${reviewer}, whose repository role authorizes triage,`;
+  return `${resultLine({ ...published, status: "approved", label, reviewer, reviewEventId })}\n## Issue contract readiness recorded\n\nThe ${published.kind} at revision \`${published.revision}\` ${review} and is bound to \`${label}\`. Editing or replacing the contract or removing readiness invalidates this association.`;
 }
 
 function noContractFeedback(evaluation, corrected) {
@@ -1695,12 +1765,61 @@ function noContractFeedback(evaluation, corrected) {
 const triggerWaitInterval = 2000;
 const triggerWaitBound = 30000;
 
+// The factory's triage result as the repository's factory configuration names
+// it under `triageResult`: the `marker` of the line naming the run and the
+// `author` account that posts the result. `null` when the repository has no
+// factory configuration or names no triage result, so only people grant
+// readiness.
+/** @param {string | URL} [path] */
+export function factoryTriageResult(
+  path = new URL("../.factory/config.json", import.meta.url),
+) {
+  let source;
+  try {
+    source = readFileSync(path, "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
+  const { triageResult } = JSON.parse(source) ?? {};
+  if (triageResult === undefined) return null;
+  const { marker, author } = triageResult ?? {};
+  if (
+    ![marker, author].every(
+      (value) => typeof value === "string" && value && value.trim() === value,
+    )
+  )
+    throw new Error(
+      `The factory configuration's triageResult needs a non-empty trimmed marker and author.`,
+    );
+  return { marker, author };
+}
+
+// A tracker label change as the decision's timeline reads it.
+function timelineEvent(change) {
+  return {
+    id: change.id,
+    event: change.action === "added" ? "labeled" : "unlabeled",
+    label: { name: change.label },
+    actor: change.actor,
+    created_at: change.time,
+  };
+}
+
+// The ID of the latest readiness change among the tracker's label changes that
+// a result records as observed, `null` for none. The `triage` readiness
+// command waits for a result that observed it.
+export function observedChangeId(changes) {
+  return eventId(changes.map(timelineEvent).findLast(isObservedTransition));
+}
+
 export async function runIssueContractValidation(
   event,
   connection,
   resolveIssue,
   pause = wait,
   now = Date.now,
+  triageResult = factoryTriageResult(),
 ) {
   const tracker = connection.issueTracker;
   if (!event) {
@@ -1751,15 +1870,10 @@ export async function runIssueContractValidation(
     },
     issueEvents: null,
     permissions: {},
+    triageResult,
   };
   const readTimeline = async () =>
-    (await tracker.labelChanges(issueNumber)).map((change) => ({
-      id: change.id,
-      event: change.action === "added" ? "labeled" : "unlabeled",
-      label: { name: change.label },
-      actor: change.actor,
-      created_at: change.time,
-    }));
+    (await tracker.labelChanges(issueNumber)).map(timelineEvent);
   let needs = snapshotNeeds(snapshot);
   if (needs.timeline) {
     snapshot.issueEvents = await readTimeline();

@@ -40,13 +40,29 @@ No deployment is performed by these checks.
 Restore the delivery runtime with
 `npm ci --ignore-scripts --prefix .repo-standards/runtime` and run
 `.repo-standards/runtime/node_modules/.bin/repo-standards check --json` for
-installed standards checks. Combined standards and sandbox adoption is separate
-work under [#21](https://github.com/lutzseverino/minecraft-stream-guard/issues/21).
-The retained `.factory/Dockerfile` is the historical plugin toolchain image;
-its existing Actions check remains, and does not prove combined acceptance.
+installed standards checks.
+
+The root `.factory/Dockerfile` provides Node.js 24, pnpm 11.28.9, JDK 21,
+Python 3 and Maven-wrapper prerequisites system-wide. It builds without a
+repository context; the factory adds its agent layer and unprivileged user.
+Project dependencies install in each fresh checkout.
+
+To verify the combined sandbox on a Mac with Docker and Git, run:
+
+```sh
+bash docs/development/verify-agent-sandbox.sh <full-commit-sha>
+```
+
+The script fetches that exact revision into a fresh directory, builds its
+contextless toolchain and the pinned factory agent layer, then clones the
+revision inside the resulting image as `agent`. It runs every canonical plugin
+and site check, plus installed standards checks, and prints the head, image
+identity, user, tool versions, working directories and exit outcomes. It removes
+its temporary checkout, container and image tags on exit. Keep the result on
+the pull request; source checks do not establish live factory delivery.
 
 ## Documents
 
 - [Plugin architecture](architecture.md): plugin dependency direction and composition.
-- [Site architecture](../../site/docs/development/architecture/README.md): site modules and feed consumption.
+- [Sandbox verification](verify-agent-sandbox.sh): build both image layers and validate a fresh checkout as the unprivileged agent.
 - [Documentation Templates](templates/README.md): documentation templates.

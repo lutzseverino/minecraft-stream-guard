@@ -10,6 +10,7 @@ import {
   executedAsScript,
   pages,
   requestData,
+  pinnedFiles,
   checkRollup,
   workflowRuns,
 } from "./platform.mjs";
@@ -18,7 +19,7 @@ import {
   trustedReviewConfiguration,
 } from "./trusted-review-config.mjs";
 import { skipsExternalReview } from "./review-policy.mjs";
-import { completeReviewOutcome } from "./review-outcome.mjs";
+import { completeReview, reviewsSection } from "./review-outcome.mjs";
 
 import { checkStates, decide } from "./wait.mjs";
 
@@ -143,52 +144,26 @@ async function baseIsStale(connection, branch, head) {
 
 // This last preflight shares the review snapshot, never the proposed PR tree.
 async function mergeHolds(connection, revision, number) {
-  const [owner, name] = connection.repository.path.split("/");
-  const response = await requestData(connection, {
-    method: "POST",
-    path: "/graphql",
-    body: {
-      query: `query BabysitReleaseHold($owner: String!, $name: String!, $revision: GitObjectID!, $factory: String!) {
-        repository(owner: $owner, name: $name) {
-          commit: object(oid: $revision) { __typename oid }
-          factory: object(expression: $factory) { __typename ... on Blob { text isTruncated } }
-        }
-      }`,
-      variables: {
-        owner,
-        name,
-        revision,
-        factory: `${revision}:.factory/config.json`,
-      },
+  const { files } = await pinnedFiles(
+    connection,
+    {
+      factory: ".factory/config.json",
     },
-  });
-  const files = response?.data?.repository;
-  if (
-    response?.errors?.length ||
-    files?.commit?.__typename !== "Commit" ||
-    files.commit.oid !== revision
-  )
-    throw new Error("Could not read the pinned factory configuration commit.");
-  const blob = files.factory;
-  if (blob === null) return [];
-  if (
-    blob?.__typename !== "Blob" ||
-    blob.isTruncated !== false ||
-    typeof blob.text !== "string"
-  )
-    throw new Error("Could not read complete .factory/config.json.");
-  const config = JSON.parse(blob.text);
+    { revision, evidence: `${connection.repository.path}@${revision}` },
+  );
+  if (files.factory === null) return [];
+  const config = JSON.parse(files.factory);
   if (
     !config ||
     Array.isArray(config) ||
-    ![1, 2].includes(config.version) ||
+    ![1, 2, 3].includes(config.version) ||
     (config.labels !== undefined &&
       (!config.labels ||
         typeof config.labels !== "object" ||
         Array.isArray(config.labels)))
   )
     throw new Error(
-      "Invalid .factory/config.json: expected version 1 or 2 and a labels object when present.",
+      "Invalid .factory/config.json: expected version 1, 2 or 3 and a labels object when present.",
     );
   const holds = new Map();
   for (const key of ["hold", "releaseHold"]) {
@@ -247,17 +222,15 @@ export async function main(argv = process.argv.slice(2), connection) {
     throw error;
   }
   if (skipsExternalReview(configuration.policy, pullRequest.author?.login)) {
-    const comments = await pages(
-      connection,
-      `/repos/${connection.repository.path}/issues/${number}/comments?per_page=100`,
-    );
+    const reviews = await connection.pullRequests.reviews(Number(number));
     if (
-      !comments
-        .flat()
-        .some((comment) => completeReviewOutcome(comment.body, head))
+      !reviews.some(
+        (review) =>
+          review.state !== "PENDING" && completeReview(review.body, head),
+      )
     ) {
       console.error(
-        `Post a complete current-head review outcome comment for ${head}, then rerun merge.mjs; ${configuration.evidence}.`,
+        `Post a complete review of ${head} as ${reviewsSection} describes, then rerun merge.mjs; ${configuration.evidence}.`,
       );
       process.exitCode = 5;
       return;
