@@ -52,7 +52,7 @@ Each unverified state can independently allow movement, chat, commands, and
 kick-on-join behavior, while guarded actions decide which world changes require
 a current live observation. Manual administrator verification remains durable;
 provider observations expire. See the
-[configuration reference](docs/usage/reference/configuration.md) for every setting
+[configuration reference](../docs/usage/reference/configuration.md) for every setting
 and complete provider examples.
 
 ## Commands
@@ -61,23 +61,29 @@ Players use `/stream setup`, `/stream status`, `/stream link`, `/stream verify`,
 and `/stream cancel`. Administrators use `/streamguard` to inspect status,
 manage bypasses, verify or unverify players, and reload configuration.
 
-See the [commands and permissions reference](docs/usage/reference/commands-and-permissions.md)
+See the [commands and permissions reference](../docs/usage/reference/commands-and-permissions.md)
 for command behavior, duration rules, and permission nodes.
 
 ## Companion Site
 
-The optional [StreamGuard site](https://github.com/lutzseverino/minecraft-stream-guard-site)
+The optional [StreamGuard site](../site/README.md)
 renders the plugin's `/api/live` feed as a fullscreen live wall. The feed can
 include provider metadata such as titles, thumbnails, viewer counts, and live
 start times when the provider returns them.
 
+## Development
+
+Run `./mvnw --batch-mode --no-transfer-progress verify` from `plugin/` with
+JDK 21. It emits Java 17 bytecode and `target/StreamGuard-<version>.jar`.
+See the [combined development guide](../docs/development/README.md) for root checks.
+
 ## Documentation
 
-[Documentation](docs/README.md)
+[Documentation](../docs/README.md)
 
 ## Contributing
 
-[Contributing](CONTRIBUTING.md)
+[Contributing](../CONTRIBUTING.md)
 
 ## Support
 

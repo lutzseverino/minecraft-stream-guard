@@ -17,6 +17,9 @@ jobs:
   verify:
     name: Verify plugin
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: plugin
     steps:
       - name: Check out repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -25,11 +28,12 @@ jobs:
         uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
         with:
           cache: maven
+          cache-dependency-path: plugin/pom.xml
           distribution: temurin
           java-version: 21
 
       - name: Test release note extraction
-        run: python3 .github/scripts/test-release-notes.py
+        run: python3 ../.github/scripts/test-release-notes.py
 
       - name: Verify
         run: ./mvnw --batch-mode --no-transfer-progress verify

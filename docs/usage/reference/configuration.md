@@ -1,6 +1,6 @@
 # Configuration Reference
 
-The canonical defaults live in `src/main/resources/config.yml`. Values below are
+The canonical defaults live in `plugin/src/main/resources/config.yml`. Values below are
 grouped by their top-level configuration section.
 
 ## `language`

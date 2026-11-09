@@ -2,7 +2,7 @@ Contributor setup and maintenance guidance for StreamGuard Site.
 
 ## Setup and validation
 
-Use Node.js 24 or 26 and pnpm 11; `packageManager` in `package.json` pins the exact pnpm version. From the repository root, run `pnpm install` and `pnpm dev`.
+Use Node.js 24 or 26 and pnpm 11; `packageManager` in `package.json` pins the exact pnpm version. From `site/`, run `pnpm install` and `pnpm dev`.
 
 Run `pnpm validate` before review. It runs, in order:
 
@@ -15,7 +15,7 @@ Run `pnpm validate` before review. It runs, in order:
 - `ui:check`: generated shadcn registry integrity.
 - `build`: the production Vite 8 build.
 
-`pnpm build` creates `dist/`; `pnpm preview` serves it locally. `pnpm format` rewrites formatting. `validate` is the App's own aggregate; Repo Canon's `scripts/validate.mjs` is a separate issue and pull request contract check.
+`pnpm build` creates `dist/`; `pnpm preview` serves it locally. `pnpm format` rewrites formatting. `validate` is the site's own aggregate; shared delivery checks live at the repository root. Run `bash scripts/check.sh` from that root to validate both components.
 
 The required checks are `Validate site` from CI, which runs `validate` on Node.js 24 and 26, plus `validate` from PR Policy and `PR metadata`.
 
