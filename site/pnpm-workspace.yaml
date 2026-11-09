@@ -1,0 +1,7 @@
+# Settings only: this repository has a single root Project.
+packageExtensions:
+  # dependency-cruiser 18 parses TypeScript through the compiler API, which
+  # TypeScript 7 no longer ships. Give it a private TypeScript 6 to parse with.
+  dependency-cruiser:
+    dependencies:
+      typescript: 6.0.3

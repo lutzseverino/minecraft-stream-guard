@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/oswald";
+@import "./theme/tokens.css";
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    height: 100dvh;
+  }
+
+  body,
+  #root {
+    height: 100dvh;
+  }
+
+  body {
+    @apply overflow-hidden bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    overscroll-behavior: none;
+  }
+
+  ::selection {
+    background: var(--tally);
+    color: var(--primary-foreground);
+  }
+}
+
+@layer components {
+  /* Condensed broadcast gothic — wordmark, ON AIR, channel + status display. */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Telemetry / under-monitor-display label. */
+  .type-umd {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * Generated monitor surface for a tile with no provider thumbnail. The hue is
+   * driven by --screen-hue so each player's "channel" gets a stable signal glow,
+   * kept low-chroma so the wall still reads as a dark gallery.
+   */
+  .screen-surface {
+    --screen-hue: 250;
+    background-color: oklch(0.2 0.02 var(--screen-hue));
+    background-image:
+      radial-gradient(
+        125% 80% at 15% 0%,
+        oklch(0.4 0.12 var(--screen-hue) / 0.5),
+        transparent 60%
+      ),
+      radial-gradient(
+        110% 90% at 100% 100%,
+        oklch(0.32 0.1 calc(var(--screen-hue) + 35) / 0.45),
+        transparent 55%
+      );
+  }
+
+  /* Faint scanlines layered over a screen for a monitor / CRT feel. */
+  .screen-scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      oklch(1 0 0 / 0.045) 0px,
+      oklch(1 0 0 / 0.045) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
+  /* Bottom-up signal scrim for legible overlay text — no boxed card. */
+  .screen-scrim {
+    background-image: linear-gradient(
+      to top,
+      oklch(0 0 0 / 0.88) 0%,
+      oklch(0 0 0 / 0.55) 26%,
+      oklch(0 0 0 / 0.12) 52%,
+      transparent 78%
+    );
+  }
+}
