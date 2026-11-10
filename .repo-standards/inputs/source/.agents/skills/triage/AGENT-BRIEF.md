@@ -1,6 +1,6 @@
 # Writing Agent Briefs
 
-An agent brief is a structured comment posted on a GitHub issue or PR before it moves to `ready-for-agent`; readiness follows a review by someone who did not write it, as [SKILL.md](SKILL.md) describes. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context: the agent brief is the contract.
+An agent brief is a structured comment posted on a GitHub issue or PR before it moves to `state:ready`; readiness follows its acceptance, as [SKILL.md](SKILL.md) describes. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context: the agent brief is the contract.
 
 The brief states **what the agent should do**, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do *to the existing diff*: finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.
 
@@ -8,11 +8,11 @@ The brief states **what the agent should do**, which stretches to both surfaces:
 
 ### Available inputs
 
-A brief's required implementation material must be in the repository, the issue and its comments, or public URLs. A host-only path cannot be the sole required source. Before readiness, check host material for secrets and post the non-secret material on the issue, quoted or attached, then cite it from the brief. Independent acceptance review verifies input availability along with the brief's other requirements.
+A brief's required implementation material must be in the repository, the issue and its comments, or public URLs. A host-only path cannot be the sole required source. Before readiness, check host material for secrets and post the non-secret material on the issue, quoted or attached, then cite it from the brief. Copy every relied-on decision into the repository-facing record with its date and quoted words, even when this duplicates a private record. Never cite or require the private workbench: no URL, host path or instruction to consult it, including for provenance. Repository records may cite one another. Independent acceptance review rejects a private-workbench reference as a substitute for copied decision content and verifies input availability along with the brief's other requirements.
 
 ### Durability over precision
 
-The issue may sit in `ready-for-agent` for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.
+The issue may sit in `state:ready` for days or weeks. The codebase will change in the meantime. Write the brief so it stays useful even as files are renamed, moved, or refactored.
 
 - **Do** describe interfaces, types, and behavioral contracts
 - **Do** name specific types, function signatures, or config shapes that the agent should look for or modify
@@ -33,7 +33,7 @@ Describe **what** the system should do, not **how** to implement it. The agent w
 
 The agent needs to know when it's done. Every agent brief must have concrete, testable acceptance criteria. Each criterion should be independently verifiable.
 
-- **Good:** "Running `gh issue list --label needs-triage` returns issues that have been through initial classification"
+- **Good:** "Running `gh issue list --label state:triage` returns issues that have been through initial classification"
 - **Bad:** "Triage should work correctly"
 
 ### Progress stays out of the brief
@@ -50,13 +50,13 @@ State what is out of scope. This prevents the agent from gold-plating or making 
 
 ### Decisions, not options
 
-The implementing agent can't ask the owner anything, so a brief settles every question of intent before it is accepted. State each owner decision as behavior. A brief that needs one of these is not finished; its question goes to the orchestrating agent, which infers the answer under the inference test or takes it to the owner:
+The implementing agent can't ask the owner anything, so a brief settles every question of intent before it is accepted. State each owner decision as behavior. A brief that needs one of these is not finished; its question is routed as [SKILL.md](SKILL.md) says, to be inferred under the inference test or answered by the owner:
 
 - **Bad:** "Retry for a reasonable period (agent's choice)"
 - **Bad:** "Either drop the row or fail the export"
 - **Bad:** "Fall back to 60 minutes when no window is configured", when nobody chose 60 minutes
 - **Bad:** "Open question: should admins be exempt?"
-- **Good:** "Retry for 30 minutes after the first failure, then mark the Parcel failed", with the owner's decision linked from the triage notes
+- **Good:** "Retry for 30 minutes after the first failure, then mark the Parcel failed", with the owner's dated, quoted decision in the triage notes
 
 When the owner has reserved review before merge, state that designation as contract behavior and retain its dated decision source in the triage notes for the worker's PR handoff. Use the recorded reservation, not a routing label, as its source. Follow the `github-repository-configuration` rules' Designated owner review gate in both profiles; applicable installed rules retain merge ownership and continuation.
 
@@ -68,10 +68,10 @@ The triage notes that accompany a brief follow it in the same comment, never bet
 
 - **Path**: code-bound or intent-bound, with a one-line reason.
 - **Verification**: what was checked and how (reproduction, code path, tests run), and where the redundancy search looked.
-- **Owner decisions**: each decision the brief relies on, including any owner-review reservation, with its date and a link to where the owner gave it; for a grill's brief, pasted from the grill record.
-- **Inferred intent**: each answer the orchestrating agent inferred under the inference test, which the brief states as behavior, with its citation: the owner's approved goal, recorded decision or wish, or quoted words, with its date and where it was given.
+- **Owner decisions**: each decision the brief relies on, including any owner-review reservation, with its date and quoted words; for a grill's brief, copied from the grill record. Cite a repository record when available, never the private workbench.
+- **Inferred intent**: each answer inferred under the inference test, which the brief states as behavior, with its date, quoted decision content and repository citation when available; copy private-source content without referencing the private record. In the factory's triage run, it cites a repository record, as the installed factory workflow rules' Triage run section says.
 - **Dependencies**: issues that must land first, for the reviewer to record as blockers.
-- **Model**: when the installed rules ask for it, one suggested `model:` label with a one-line reason, for the reviewer to apply or replace.
+- **Model**: when the installed rules ask for it, one `model:` label with a one-line reason: a suggestion for the reviewer to apply or replace, or, in the factory's triage run, the label its run result asks for.
 - **Owner questions**: none, for a brief ready for review.
 
 ## Template

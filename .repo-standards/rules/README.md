@@ -1,18 +1,14 @@
 # Installed rules
 
-These rules come from https://github.com/lutzseverino/repo-canon v0.23.1, profile factory.
-Repository Standards installs and verifies them; adopt again to change them.
+These rules come from https://github.com/lutzseverino/repo-canon v0.25.0, profile factory.
+Repo Standards installs and verifies them; adopt again to change them.
 Run `repo-standards rules <path>` to print the rules that cover a path.
 
+- [`comments`](comments.md) covers the whole repository.
 - [`documentation`](documentation.md) covers:
   - `docs/README.md`
-  - `docs/_templates/README.md`
-  - `docs/_templates/decision.template.md`
-  - `docs/_templates/explanation.template.md`
-  - `docs/_templates/how-to.template.md`
-  - `docs/_templates/index.template.md`
-  - `docs/_templates/reference.template.md`
-  - `docs/_templates/tutorial.template.md`
+  - `docs/adr/0001-one-repository-per-project.md`
+  - `docs/adr/README.md`
   - `docs/development/README.md`
   - `docs/development/architecture.md`
   - `docs/development/templates/README.md`
@@ -22,19 +18,7 @@ Run `repo-standards rules <path>` to print the rules that cover a path.
   - `docs/development/templates/index.template.md`
   - `docs/development/templates/reference.template.md`
   - `docs/development/templates/tutorial.template.md`
-  - `docs/explanation/README.md`
-  - `docs/explanation/architecture.md`
-  - `docs/explanation/enforcement-model.md`
-  - `docs/how-to/README.md`
-  - `docs/how-to/configure-providers.md`
-  - `docs/how-to/publish-live-feed.md`
-  - `docs/marketplace.md`
-  - `docs/reference/README.md`
-  - `docs/reference/commands-and-permissions.md`
-  - `docs/reference/configuration.md`
-  - `docs/reference/versioning.md`
-  - `docs/tutorials/README.md`
-  - `docs/tutorials/install-and-configure.md`
+  - `docs/development/verify-agent-sandbox.sh`
   - `docs/usage/README.md`
   - `docs/usage/explanation/README.md`
   - `docs/usage/explanation/enforcement-model.md`
@@ -48,6 +32,22 @@ Run `repo-standards rules <path>` to print the rules that cover a path.
   - `docs/usage/reference/versioning.md`
   - `docs/usage/tutorials/README.md`
   - `docs/usage/tutorials/install-and-configure.md`
+  - `site/docs/README.md`
+  - `site/docs/development/README.md`
+  - `site/docs/development/architecture/README.md`
+  - `site/docs/development/architecture/architecture.md`
+  - `site/docs/development/templates/README.md`
+  - `site/docs/development/templates/decision.template.md`
+  - `site/docs/development/templates/explanation.template.md`
+  - `site/docs/development/templates/how-to.template.md`
+  - `site/docs/development/templates/index.template.md`
+  - `site/docs/development/templates/reference.template.md`
+  - `site/docs/development/templates/tutorial.template.md`
+  - `site/docs/usage/README.md`
+  - `site/docs/usage/guides/README.md`
+  - `site/docs/usage/guides/run-locally.md`
+  - `site/docs/usage/reference/README.md`
+  - `site/docs/usage/reference/live-feed.md`
 - [`factory-sandbox-image`](factory-sandbox-image.md) covers:
   - `.factory/Dockerfile`
 - [`factory-workflow`](factory-workflow.md) covers the whole repository.
@@ -56,8 +56,12 @@ Run `repo-standards rules <path>` to print the rules that cover a path.
 - [`github-repository-configuration`](github-repository-configuration.md) covers the whole repository.
 - [`project-agent-guidance`](project-agent-guidance.md) covers:
   - `docs/agents/project.md`
-- [`project-readmes`](project-readmes.md) covers the whole repository.
+- [`project-readmes`](project-readmes.md) covers:
+  - `plugin/README.md`
+  - `site/README.md`
 - [`repository-license`](repository-license.md) covers:
   - `LICENSE`
 - [`repository-readme`](repository-readme.md) covers:
   - `README.md`
+- [`typescript-vite-stack`](typescript-vite-stack.md) covers:
+  - `site/package.json`

@@ -5,21 +5,15 @@ names, how to create the workbench, and the rules for writing in it.
 
 ## Creating the workbench
 
-When [Workbench](../SKILL.md#workbench) says to create one, create it as a
-local git repository outside every project checkout, seeded with `index.md`,
-`inbox.md`, `wishes.md` and `now.md`. Tell the owner its path
-and the line to add to their global agent instructions, such as
-`The orchestrating agent's workbench is <path>.`
+Create a local git repository outside project checkouts, seeded with `index.md`,
+`inbox.md`, `wishes.md` and `now.md`. Tell the owner its path and global-instruction
+line: `The orchestrating agent's workbench is <path>.`
 
-When you create it, also offer to adopt Repo Canon's `workbench` profile into
-it. The profile installs this skill and the other workflow skills, pinned to a
-release, with no rules, CI or branch requirements, so a later orchestrating
-session started in the workbench invokes them from there. With the owner's
-yes, commit the seeded files, then run Repository Standards' `adopt` in the
-workbench with the Repo Canon source that a tracked repository's adoption
-record names, such as `https://github.com/lutzseverino/repo-canon`, and the
-`workbench` profile. Update it later by running `adopt` there without the
-source.
+Offer Repo Canon's `workbench` profile: pinned workflow skills without rules, CI
+or branch requirements. With the owner's yes, commit the seed and run Repository
+Standards' `adopt` with that profile and the source named by a tracked repository's
+adoption record (else `https://github.com/lutzseverino/repo-canon`). Later update
+with `adopt` without a source.
 
 A completed adoption or update of the `workbench` profile is one workbench
 change: commit it once `status` reports it ready to commit.
@@ -44,7 +38,9 @@ of the workbench is a wiki:
 
 - Date every entry.
 - Cite each source, such as an issue, pull request, comment or session, by its
-  link or reference, and leave its content where it is.
+  link or reference. Private planning retains these sources; repository-facing
+  records instead copy needed decisions, dates and quoted words under
+  [Workbench](../SKILL.md#workbench), with no private-workbench reference.
 - Leave a superseded entry's text as written: mark it superseded, dated, and
   point to the entry that replaces it.
 - Once a draft brief is filed, add a dated line at its top linking the issues
@@ -66,8 +62,8 @@ on it.
 
 ## `now.md`
 
-The current state across plans. Rewrite it on every pass; never append to it.
-Take its times from the clock, in UTC, as `log.md` does.
+Rewrite current state on every pass, using UTC times from the clock. These
+three tables are required, even when empty; keep counts and notifications.
 
 ```markdown
 # Now
@@ -78,38 +74,68 @@ Take its times from the clock, in UTC, as `log.md` does.
 
 - <chore or notification for the owner>
 
+| Item | Decision/owner action | Since (UTC) | Next check |
+| ---- | --------------------- | ----------- | ---------- |
+
 ## In flight
 
-| Item | Waiting on | Since (UTC) | Next check | Evidence |
-| ---- | ---------- | ----------- | ---------- | -------- |
+| Item | Waiting on | Since (UTC) | Next check | Evidence | Watches |
+| ---- | ---------- | ----------- | ---------- | -------- | ------- |
 
 ## Running launches
 
-| Host | Kind | Session | Started (UTC) |
-| ---- | ---- | ------- | ------------- |
+| Host | Kind | Session | Started (UTC) | Item | Report | Next check |
+| ---- | ---- | ------- | ------------- | ---- | ------ | ---------- |
 ```
 
-- **Waiting on you** holds the count of open entries in `inbox.md`, plus the
-  chores and notifications for the owner. Carry each one into every rewrite
-  until the owner has done or acknowledged it.
-- **In flight** holds one row per item that waits on someone or something,
-  such as a run, a review, a blocker, plan approval or a launch's report-back,
-  with the link that shows it. Its *Next check* names the wake-up armed for
-  it, as the [wait step](../SKILL.md#the-wait-step) says. An
-  [expedited change](launches.md#expedited-change)'s row starts its Item with
-  `expedited`, links its `Answered` entry and pull request in Evidence, and
-  states the pause it holds.
-  A time-bounded host access grant you asked the maintainer for is one row you
-  own: *Waiting on* lists the workers using it, and its *Next check* names a
-  wake-up at its time bound. When a listed worker reports back, remove it from
-  the row. When the last one reports, end the grant, tell the maintainer, log
-  its end in `log.md` and remove the row. At its own time bound the grant has
-  ended, whoever still uses it: log its end and remove the row.
-- **Running launches** holds one row per agent launch you started: its host's
-  hostname, its kind (grill, triage run, research run, worker or Close
-  review), its session reference once the harness gives one, and its start
-  time. Add a launch's row
-  before you start it, and remove the row when you take in its report-back.
+- **Identity:** Item is a linked row code, such as `[R](plan.md#r)`. The link
+  target joins tables; display words and opaque Session references identify no
+  watch. Each table has at most one row per identity; joined watches form a union.
+- **Waiting on you:** retain counts, notifications and chores until acknowledged.
+  Record owner waits as dated rows with a linked decision/action, including
+  outstanding/deferred steps under [inbox](#inboxmd)'s do/defer/drop rules.
+  Since records the owner wait's beginning; never derive it from report prose.
+- **In flight:** retain activity, Since, Next check and Evidence for each wait.
+  Watches is an inline-code JSON array. A non-owner row names its actual wake
+  mechanism; an owner-only row uses `[{"owner":true}]` and a matching owner row.
+  Evidence supplies no implicit watch. Examples:
+  `[{"item":"file:plan.md"},{"event":"worker completion event"}]` or
+  `[{"item":"org/repo#7","expected":{"labels":["state:ready"]}}]`.
+  Tracker expectations contain observed labels and/or head/checks; their exact
+  shape is in [the wait script](launches.md#the-wait-script).
+- **Running launches:** record Host, Kind, Session (initially `pending`), Started,
+  linked Item, current-turn Report path and Next check **before** launch. Reports
+  supply launch watches. Before resuming a session, choose a fresh report or clear
+  the old terminal marker so preceding completion cannot end the current turn.
+  Consume a report by removing its launch row and reconciling In flight and owner
+  rows. Owner outcomes stay tracked through explicit owner rows; finished work
+  disappears when its work rows are removed. A marker means read, never success.
+- **Paths:** Report and file/directory watches resolve beside the selected
+  `now.md`; absolute paths stay absolute. Incoming coverage is its `incoming/`.
+  Keep emitted record links relative to this same directory. Table cells cannot
+  contain literal pipes; JSON uses `\u007c`. Report paths may be inline code.
+- **Projection:** `wait.mjs --status --from <now.md>` reads these records and
+  report final lines only, without platform access or wait durations. It emits
+  `Item | Running | Waiting on owner | Since (UTC) | Next check`. Running uses
+  In flight's activity, else launch Kind; owner rows have Running `—`. Launches
+  use Started and Next check; other rows use Since and Next check. A final
+  `status: done` overrides stale rows with `turn ended; read report`, owner `—`,
+  Started and `read [<report>](<report>)` until consumption. No prose classifies
+  owner work and no elapsed time invents deadlines. Empty tables show headers.
+- **Special rows:** an [expedited change](launches.md#expedited-change)'s Item
+  starts with `expedited`; Evidence links its Answered entry and PR, and activity
+  states its pause. A time-bounded grant lists its workers under Waiting on and
+  a harness event at its bound under Watches/Next check. Remove reporting workers;
+  when the last reports or the bound ends, end/log the grant, tell the maintainer
+  and remove its row. Preserve linked plan/decision/chore tracking.
+
+For example, a launch row can join `[R](plan.md#r)` above with Report
+"reports/r.md"; its launch watch and tracker watch both apply. An owner row
+`[O](plan.md#o) | [approve access](inbox.md#o) | 2026-11-08T18:10Z | owner reply`
+records an owner step independently of any report marker. Missing tables, fields,
+invalid Watches and conflicting expectations are actionable errors; repair the
+named input rather than keeping stale coverage. A missing report is incomplete,
+not invalid. Empty work tables retain incoming-only coverage.
 
 ## `inbox.md`
 
@@ -119,11 +145,32 @@ its plan, a link to its source, the date it opened, and your recommendation.
 Notifications and chores go in `now.md`. Grills and triage runs add entries
 too. Keep open decisions separate from the inbox's `Answered` history.
 
+After an inbox rule update, reconcile every currently open entry against the
+active rules on the next pass, including takeover. Repair missing context
+(question, plan, source and opening date) and recommendations from the records;
+when a fact is unavailable, state the gap rather than invent it. An entry's age
+never exempts it. A repair leaves it open and leaves previously answered
+history unchanged.
+
+For each owner-only step holding a plan row open, link a decision offering
+**do, defer and drop**, with a recommendation and explicit status: whether
+the step is optional and whether a third party blocks it, with the blocker
+when present. Link the decision, executable chore in `now.md` and affected
+plan row to each other. Keep the row tracked pending the owner's decision;
+deferral keeps it tracked too. Record an owner drop and its source before
+marking the row `dropped (owner)`. Invent no deadline and silently drop no row.
+
 When an owner message contains a decision, complete this sequence before
-acting on anything else in that message:
+acting on anything else in that message. For a bulk reply, identify exactly
+which entries it answers; apply the sequence only to those entries. Preserve
+every unanswered entry with its context and recommendation, including entries
+to which the reply does not apply:
 
 1. Post a comment on each affected issue, recording the decision, its date
-   and where the owner gave it, under the contribution guide's comment rules.
+   and quoted words, with a repository citation when available. Copy private
+   decisions without referencing the private record, as
+   [Workbench](../SKILL.md#workbench) requires, and post as the repository's
+   `.repo-standards/rules/comments.md#disclaimers` says.
 2. Append the decision, date, source and issue links to the plan's `log.md`.
 3. Move the answered entry under `Answered` in `inbox.md`, keeping its
    question, answer, date and source.

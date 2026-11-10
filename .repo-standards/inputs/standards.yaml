@@ -29,6 +29,13 @@ profiles:
         kind: file
         target: .github/ISSUE_TEMPLATE/bug-report.yml
         exact: .github/ISSUE_TEMPLATE/bug-report.yml
+      comments:
+        checks: []
+        fixes: []
+        kind: repository
+        guidance: guidance/comments.md
+        rules: rules/comments.md
+        discovery: discovery/comments.md
       contribution-guidance:
         checks: []
         fixes: []
@@ -103,7 +110,19 @@ profiles:
         target: .github/workflows/sandbox-image.yml
         exact: .github/workflows/sandbox-image.yml
       factory-workflow:
-        checks: []
+        checks:
+          - id: factory-model-policy
+            run:
+              executable: node
+              script: operations/check-factory-model-policy.mjs
+              resources:
+                - operations/lib/factory-model-policy.mjs
+              arguments: []
+            prerequisite:
+              version-arguments:
+                - --version
+              version: ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            timeout-seconds: 30
         fixes: []
         kind: repository
         guidance: guidance/factory-workflow.md
@@ -129,7 +148,7 @@ profiles:
               executable: node
               script: operations/check-pull-request-reviewer.mjs
               resources:
-                - operations/lib/pull-request-reviewer.mjs
+                - .agents/skills/babysit/pull-request-reviewer.mjs
               arguments: []
             prerequisite:
               version-arguments:
@@ -141,7 +160,7 @@ profiles:
               executable: node
               script: operations/check-factory-review-policy.mjs
               resources:
-                - operations/lib/review-policy.mjs
+                - .agents/skills/babysit/review-policy.mjs
               arguments: []
             prerequisite:
               version-arguments:
@@ -491,6 +510,12 @@ profiles:
         kind: skill
         name: research
         source: .agents/skills/research
+      skill-review:
+        checks: []
+        fixes: []
+        kind: skill
+        name: review
+        source: .agents/skills/review
       skill-tdd:
         checks: []
         fixes: []

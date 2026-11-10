@@ -41,15 +41,16 @@ the source ticket, which closes only on its recorded live acceptance.
 Triage routes an intake request by where its uncertainty lies, not by its
 category label. A request is code-bound when its expected result is clear and
 code, logs, or a reproduction can answer the rest. It is intent-bound when an
-open question needs the owner's intent, a policy, or a trade-off they choose,
-as when its brief would otherwise leave an owner question, offer options, or
+open question needs the owner's intent, a policy, a trade-off they choose, or
+their taste in copy, UI or look, as when its brief would otherwise leave an owner question, offer options, or
 set a value nobody chose, including for a bug. Missing evidence or access never
 licenses inventing policy.
 
 The orchestrating agent runs triage and starts a research run, a separate
 agent, for each request. For a code-bound request, the research run verifies
 the claim and posts the Agent Brief. For an intent-bound request, it first
-gathers the facts from the code.
+gathers the facts from the code. Where a factory runs triage itself, the
+factory workflow rules' Triage run section sets that run's limits.
 
 Under the inference test, the orchestrating agent may answer an intent question
 itself only when all three hold: it can cite the answer's source, the owner's
@@ -76,8 +77,10 @@ one only when it needs code facts the grill did not gather.
 
 A grilling session changing a repository's glossary or ADRs works on its own
 branch in a checkout it owns (a worktree or fresh clone), never in a shared
-checkout on the default branch. Each repository whose domain documents change
-gets one pull request through its normal review and merge. The grill's decision
+checkout on the default branch. The grill opens one draft pull request per
+repository whose domain documents change, and stops; the `review` skill
+delivers it, run by the orchestrating agent unless a factory reviews it. The
+grill's decision
 record and draft briefs stay in the workbench, committed directly to its default
 branch.
 
@@ -91,33 +94,35 @@ goes back to the brief's writer for correction. The orchestrating agent accepts
 a brief that holds by applying readiness to its revision, records its blockers,
 and tells the owner with links. When the revision notice never arrives, or its
 credentials cannot apply readiness, it leaves readiness to the owner and tells
-them under the [comment rules](#comments) instead.
+them under the [comment rules](rules/comments.md) instead.
 
-Every question reaches the orchestrating agent first. `needs-info` means
-information is missing: the orchestrating agent answers what it can from code,
-logs, or a reproduction, or under the inference test, and a question for an
-outside reporter still goes to the reporter. A question only the owner can
-answer goes into its decision inbox with its recommendation; the decision inbox
+Every question reaches the orchestrating agent first. It answers what it can
+from code, logs, or a reproduction, or under the inference test. A fact only an
+outside reporter holds goes to the reporter, with the issue in
+`state:reporter`. A question only the owner can answer goes into its decision
+inbox with its recommendation, with the issue in `state:owner`, or in
+`state:grill` when a grill must settle the owner's intent; the decision inbox
 is the one channel for questions to the owner. When the owner runs triage
 themselves, they are the orchestrating agent.
 
 ## Readiness
 
-Applying `ready-for-agent` or `ready-for-human` is the review action, and the
-`github-repository-configuration` rules name the roles it needs. After
-revising a contract or posting an Agent Brief, wait for the issue-contract
-workflow's revision notice before applying readiness. Editing a contract removes its readiness. The
-workflow keeps one workflow state label on an issue: authorized readiness or a
-newly applied state replaces the previous one, and an issue left with none gets
-`needs-triage` on every run, even if it has never carried a state. This applies
+Applying `state:ready` is the review action, and the
+`github-repository-configuration` rules name the roles it needs, the factory
+triage run's exception to them, and the labels. After revising a contract or
+posting an Agent Brief, wait for the issue-contract workflow's revision notice
+before applying readiness. Editing a contract removes its readiness. The workflow keeps one workflow state label on
+an issue, a `state:` label or the closing `wontfix` in its place: authorized
+readiness or a newly applied state replaces the previous one, and an issue left with none gets
+`state:triage` on every run, even if it has never carried a state. This applies
 to open intake requests, specifications, tickets, and unrecognized issues;
 Wayfinder maps and children stay outside workflow states. The validator's own
-`needs-triage` is a fallback and never supersedes authorized readiness bound to
+`state:triage` is a fallback and never supersedes authorized readiness bound to
 the current revision, even when applied after its review. A person's later
-workflow state still supersedes readiness. A closed issue loses `needs-triage`,
-`needs-info`, `ready-for-agent`, `ready-for-human` and every `factory:*` label,
-preserving `wontfix`, category, `model:*`, unrelated labels and feedback.
-Reopening restores no removed labels; normal validation applies.
+workflow state still supersedes readiness. A closed issue loses every
+`state:`, `gate:` and `factory:` label, preserving `wontfix`, `type:`,
+`priority:`, `model:`, unrelated labels and feedback. Reopening restores no
+removed labels; normal validation applies.
 A specification or ticket can be ready while its blockers are open.
 
 ## Development setup
@@ -138,9 +143,13 @@ work it is responsible for. Fix defects inside the change's responsibility in
 the change. An adoption run's own contextual work in the adopting repository
 is not a finding.
 
+A factory run cites its filing run in each finding it files, and never opens a
+separate unticketed pull request: out-of-scope work, however small, is a
+finding.
+
 Before filing, check for an open issue that already reports the finding and
 link it instead of creating a duplicate. Otherwise, open one issue per finding
-through the target repository's issue forms, labelled `needs-triage`. File it
+through the target repository's issue forms, labelled `state:triage`. File it
 in the repository responsible for the affected material or tooling. Each issue
 cites the run's pull request or issue and distinguishes what the run observed
 from what it only read in code. Leave the issues to triage.
@@ -186,36 +195,19 @@ merge pull requests, and apply labels as the installed
 [GitHub repository configuration rules](rules/github-repository-configuration.md)
 and, where applicable, [factory workflow rules](rules/factory-workflow.md) allow;
 the [readiness](#readiness), [credential](#credentials), and [merge](#merging)
-gates still apply.
+gates still apply. What it posts on issues and pull requests follows the
+[comment rules](rules/comments.md), as for any account.
 
-The disclaimer below starts every agent-written comment and every agent-filed
-issue body (using the triage variant during triage), while the attribution ban
-forbids crediting an agent, model or tool in commits and pull request titles and
-bodies and never applies to comments.
-
-Start with the disclaimer line, `>` included, followed by a blank line:
-
-```markdown
-> _This was generated by AI._
-```
-
-During triage, use the [triage skill](.agents/skills/triage/SKILL.md)'s variant:
-
-<!-- prettier-ignore -->
-```markdown
-> *This was generated by AI during triage.*
-```
-
-Pull request titles and bodies are exempt from the disclaimer; review request
-comments follow the [GitHub rules](rules/github-repository-configuration.md#review-request-comments)
-instead.
-
-Under the attribution ban, omit every `Co-authored-by:` trailer, for any
-co-author, including people and bots; any "Generated with …" or "Generated by …"
-attribution line; and agent session links.
-The merging account already records who did the work.
+The attribution ban forbids crediting an agent, model or tool in commits and
+pull request titles and bodies, and never applies to comments. Under it, omit
+every `Co-authored-by:` trailer, for any co-author, including people and bots;
+any "Generated with …" or "Generated by …" attribution line; and agent session
+links. The merging account already records who did the work.
 
 ## Pull requests
+
+Use `implement`, then separate `review` through merge; factories without review
+use `babysit` instead. Address review hand-backs on the same draft PR.
 
 Keep each pull request focused. Describe the problem and resulting change,
 report the checks you ran and their outcomes, and link the relevant issue.
@@ -275,7 +267,7 @@ Post one check-outcomes comment with the repository's own
 validation outcomes, confirmation of the recorded ready-to-commit verdict, and findings
 links or unfiled findings under the
 [findings rule](#findings).
-Write the check-outcomes comment under the [comment rules](#comments).
+Write the check-outcomes comment under the [comment rules](rules/comments.md).
 
 The Repository Standards update action uses `chore!:` titles and includes
 Impact and Migration sections for major advances and breaking `0.x` minor
@@ -299,7 +291,7 @@ head alongside the conditions below.
 
 Merge a pull request once every required check passes on its latest head and
 every review thread is answered with its fix or a reasoned decline under the
-[comment rules](#comments). Checks must include the current default branch
+[comment rules](rules/comments.md). Checks must include the current default branch
 under GitHub enforcement wherever available; proven private-plan limitations
 require immediate merging-agent verification with the accepted concurrent-base race. The
 `github-repository-configuration` rules define freshness, passing checks and
@@ -316,7 +308,7 @@ it is outside the change's ticket or scope; when it guards a rule another layer
 owns, such as by duplicating that layer's validation; or when it guards against
 the owner misconfiguring files only the owner writes, or a component corrupting
 state it owns itself, which lie outside the threat model. Answer a decline with
-its reason in its review thread under the [comment rules](#comments). Record real findings declined because they
+its reason in its review thread under the [comment rules](rules/comments.md). Record real findings declined because they
 are outside the change's ticket or scope, or because another layer owns the
 rule they guard, under the [findings rule](#findings). Do not file findings
 declined because they do not hold or lie outside the threat model.
@@ -332,28 +324,23 @@ call is refused for permission, the refusal stands: the agent stops and asks
 the owner, as for any answer only the owner can give, and never retries under
 another identity.
 
-## Comments
+## Owner questions
 
-When an agent needs an answer only the owner can give, post the question as one
-issue comment under these rules, and stop without a pull request if none is open,
-or leaving the open pull request unmerged and linked from the question. Work
-without an issue asks on its pull request instead. This owner handoff ends the
-agent's babysitting of the pull request. The agent neither closes the pull
-request nor waits for the answer. Subsequent continuation follows applicable
-installed rules. The orchestrating agent reads the question
-first: when it can answer under the [triage](#triage) inference test, it
-answers on the issue; otherwise it puts the question in its decision inbox.
+When an agent needs an answer only the owner can give, it posts the question as
+the [comment rules](rules/comments.md#owner-questions) say, and stops without a
+pull request if none is open, or leaving the open pull request unmerged and
+linked from the question. This owner handoff ends the agent's babysitting of
+the pull request. The agent neither closes the pull request nor waits for the
+answer. Subsequent continuation follows applicable installed rules. The
+orchestrating agent reads the question first: when it can answer under the
+[triage](#triage) inference test, it answers on the issue; otherwise it puts the
+question in its decision inbox.
 
 If the answer changes the implementation contract, have a separate writer edit
 it; await its validator notice, independent review and renewed readiness before
 continuation.
 
-An agent comments on an issue or pull request to record a decision, an outcome,
-or a question that needs an answer, never to narrate progress. Consolidate
-everything the agent has to say on one occasion into one comment.
+## Comments
 
-For disclaimers and attribution, follow
-[Agents on the maintainer's account](#agents-on-the-maintainers-account).
-
-Comments, issue and pull request titles, and their bodies never contain secret,
-token, or credential values. Write `<REDACTED>` in their place.
+Every rule about what agents post on issues and pull requests, on any account,
+lives in the installed [comment rules](rules/comments.md).

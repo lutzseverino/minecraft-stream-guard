@@ -21,4 +21,4 @@ public-feed acceptance.
 CI and plugin release workflows are project-owned. Plugin publication uses
 annotated `plugin-v…` tags, component/version checks, and the existing release
 environment and distribution identities. Historical `v…` refs/releases remain.
-Combined standards/factory-image adoption follows the import separately in #21.
+The root factory image supplies both component toolchains.
