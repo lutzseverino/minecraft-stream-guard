@@ -2,6 +2,7 @@
 set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
+python3 .github/scripts/test-agent-sandbox.py
 (
   cd plugin
   ./mvnw --batch-mode --no-transfer-progress verify
