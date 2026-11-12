@@ -16,7 +16,8 @@ pnpm --dir site install --frozen-lockfile
 bash scripts/check.sh
 ```
 
-The root check invokes these component commands in order:
+The root check first tests the repository-owned sandbox verifier's input
+selection using local Git fixtures, then invokes these component commands in order:
 
 ```sh
 (cd plugin && ./mvnw --batch-mode --no-transfer-progress verify)
@@ -42,10 +43,15 @@ Restore the delivery runtime with
 `.repo-standards/runtime/node_modules/.bin/repo-standards check --json` for
 installed standards checks.
 
-The root `.factory/Dockerfile` provides Node.js 24, pnpm 11.28.9, JDK 21,
-Python 3 and Maven-wrapper prerequisites system-wide. It builds without a
-repository context; the factory adds its agent layer and unprivileged user.
-Project dependencies install in each fresh checkout.
+The root toolchain Dockerfile provides Node.js 24, pnpm 11.28.9, JDK 21,
+Python 3 and Maven-wrapper prerequisites system-wide. Its canonical path is
+`.scriptorium/Dockerfile`; pre-update revisions use `.factory/Dockerfile`.
+It builds without a repository context; the factory adds its agent layer and
+unprivileged user. Project dependencies install in each fresh checkout. The
+verifier prefers the canonical path and fails before downloading or building
+if neither input exists. The supported
+Repo Canon update installs canonical `.scriptorium/config.json` and migrates the
+Dockerfile; the compatibility caller does not migrate either input.
 
 To verify the combined sandbox on a Mac with Docker and Git, run:
 
@@ -53,13 +59,16 @@ To verify the combined sandbox on a Mac with Docker and Git, run:
 bash docs/development/verify-agent-sandbox.sh <full-commit-sha>
 ```
 
-The script fetches that exact revision into a fresh directory, builds its
+The script uses `TMPDIR` for scratch when set (otherwise `/var/tmp`), and fetches
+that exact revision into a fresh directory. It builds the
 contextless toolchain and the pinned factory agent layer, then clones the
 revision inside the resulting image as `agent`. It runs every canonical plugin
 and site check, plus installed standards checks, and prints the head, image
 identity, user, tool versions, working directories and exit outcomes. It removes
 its temporary checkout, container and image tags on exit. Keep the result on
 the pull request; source checks do not establish live factory delivery.
+When checking a revision that predates the caller tests, it runs that revision's
+existing check list without requiring the newer test file.
 
 ## Documents
 
