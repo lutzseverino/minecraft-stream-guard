@@ -94,6 +94,17 @@ defaults:
       rules: rules/github-repository-configuration.md
       discovery: discovery/github-repository-configuration.md
       checks:
+        - id: required-checks
+          run:
+            executable: node
+            script: operations/check-required-checks.mjs
+            resources:
+              - .agents/skills/babysit/required-checks.mjs
+            arguments: []
+          prerequisite:
+            version-arguments: ["--version"]
+            version: ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+          timeout-seconds: 30
         - id: pull-request-reviewer
           run:
             executable: node
@@ -195,8 +206,8 @@ defaults:
 
     validator-command:
       kind: file
-      target: scripts/validate.mjs
-      exact: scripts/validate.mjs
+      target: vendor/repo-canon/validate.mjs
+      exact: vendor/repo-canon/validate.mjs
 
     github-validator-trigger:
       kind: file
@@ -220,8 +231,23 @@ defaults:
 
     issue-contract-validator:
       kind: file
-      target: scripts/validate-issue-contract.mjs
-      exact: scripts/validate-issue-contract.mjs
+      target: vendor/repo-canon/validate-issue-contract.mjs
+      exact: vendor/repo-canon/validate-issue-contract.mjs
+
+    issue-contract-sources:
+      kind: file
+      target: scripts/issue-contract-sources.mjs
+      exact: scripts/issue-contract-sources.mjs
+
+    issue-contract-store:
+      kind: file
+      target: scripts/issue-contract-store.mjs
+      exact: scripts/issue-contract-store.mjs
+
+    issue-contract-cutoff:
+      kind: file
+      target: scripts/issue-contract-cutoff.mjs
+      exact: scripts/issue-contract-cutoff.mjs
 
     issue-contract-workflow:
       kind: file
@@ -397,11 +423,6 @@ defaults:
       kind: skill
       name: improve-codebase-architecture
       source: .agents/skills/improve-codebase-architecture
-
-    skill-orchestrate:
-      kind: skill
-      name: orchestrate
-      source: .agents/skills/orchestrate
 
     skill-pr:
       kind: skill
@@ -589,8 +610,8 @@ profiles:
 
       factory-configuration:
         kind: file
-        target: .factory/config.json
-        exact: .factory/config.json
+        target: .scriptorium/config.json
+        exact: .scriptorium/config.json
 
       factory-workflow:
         kind: repository
@@ -612,8 +633,11 @@ profiles:
             timeout-seconds: 30
 
       factory-sandbox-image:
-        kind: file
-        target: .factory/Dockerfile
+        kind: repository
+        targets:
+          paths:
+            [.scriptorium/Dockerfile, .factory/Dockerfile, .factory/config.json]
+          directories: []
         rules: rules/factory-sandbox-image.md
         guidance: guidance/factory-sandbox-image.md
 
@@ -633,6 +657,10 @@ profiles:
         kind: skill
         name: create-adopted-repo
         source: .agents/skills/create-adopted-repo
+      skill-orchestrate:
+        kind: skill
+        name: orchestrate
+        source: .agents/skills/orchestrate
       agent-configuration-index: { exclude: true }
       agent-guidance: { exclude: true }
       bug-report-template: { exclude: true }
@@ -646,6 +674,7 @@ profiles:
       github-validator-trigger: { exclude: true }
       implementation-ticket-template: { exclude: true }
       issue-contract-workflow: { exclude: true }
+      issue-contract-cutoff: { exclude: true }
       issue-tracker-configuration: { exclude: true }
       pr-metadata-validator: { exclude: true }
       pr-metadata-workflow: { exclude: true }

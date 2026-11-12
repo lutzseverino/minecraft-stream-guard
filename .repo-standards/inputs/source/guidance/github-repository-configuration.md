@@ -16,6 +16,16 @@ Until the PR metadata validation workflow is on the default branch, requiring
 the check is deferred, and the next adoption or update after the workflow
 merges requires it.
 
+For a first adoption that installs the workflow absent from default, deliver
+through the owner, including when both protection mechanisms are proven
+unavailable on the private plan. After separate review, leave the PR open and
+stop with its exact reviewed head, pre-commit ready-to-commit summary and
+verdict, validation outcomes, missing prerequisites and owner action. Record
+absent hosted checks as absent, not passed. This bootstrap step grants no agent
+merge exception and changes no wait or merge refusal. Once owner delivery or
+correction is confirmed, continue from clean updated default with the next
+full adoption, preserving its own pre-commit evidence and ordinary gates.
+
 The fix establishes and reads back strict required-check freshness through
 classic protection or its managed ruleset when it establishes the required
 check, preserving other checks, rules and bypass settings. Changes to existing
@@ -57,6 +67,18 @@ rename names the former label, so the issue-contract workflow removes it on
 its next run; review each such issue's current revision again before applying
 `state:ready`. Issues left with a former label that has no single successor
 get `state:triage` and go back to triage.
+
+## Required checks
+
+The required repository-owned `.github/required-checks.json` follows the rules'
+Required-check authority and merge gate schema. The declaration owns no file or
+names and adoption never creates or rewrites it. Its read-only check fails on
+absence, malformed data or an empty list. Establish repository-chosen names before starting adoption, in
+a separate repository-policy change outside the adoption commit and PR.
+An absent trusted declaration stops wait and merge: correct it on the destination
+default branch through the applicable owner procedure, then invoke again.
+Do not infer names from observed results or GitHub settings, or bypass the gate
+to bootstrap a declaration present only locally or on the PR branch.
 
 ## Pull request reviewer
 

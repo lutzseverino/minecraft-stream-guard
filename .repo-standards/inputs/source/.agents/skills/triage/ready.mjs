@@ -7,7 +7,8 @@ import {
   noticePrecedes,
   observedChangeId,
   readyLabels,
-} from "../../../scripts/validate-issue-contract.mjs";
+  readIssueContractObservation,
+} from "../../../vendor/repo-canon/validate-issue-contract.mjs";
 import {
   connectionFor,
   executedAsScript,
@@ -18,6 +19,7 @@ import {
 // The validator binds one ready label; a companion carries no other state.
 const [readyLabel] = readyLabels;
 
+// Seam (deferred): Scriptorium configuration reads; consumers: 6; extraction proposed in https://github.com/lutzseverino/repo-canon/issues/967.
 // The model label prefix this readiness needs, or null: only where the
 // destination's installed factory rules apply and its factory configuration
 // names this ready label. Both come from one pinned default-branch commit,
@@ -26,14 +28,14 @@ async function modelPolicy(connection) {
   try {
     const { files, evidence } = await pinnedFiles(connection, {
       rules: ".repo-standards/rules/factory-workflow.md",
-      configuration: ".factory/config.json",
+      configuration: ".scriptorium/config.json",
     });
     if (files.rules === null) return null;
     const { labels, modelLabelPrefix } =
       JSON.parse(files.configuration ?? "null") ?? {};
     if (typeof labels?.ready !== "string" || !modelLabelPrefix?.trim?.())
       throw new Error(
-        `${evidence}: .factory/config.json names no ready label and model label prefix.`,
+        `${evidence}: .scriptorium/config.json names no ready label and model label prefix.`,
       );
     return labels.ready === readyLabel ? modelLabelPrefix : null;
   } catch (error) {
@@ -50,7 +52,9 @@ async function actingLogin(connection) {
   const identity = await requestData(connection, {
     method: "POST",
     path: "/graphql",
-    body: { query: "query TriageActingAccount { viewer { __typename login } }" },
+    body: {
+      query: "query TriageActingAccount { viewer { __typename login } }",
+    },
   });
   const viewer = identity?.data?.viewer;
   if (
@@ -72,13 +76,26 @@ async function snapshot(connection, number) {
   const comments = await tracker.comments(number);
   const events = await tracker.labelChanges(number);
   // The validator's own reader interprets its published result.
-  return { issue, events, ...issueContractResult(comments) };
+  const result = issueContractResult(comments);
+  const current =
+    (result.state?.format === "repo-canon/issue-contract-state/v2" ||
+     result.state?.baseFormat === "repo-canon/issue-contract-state/v2")
+      ? result.state.observation ===
+        (await readIssueContractObservation(
+          connection,
+          issue,
+          comments,
+          events,
+        ))
+      : true;
+  return { issue, events, current, ...result };
 }
 
 // Whether the result has observed the latest readiness change.
-const processed = ({ state, events }) =>
+const processed = ({ state, events, current }) =>
+  current &&
   (state?.observedEventId ?? state?.reviewEventId ?? null) ===
-  observedChangeId(events);
+    observedChangeId(events);
 
 function parentNeedsReapply({ issue, events }, label) {
   if (

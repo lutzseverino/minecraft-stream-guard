@@ -10,6 +10,8 @@ profiles:
   factory:
     description: The standard profile plus the factory's repository files and
       workflow rules, for a repository a factory serves
+    check-locations:
+      - github
     declarations:
       agent-configuration-index:
         checks: []
@@ -94,15 +96,20 @@ profiles:
         checks: []
         fixes: []
         kind: file
-        target: .factory/config.json
-        exact: .factory/config.json
+        target: .scriptorium/config.json
+        exact: .scriptorium/config.json
       factory-sandbox-image:
         checks: []
         fixes: []
-        kind: file
-        target: .factory/Dockerfile
+        kind: repository
         guidance: guidance/factory-sandbox-image.md
         rules: rules/factory-sandbox-image.md
+        targets:
+          paths:
+            - .scriptorium/Dockerfile
+            - .factory/Dockerfile
+            - .factory/config.json
+          directories: []
       factory-sandbox-image-workflow:
         checks: []
         fixes: []
@@ -143,6 +150,18 @@ profiles:
         rules: rules/git-attributes.md
       github-repository-configuration:
         checks:
+          - id: required-checks
+            run:
+              executable: node
+              script: operations/check-required-checks.mjs
+              resources:
+                - .agents/skills/babysit/required-checks.mjs
+              arguments: []
+            prerequisite:
+              version-arguments:
+                - --version
+              version: ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            timeout-seconds: 30
           - id: pull-request-reviewer
             run:
               executable: node
@@ -259,12 +278,30 @@ profiles:
         kind: file
         target: .github/ISSUE_TEMPLATE/implementation-ticket.yml
         exact: .github/ISSUE_TEMPLATE/implementation-ticket.yml
+      issue-contract-cutoff:
+        checks: []
+        fixes: []
+        kind: file
+        target: scripts/issue-contract-cutoff.mjs
+        exact: scripts/issue-contract-cutoff.mjs
+      issue-contract-sources:
+        checks: []
+        fixes: []
+        kind: file
+        target: scripts/issue-contract-sources.mjs
+        exact: scripts/issue-contract-sources.mjs
+      issue-contract-store:
+        checks: []
+        fixes: []
+        kind: file
+        target: scripts/issue-contract-store.mjs
+        exact: scripts/issue-contract-store.mjs
       issue-contract-validator:
         checks: []
         fixes: []
         kind: file
-        target: scripts/validate-issue-contract.mjs
-        exact: scripts/validate-issue-contract.mjs
+        target: vendor/repo-canon/validate-issue-contract.mjs
+        exact: vendor/repo-canon/validate-issue-contract.mjs
       issue-contract-workflow:
         checks: []
         fixes: []
@@ -486,12 +523,6 @@ profiles:
         kind: skill
         name: improve-codebase-architecture
         source: .agents/skills/improve-codebase-architecture
-      skill-orchestrate:
-        checks: []
-        fixes: []
-        kind: skill
-        name: orchestrate
-        source: .agents/skills/orchestrate
       skill-pr:
         checks: []
         fixes: []
@@ -691,5 +722,5 @@ profiles:
         checks: []
         fixes: []
         kind: file
-        target: scripts/validate.mjs
-        exact: scripts/validate.mjs
+        target: vendor/repo-canon/validate.mjs
+        exact: vendor/repo-canon/validate.mjs
