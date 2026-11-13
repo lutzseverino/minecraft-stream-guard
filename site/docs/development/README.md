@@ -19,7 +19,7 @@ Run `pnpm validate` before review. It runs, in order:
 
 `pnpm build` creates `dist/`; `pnpm preview` serves it locally. `pnpm format` rewrites formatting. `validate` is the site's own aggregate; shared delivery checks live at the repository root. Run `bash scripts/check.sh` from that root to validate both components.
 
-The required checks are `Validate site` from CI, which runs `validate` on Node.js 24 and 26, plus `validate` from PR Policy and `PR metadata`.
+Required pull request checks are declared in the root `.github/required-checks.json`. Site CI reports `Validate site`, which runs the site's `validate` script on Node.js 24 and 26; `PR metadata` validates pull request text.
 
 ### Lint and format coverage
 
