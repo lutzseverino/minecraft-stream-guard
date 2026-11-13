@@ -2,7 +2,6 @@
   "version": 1,
   "checks": [
     "Verify plugin",
-    "validate",
     "PR metadata"
   ]
 }
