@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "fallback": "wait",
+  "runKinds": {
+    "triage": {
+      "source": "issue-label"
+    },
+    "implement": {
+      "initial": {
+        "source": "issue-label"
+      },
+      "retry": {
+        "source": "issue-label"
+      }
+    },
+    "review": {
+      "source": "issue-label"
+    }
+  }
+}
