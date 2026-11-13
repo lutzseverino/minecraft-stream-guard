@@ -1,7 +1,7 @@
 {
-  "format": "repo-standards/scope-history/v6",
+  "format": "repo-standards/scope-history/v7",
   "evidence": "historical",
-  "inspection": "sha256:566c00f5e14bf3dc2bd94ea4e5936d1a98748239985f68d45cbfc74872434677",
+  "inspection": "sha256:b205d1471a9a46c2017bc00bb273c357df917e111bf33a14d8169a9bb801f994",
   "resolved": {
     "description": "The standard profile plus the factory's repository files and workflow rules, for a repository a factory serves",
     "declarations": [
@@ -141,17 +141,24 @@
         "checks": [],
         "fixes": [],
         "kind": "file",
-        "target": ".factory/config.json",
-        "exact": ".factory/config.json"
+        "target": ".scriptorium/config.json",
+        "exact": ".scriptorium/config.json"
       },
       {
         "id": "factory-sandbox-image",
         "checks": [],
         "fixes": [],
-        "kind": "file",
-        "target": ".factory/Dockerfile",
+        "kind": "repository",
         "guidance": "guidance/factory-sandbox-image.md",
-        "rules": "rules/factory-sandbox-image.md"
+        "rules": "rules/factory-sandbox-image.md",
+        "targets": {
+          "paths": [
+            ".scriptorium/Dockerfile",
+            ".factory/Dockerfile",
+            ".factory/config.json"
+          ],
+          "directories": []
+        }
       },
       {
         "id": "factory-sandbox-image-workflow",
@@ -212,6 +219,24 @@
       {
         "id": "github-repository-configuration",
         "checks": [
+          {
+            "id": "required-checks",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-required-checks.mjs",
+              "resources": [
+                ".agents/skills/babysit/required-checks.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          },
           {
             "id": "pull-request-reviewer",
             "run": {
@@ -377,12 +402,36 @@
         "exact": ".github/ISSUE_TEMPLATE/implementation-ticket.yml"
       },
       {
+        "id": "issue-contract-cutoff",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/issue-contract-cutoff.mjs",
+        "exact": "scripts/issue-contract-cutoff.mjs"
+      },
+      {
+        "id": "issue-contract-sources",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/issue-contract-sources.mjs",
+        "exact": "scripts/issue-contract-sources.mjs"
+      },
+      {
+        "id": "issue-contract-store",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/issue-contract-store.mjs",
+        "exact": "scripts/issue-contract-store.mjs"
+      },
+      {
         "id": "issue-contract-validator",
         "checks": [],
         "fixes": [],
         "kind": "file",
-        "target": "scripts/validate-issue-contract.mjs",
-        "exact": "scripts/validate-issue-contract.mjs"
+        "target": "vendor/repo-canon/validate-issue-contract.mjs",
+        "exact": "vendor/repo-canon/validate-issue-contract.mjs"
       },
       {
         "id": "issue-contract-workflow",
@@ -688,14 +737,6 @@
         "source": ".agents/skills/improve-codebase-architecture"
       },
       {
-        "id": "skill-orchestrate",
-        "checks": [],
-        "fixes": [],
-        "kind": "skill",
-        "name": "orchestrate",
-        "source": ".agents/skills/orchestrate"
-      },
-      {
         "id": "skill-pr",
         "checks": [],
         "fixes": [],
@@ -865,8 +906,8 @@
         "checks": [],
         "fixes": [],
         "kind": "file",
-        "target": "scripts/validate.mjs",
-        "exact": "scripts/validate.mjs"
+        "target": "vendor/repo-canon/validate.mjs",
+        "exact": "vendor/repo-canon/validate.mjs"
       }
     ]
   },
@@ -983,17 +1024,24 @@
         "checks": [],
         "fixes": [],
         "kind": "file",
-        "target": ".factory/config.json",
-        "exact": ".factory/config.json"
+        "target": ".scriptorium/config.json",
+        "exact": ".scriptorium/config.json"
       },
       {
         "id": "factory-sandbox-image",
         "checks": [],
         "fixes": [],
-        "kind": "file",
-        "target": ".factory/Dockerfile",
+        "kind": "repository",
         "guidance": "guidance/factory-sandbox-image.md",
-        "rules": "rules/factory-sandbox-image.md"
+        "rules": "rules/factory-sandbox-image.md",
+        "targets": {
+          "paths": [
+            ".scriptorium/Dockerfile",
+            ".factory/Dockerfile",
+            ".factory/config.json"
+          ],
+          "directories": []
+        }
       },
       {
         "id": "factory-sandbox-image-workflow",
@@ -1051,6 +1099,24 @@
       {
         "id": "github-repository-configuration",
         "checks": [
+          {
+            "id": "required-checks",
+            "run": {
+              "executable": "node",
+              "script": "operations/check-required-checks.mjs",
+              "resources": [
+                ".agents/skills/babysit/required-checks.mjs"
+              ],
+              "arguments": []
+            },
+            "prerequisite": {
+              "version-arguments": [
+                "--version"
+              ],
+              "version": ">=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
+            },
+            "timeout-seconds": 30
+          },
           {
             "id": "pull-request-reviewer",
             "run": {
@@ -1213,12 +1279,36 @@
         "exact": ".github/ISSUE_TEMPLATE/implementation-ticket.yml"
       },
       {
+        "id": "issue-contract-cutoff",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/issue-contract-cutoff.mjs",
+        "exact": "scripts/issue-contract-cutoff.mjs"
+      },
+      {
+        "id": "issue-contract-sources",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/issue-contract-sources.mjs",
+        "exact": "scripts/issue-contract-sources.mjs"
+      },
+      {
+        "id": "issue-contract-store",
+        "checks": [],
+        "fixes": [],
+        "kind": "file",
+        "target": "scripts/issue-contract-store.mjs",
+        "exact": "scripts/issue-contract-store.mjs"
+      },
+      {
         "id": "issue-contract-validator",
         "checks": [],
         "fixes": [],
         "kind": "file",
-        "target": "scripts/validate-issue-contract.mjs",
-        "exact": "scripts/validate-issue-contract.mjs"
+        "target": "vendor/repo-canon/validate-issue-contract.mjs",
+        "exact": "vendor/repo-canon/validate-issue-contract.mjs"
       },
       {
         "id": "issue-contract-workflow",
@@ -1518,14 +1608,6 @@
         "source": ".agents/skills/improve-codebase-architecture"
       },
       {
-        "id": "skill-orchestrate",
-        "checks": [],
-        "fixes": [],
-        "kind": "skill",
-        "name": "orchestrate",
-        "source": ".agents/skills/orchestrate"
-      },
-      {
         "id": "skill-pr",
         "checks": [],
         "fixes": [],
@@ -1793,13 +1875,13 @@
         "checks": [],
         "fixes": [],
         "kind": "file",
-        "target": "scripts/validate.mjs",
-        "exact": "scripts/validate.mjs"
+        "target": "vendor/repo-canon/validate.mjs",
+        "exact": "vendor/repo-canon/validate.mjs"
       }
     ]
   },
   "discovery": {
-    "identity": "sha256:43499c385fee2d024d712d105202e621f7ea30930b5eb2788d90fadea92dc2bd",
+    "identity": "sha256:f440a55f05c9b1495d2d548d4e1ea1b8b40ccee91e544b5a5c57e46ac042fed8",
     "proposal": {
       "format": "repo-standards/scope/v2",
       "declarations": [
@@ -2306,18 +2388,12 @@
         }
       ]
     },
-    "absence": [
-      {
-        "kind": "absence",
-        "path": "docs/development/verify-agent-sandbox.sh",
-        "identity": "sha256:151b526dd64cbf80a445aada9da8f6a78c062f18e9a0a058b087427d46b89840"
-      }
-    ],
+    "absence": [],
     "named": {
       "targets": {
         "docs/README.md": {
           "type": "file",
-          "sha256": "4f2d1bd5edc512e61f95712f2960bfb46c4766dba4da40fccfc0c33e38228d7f",
+          "sha256": "e00cd3da6d4c193fd1dcabf9baa18afc190616475b8411b10ea77de0de3c12f0",
           "executable": false
         },
         "docs/adr/0001-one-repository-per-project.md": {
@@ -2332,7 +2408,7 @@
         },
         "docs/development/README.md": {
           "type": "file",
-          "sha256": "4b61bf166cd57bba67bd0ba9c19e1d969f038af269cf1efe5f2f9b6b111bbe46",
+          "sha256": "485a632ccaf29f20e780efd2491fe73c6a6bad021e53e6cd91572dc3cdbcd240",
           "executable": false
         },
         "docs/development/architecture.md": {
@@ -2376,7 +2452,9 @@
           "executable": false
         },
         "docs/development/verify-agent-sandbox.sh": {
-          "type": "missing"
+          "type": "file",
+          "sha256": "5f12fda1b0a1ae1f5dc4254d47c356ed9288b8252da4e9341b0974ba3e541038",
+          "executable": true
         },
         "docs/usage/README.md": {
           "type": "file",
@@ -2445,12 +2523,12 @@
         },
         "plugin/README.md": {
           "type": "file",
-          "sha256": "deba0d69e8ab1ca244c96c087bd20b8de03649e5a6104b548e06bf2d4c20adf7",
+          "sha256": "ac0d1869405abc8d4a51df6d8198834508aa73b375099bd81004ab6476e09733",
           "executable": false
         },
         "site/README.md": {
           "type": "file",
-          "sha256": "792e24a8822e1d6d2c09f1009bf7fbd07161204afe0aa32996bc7521ded2316e",
+          "sha256": "4bc9fe03e46af0ec8a7a6992947946870eec0060932d8a69a78f06d7609d646b",
           "executable": false
         },
         "site/docs/README.md": {
@@ -2460,7 +2538,7 @@
         },
         "site/docs/development/README.md": {
           "type": "file",
-          "sha256": "fdb3eb8718373f54b37647050a70b6e164f92932764f599bff3d8bd146f504f5",
+          "sha256": "91b645d6bd2dd27a4ee88d648e15b24f1855f62ee271ae5e74f4371d5a822e63",
           "executable": false
         },
         "site/docs/development/architecture/README.md": {
@@ -2682,6 +2760,14 @@
             ]
           },
           {
+            "path": "docs/development/verify-agent-sandbox.sh",
+            "decision": "include",
+            "reason": "A file under the documentation root `docs`.",
+            "evidence": [
+              "docs/development/verify-agent-sandbox.sh"
+            ]
+          },
+          {
             "path": "docs/usage/README.md",
             "decision": "include",
             "reason": "A file under the documentation root `docs`.",
@@ -2804,7 +2890,7 @@
         ],
         "unresolved": [
           "Is `site/docs` a documentation root? Its `site/docs/development` and `site/docs/usage` directories hold Markdown documents. If it is, include its files and a new index for each of its directories without one, as this draft does for `docs`. If it is not, its README.md files stay out of this scope.",
-          "Which of these Markdown files under `.agents` are documentation this scope must cover, such as a document to move into a documentation category: `.agents/skills/implementation-governance/SKILL.md`, `.agents/skills/implementation-governance/references/change-kinds.md`, `.agents/skills/implementation-governance/references/contract-changes.md`, `.agents/skills/implementation-governance/references/conventions.md`, `.agents/skills/implementation-governance/references/escalation.md`, `.agents/skills/implementation-governance/references/extraction.md`, `.agents/skills/implementation-governance/references/materialization.md`, `.agents/skills/implementation-governance/references/overview.md`, `.agents/skills/implementation-governance/references/scoping.md`, `.agents/skills/implementation-governance/references/validation.md`, and `.agents/skills/implementation-governance/references/workflow.md`? Include each one, with its destination when it moves.",
+          "Which of these Markdown files under `.agents` are documentation this scope must cover, such as a document to move into a documentation category: `.agents/skills/implementation-governance/SKILL.md`, `.agents/skills/implementation-governance/references/change-kinds.md`, `.agents/skills/implementation-governance/references/contract-changes.md`, `.agents/skills/implementation-governance/references/conventions.md`, `.agents/skills/implementation-governance/references/escalation.md`, `.agents/skills/implementation-governance/references/extraction.md`, `.agents/skills/implementation-governance/references/materialization.md`, `.agents/skills/implementation-governance/references/overview.md`, `.agents/skills/implementation-governance/references/scoping.md`, `.agents/skills/implementation-governance/references/validation.md`, `.agents/skills/implementation-governance/references/workflow.md`, `.agents/skills/orchestrate/CREDITS.md`, `.agents/skills/orchestrate/SKILL.md`, `.agents/skills/orchestrate/references/close.md`, `.agents/skills/orchestrate/references/launches.md`, and `.agents/skills/orchestrate/references/templates.md`? Include each one, with its destination when it moves.",
           "Which of these Markdown files under `site` are documentation this scope must cover, such as a document to move into a documentation category: `site/docs/development/architecture/architecture.md`, `site/docs/development/templates/decision.template.md`, `site/docs/development/templates/explanation.template.md`, `site/docs/development/templates/how-to.template.md`, `site/docs/development/templates/index.template.md`, `site/docs/development/templates/reference.template.md`, `site/docs/development/templates/tutorial.template.md`, `site/docs/usage/guides/run-locally.md`, and `site/docs/usage/reference/live-feed.md`? Include each one, with its destination when it moves."
         ]
       },
@@ -2987,7 +3073,7 @@
       {
         "id": "factory-workflow",
         "source": "discovery/factory-workflow.md",
-        "sha256": "6f8e546cfa909fd4fd090d8555de882d8a786975c088d649a490192f30ad3b7a",
+        "sha256": "0e23a4587d04ec99790ffe76f8a99f5477ccfa2428b3f46609327fcdef92d435",
         "executable": false
       },
       {
@@ -3035,12 +3121,12 @@
         },
         ".agents/skills/babysit/CREDITS.md": {
           "type": "file",
-          "sha256": "4284efe010cd760409f7d34f0d41bced50d7e013a65e25e3ed9f979289a8f485",
+          "sha256": "407cbf3f51699040bf0006e3c9722a8a2b9a867bedf52f60c2d734db5103d09e",
           "executable": false
         },
         ".agents/skills/babysit/SKILL.md": {
           "type": "file",
-          "sha256": "b8163e5d72cd85b87458b204181959afe57ec2a4ce01046a9c360fadba7c911f",
+          "sha256": "404e11a159019d47727c10b29730af8623e8f161cbd371fd187065ec262d6897",
           "executable": false
         },
         ".agents/skills/babysit/body-links.mjs": {
@@ -3050,17 +3136,17 @@
         },
         ".agents/skills/babysit/merge.mjs": {
           "type": "file",
-          "sha256": "881b28cb5a89acfbbb642fbf42106e3af80ce2af1ee9080f7c2eec37b45d63b5",
+          "sha256": "1d6d4dd0bf4b8b3f8d4f6562bf781ec62b7a49514a18ea34c674dae656a79eea",
           "executable": false
         },
         ".agents/skills/babysit/platform.mjs": {
           "type": "file",
-          "sha256": "fc6fdbf5129dea3335ea340882806d7e9ee908f8b4dc72d10873c7637efc1fe3",
+          "sha256": "270dcd75892cf3c5955ff9b526361e991e361d5d31dad4d87cf15c5814e8beeb",
           "executable": false
         },
         ".agents/skills/babysit/pull-request-reviewer.mjs": {
           "type": "file",
-          "sha256": "d2b3ecf236b1758f299577cfd81ccdec3ec0980e46209fbec0cd06e9060c2f4a",
+          "sha256": "2d22280d01d2835b8e0a47bfc3fa50c507b74aee6b0aa047d4f106f98871a5dd",
           "executable": false
         },
         ".agents/skills/babysit/request.mjs": {
@@ -3070,7 +3156,7 @@
         },
         ".agents/skills/babysit/review-outcome.mjs": {
           "type": "file",
-          "sha256": "58632b2e8c8de4487204bdd14a5ff2208b6b824b53f49d3aa512ce606e940108",
+          "sha256": "a3213bb3983f56a1df1b498157105cfd591b4e6a4afbcf9d47b6bf2429feceba",
           "executable": false
         },
         ".agents/skills/babysit/review-policy.mjs": {
@@ -3085,17 +3171,17 @@
         },
         ".agents/skills/babysit/trusted-review-config.mjs": {
           "type": "file",
-          "sha256": "25d4cb7bf51366e305d2a741c0ebb4cf6f3dac510f2519e4d0f3977898821dc6",
+          "sha256": "9f894cb3decaa1933bb226dcfa207336e70a25ec4c7399b9931b87d7d5ddb11c",
           "executable": false
         },
         ".agents/skills/babysit/wait.mjs": {
           "type": "file",
-          "sha256": "f865d885a46d5943823eeca7407fab40bf9d5eea90ab0b5697a18c6d26610f30",
+          "sha256": "b28a743bb551431a755304b133e4ead444578d1109cd211bacd5b624a7c769cb",
           "executable": false
         },
         ".agents/skills/code-review/CREDITS.md": {
           "type": "file",
-          "sha256": "a8a1e5930513f2e4500ed539291ac173800a9e0cf55d9284d6fc4cf7cdf40476",
+          "sha256": "85c42e0639b626cbce678dd4203938a2442fc079d6a8f6ae7b4b03b44bb24bd6",
           "executable": false
         },
         ".agents/skills/code-review/SKILL.md": {
@@ -3110,7 +3196,7 @@
         },
         ".agents/skills/codebase-design/CREDITS.md": {
           "type": "file",
-          "sha256": "0a8a93ed13b6e8b65dd7c59a010c49558a1a670e4eb84b618976d2466e6437bc",
+          "sha256": "866d20f3b44ac43748162ccf61fde5d275a3ae7eccee2cce42fe680655e21750",
           "executable": false
         },
         ".agents/skills/codebase-design/DEEPENING.md": {
@@ -3135,7 +3221,7 @@
         },
         ".agents/skills/diagnosing-bugs/CREDITS.md": {
           "type": "file",
-          "sha256": "9073d0c470ac0b79c9385ec2f7364bd477c0b1a4c3b9125b59602a77a817fa48",
+          "sha256": "23f6645261d3397183fa2aa8078e950447dc209c550ccff764519e100183290f",
           "executable": false
         },
         ".agents/skills/diagnosing-bugs/SKILL.md": {
@@ -3160,7 +3246,7 @@
         },
         ".agents/skills/domain-modeling/CREDITS.md": {
           "type": "file",
-          "sha256": "bbcc5a0d207d4c715189f3110887a379ca5e10787f9fdcf60bfb944aff1480ec",
+          "sha256": "724e6da4dd9f84bbf1a3f3ca74904784a2778e303b305fb8ba6206462f905c59",
           "executable": false
         },
         ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md": {
@@ -3185,12 +3271,12 @@
         },
         ".agents/skills/factory/SKILL.md": {
           "type": "file",
-          "sha256": "3745e29861b411e396a97242cce87a9858a6451603efd53fdf364d017d4e768a",
+          "sha256": "f1a50b5d7701f5a36c0734e4a3b85c0ddee9a7855978df132d92746a844cfddc",
           "executable": false
         },
         ".agents/skills/grill-with-docs/CREDITS.md": {
           "type": "file",
-          "sha256": "6bf2b0e20439662835b7ec5e8dff26c99f4e87876bdc7c355265aafb7c427b0d",
+          "sha256": "039499c7a72b9260c889e1287381e8e09f635c99eae5d26cf04c92b35d98cb11",
           "executable": false
         },
         ".agents/skills/grill-with-docs/SKILL.md": {
@@ -3205,7 +3291,7 @@
         },
         ".agents/skills/grilling/CREDITS.md": {
           "type": "file",
-          "sha256": "50702f66166d7fb00e555c44374c7d4be4a6d4a60f1b09e11b409b2c0b0bbf0e",
+          "sha256": "40457984515b4f4ba6d5b512b6b86cf0d02922b5b4ed846a576f4908c4123776",
           "executable": false
         },
         ".agents/skills/grilling/SKILL.md": {
@@ -3220,12 +3306,12 @@
         },
         ".agents/skills/implement/CREDITS.md": {
           "type": "file",
-          "sha256": "55c3fdf5d679908d21398c292069abc547fe4430897c57a441f5e3afb015d18a",
+          "sha256": "765915dca138fccdfea4c6a114d1c9c713706a3c74281b86a7062b8e1cfe0dcb",
           "executable": false
         },
         ".agents/skills/implement/SKILL.md": {
           "type": "file",
-          "sha256": "c8ee4b891bd4a6ae5d1cb3f73d20f3bf980ce66a783706042339ebcc436ce436",
+          "sha256": "3219e22efd2672c18788cad2c36bf6de194fdd494b46548b870fff84e1b9258c",
           "executable": false
         },
         ".agents/skills/implement/agents/openai.yaml": {
@@ -3295,7 +3381,7 @@
         },
         ".agents/skills/improve-codebase-architecture/CREDITS.md": {
           "type": "file",
-          "sha256": "2cb8c96b72929b6cac2780d291f047a8ecb350a678add177159316619e2e2122",
+          "sha256": "ca090b9b86395bac82fac25a41c969cf0cf975e21021f0dd7f199eafe1e2a0fb",
           "executable": false
         },
         ".agents/skills/improve-codebase-architecture/HTML-REPORT.md": {
@@ -3320,7 +3406,7 @@
         },
         ".agents/skills/orchestrate/SKILL.md": {
           "type": "file",
-          "sha256": "c3b8518d2474f63f6031e7730108c3ea1929293d9cd0f97b5d6f10ae332afe97",
+          "sha256": "ca7dba0ad7625f62c36d74ba6578bb016047805027e4c451c8d8b93d02818f89",
           "executable": false
         },
         ".agents/skills/orchestrate/agents/openai.yaml": {
@@ -3328,34 +3414,39 @@
           "sha256": "8fa9f8f0710336e9e9a32915436647c3f5c3bfa9a2acdbdcaf613daba800bf6c",
           "executable": false
         },
+        ".agents/skills/orchestrate/records.mjs": {
+          "type": "file",
+          "sha256": "f5a22605e8444e0bcf8ef581c63942fa143b54cb8ff114cb64d79387b22694c3",
+          "executable": false
+        },
         ".agents/skills/orchestrate/references/close.md": {
           "type": "file",
-          "sha256": "3e9bceb96009a826f75425484f2e0dc0d87dae4a200f10046a60895587f4939e",
+          "sha256": "ca0b83bc0bbcd5f20f1d45a6a4c3f260815d7420718e4eeff9b70ff6eb800a14",
           "executable": false
         },
         ".agents/skills/orchestrate/references/launches.md": {
           "type": "file",
-          "sha256": "1a66c90f6fc9ac5b24a608e172f86bbe7176db9020aef7064fcf701d9f91958e",
+          "sha256": "305cd9a313c2e608142cdc4c3ab0865b919f4374559107e51388d991f1775eef",
           "executable": false
         },
         ".agents/skills/orchestrate/references/templates.md": {
           "type": "file",
-          "sha256": "bb75b934eba8d4f9133b8186c94da5934e12511037b193f60ceb95bd147757d7",
+          "sha256": "07c71686a8ac3a28837215d20af02ea41fce7e9e5194b7dfecae1546dfb00dea",
           "executable": false
         },
         ".agents/skills/orchestrate/wait.mjs": {
           "type": "file",
-          "sha256": "43f0771dda265ac4fe077a2d61981a0b0bad3ed04327cb12aa1a00d08e391fea",
+          "sha256": "7acf8e16106cfdbd8bbd73e79eb80311f830a655499240961ffe3262e3dccdb8",
           "executable": false
         },
         ".agents/skills/pr/CREDITS.md": {
           "type": "file",
-          "sha256": "2631c4c0899decfed35bc7c4c930e069e91769490ddcd128e523602469db4962",
+          "sha256": "051fd057741908f154ba1300c5ec4af4781ac994db39068cb77886d0310ee444",
           "executable": false
         },
         ".agents/skills/pr/SKILL.md": {
           "type": "file",
-          "sha256": "708ab786bb60e7b7c266375b00cebd3600b00e44b49c12d8e63b1d1868ce427e",
+          "sha256": "21e087bde9f0eb5e6b3ec38f5dd9ba20ee2fe4db95a5ec2dc2e86d2c5596855a",
           "executable": false
         },
         ".agents/skills/pr/agents/openai.yaml": {
@@ -3365,7 +3456,7 @@
         },
         ".agents/skills/prototype/CREDITS.md": {
           "type": "file",
-          "sha256": "54273a012bf62110fe7cf392f6ac3e512a7d4a0ac1f7dbccac7dbcc3805e571f",
+          "sha256": "d7127e14cbad9655d701b88cb2343317b07ab65360a9193092b874b6f9c8c699",
           "executable": false
         },
         ".agents/skills/prototype/LOGIC.md": {
@@ -3400,12 +3491,12 @@
         },
         ".agents/skills/research/CREDITS.md": {
           "type": "file",
-          "sha256": "dfcf4abd977f776c90835e96ac1975cb73ce07beaf6d9267b068b00347e24e2a",
+          "sha256": "beb53571788b6df7c22fe251b9a23099c6e8102a896bf3e92ee12dfee194486b",
           "executable": false
         },
         ".agents/skills/research/SKILL.md": {
           "type": "file",
-          "sha256": "1da8bfeee51fcce27717f64fae5a2869ee50852a6c90247fcada8c3f6bd88de7",
+          "sha256": "5e63fce1b54edbb1179be9e2d493131ef8b7194cc8560774b2d6daab2c4291fe",
           "executable": false
         },
         ".agents/skills/research/agents/openai.yaml": {
@@ -3413,9 +3504,24 @@
           "sha256": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
           "executable": false
         },
+        ".agents/skills/review/CREDITS.md": {
+          "type": "file",
+          "sha256": "84f85448b6dbe4baeb6ff2761a1069c598dfba5fddab41ece9acd4bab74fab5d",
+          "executable": false
+        },
+        ".agents/skills/review/SKILL.md": {
+          "type": "file",
+          "sha256": "4373b0a562da2e5ddcafcb8a90c9a0f2f234cc07ecfadcac2335575289730284",
+          "executable": false
+        },
+        ".agents/skills/review/round.mjs": {
+          "type": "file",
+          "sha256": "878bba6ce24758c5b7769cee395d1c784c290f230847bd158ace54bbfc584a1a",
+          "executable": false
+        },
         ".agents/skills/tdd/CREDITS.md": {
           "type": "file",
-          "sha256": "a14fe58f53cd2351f8ad7fe609bb656a726606d001d64c13c8df4a7ea004e8b5",
+          "sha256": "e8fae429588f9cc4099a9a1fcbb3d2be2443b5d1ddbd999a76f4092db14c2c38",
           "executable": false
         },
         ".agents/skills/tdd/SKILL.md": {
@@ -3440,12 +3546,12 @@
         },
         ".agents/skills/to-spec/CREDITS.md": {
           "type": "file",
-          "sha256": "d03f2632fa36e602bcf0e9c38cb7f7fb18b19c821cf1186c1270103b477f264e",
+          "sha256": "f4a8dc7099ca88442eb1dca5d1feaab92f4c1ec98ddb0b0596bccfd1c7fb3d87",
           "executable": false
         },
         ".agents/skills/to-spec/SKILL.md": {
           "type": "file",
-          "sha256": "f747048852302b2d5a5327d76da2ef5c193c9e937fbef0a2e22f8447e44e29d5",
+          "sha256": "eff135abf89c1e163973412f6f92944b3c7b73fc7ce662a02e45a08d8bc17173",
           "executable": false
         },
         ".agents/skills/to-spec/agents/openai.yaml": {
@@ -3455,12 +3561,12 @@
         },
         ".agents/skills/to-tickets/CREDITS.md": {
           "type": "file",
-          "sha256": "7b8b593530943d59d040ecb098ea85943ba63f3d0ddbe0e17dfbff29770db67e",
+          "sha256": "60d96012dbd4f9ac93d21de4011874ea81a22f3e7672d21a9e7f6a2ac4370b64",
           "executable": false
         },
         ".agents/skills/to-tickets/SKILL.md": {
           "type": "file",
-          "sha256": "2b646c55cab35dbd57e81a8bec93d6003062383cdb351c05f7116981044f30e1",
+          "sha256": "f358eabf742a42a3c4521652f80740acf285ba8a850e6896819167128c0794cd",
           "executable": false
         },
         ".agents/skills/to-tickets/agents/openai.yaml": {
@@ -3470,12 +3576,12 @@
         },
         ".agents/skills/triage/AGENT-BRIEF.md": {
           "type": "file",
-          "sha256": "52ce495dc1dc49dd88c87739ef14e32817300740459879f859b4ac2ba4124d57",
+          "sha256": "05708527900b77baccd4033be3a7717bef048ae5294699a190e4c7a5bc97c917",
           "executable": false
         },
         ".agents/skills/triage/CREDITS.md": {
           "type": "file",
-          "sha256": "774ab7899fb01f533c6a2e3483b72cab9ad2a1f446168a2c706c7b79be8fbc41",
+          "sha256": "bec33a353cce26a0abf9552ba5965baa812ff4b41da429ad70999510bdc71b1f",
           "executable": false
         },
         ".agents/skills/triage/OUT-OF-SCOPE.md": {
@@ -3485,7 +3591,7 @@
         },
         ".agents/skills/triage/SKILL.md": {
           "type": "file",
-          "sha256": "82d874e0b651ef36794b8ed608460c042a5d5767d72be49a0cbffd40901c0471",
+          "sha256": "f5704c77c5c95a6ddcd2924a99d5e22c730ce2150395b00e96f9cd60ed01767d",
           "executable": false
         },
         ".agents/skills/triage/agents/openai.yaml": {
@@ -3495,17 +3601,17 @@
         },
         ".agents/skills/triage/ready.mjs": {
           "type": "file",
-          "sha256": "d35dbec41fd48778ef5e95a64e94b9482948b992456272827dd6f41a3ce02f54",
+          "sha256": "bbeb8d2057bb0cac07980723cb55012cca3b0a84e794f8ad8b08cb98486da62e",
           "executable": false
         },
         ".agents/skills/wayfinder/CREDITS.md": {
           "type": "file",
-          "sha256": "e1eea56ad12a8fa780b3d746f2108f421bf1a322c1a5c52c82466a12ecd5c933",
+          "sha256": "c6f847b8083f4a16ab087fda8d18ff19e29e56e9078274599f2ba4cfbb6ec90b",
           "executable": false
         },
         ".agents/skills/wayfinder/SKILL.md": {
           "type": "file",
-          "sha256": "89d8e3f68a5ef0e65f15ff94321dc7feeb22c9f03f5f32b874a6068bee9cb182",
+          "sha256": "801037381f3aed3fe09e69eb3f27d1d0d85660ee57e72c5022b14c413fed00b0",
           "executable": false
         },
         ".agents/skills/wayfinder/agents/openai.yaml": {
@@ -3515,7 +3621,7 @@
         },
         ".agents/skills/writing-for-agents/CREDITS.md": {
           "type": "file",
-          "sha256": "f55ac668257fa933322d694da377d6a49b8b934c883eabec7732bbe53677a9e5",
+          "sha256": "1653c6d6471ab2a5f674c8f4813c81d7bd2325c069db8d21b3442c01b67f43b3",
           "executable": false
         },
         ".agents/skills/writing-for-agents/SKILL-MECHANICS.md": {
@@ -3597,6 +3703,10 @@
           "type": "symlink",
           "target": "../../.agents/skills/research"
         },
+        ".claude/skills/review": {
+          "type": "symlink",
+          "target": "../../.agents/skills/review"
+        },
         ".claude/skills/tdd": {
           "type": "symlink",
           "target": "../../.agents/skills/tdd"
@@ -3628,22 +3738,22 @@
         },
         ".factory/Dockerfile": {
           "type": "file",
-          "sha256": "3b86ae48d8e60a4fa55c228deb56279a61d2b99af43b787f1a60d2aa988832d7",
+          "sha256": "85eb160f6f8d362b6f0789f3497404f36aca129e8b2fae4d72ed68a7f5294348",
           "executable": false
         },
         ".factory/config.json": {
           "type": "file",
-          "sha256": "93ce08eec563aa8f79469713ed41bc8f7d5017c67b3de7a9cff05913e325cbfd",
+          "sha256": "97f5834836c12df348a1f6b7924d28e3d7021d521918ec4b1f8fdbb4707fd9c2",
           "executable": false
         },
         ".gitattributes": {
           "type": "file",
-          "sha256": "dab10623720d9052622e2350338fd07618b09cf1dca64e56b25e0d48ce4b1312",
+          "sha256": "62803b9edaa981de265a0825b06954fc8c19cd51055e770754035840a84ec925",
           "executable": false
         },
         ".github/ISSUE_TEMPLATE/bug-report.yml": {
           "type": "file",
-          "sha256": "5fca3bab67073fdb827cd5eb88d9c413ac1e1df2891a85c7938420dcb1e3dfed",
+          "sha256": "640ba23f2f36bf471b4a2fca372ebc59a284336d80a3a7c7cb235cb49e4a3517",
           "executable": false
         },
         ".github/ISSUE_TEMPLATE/config.yml": {
@@ -3653,17 +3763,17 @@
         },
         ".github/ISSUE_TEMPLATE/feature-request.yml": {
           "type": "file",
-          "sha256": "d3df4f5c27dd7b7a22d0baec1a52a1dc3301c002549f8634392a3abd26566505",
+          "sha256": "c965084796f10393fe0fb7ee3b3507b16b383949b59d328194aac62778cdecee",
           "executable": false
         },
         ".github/ISSUE_TEMPLATE/implementation-ticket.yml": {
           "type": "file",
-          "sha256": "d452da0ad9e39173f681b699d3848a00ab3466b55be508cc3f36d7731083bff6",
+          "sha256": "357a7458d2747c52388f483312968203e3bee05c180d1092dc8059225a896628",
           "executable": false
         },
         ".github/ISSUE_TEMPLATE/specification.yml": {
           "type": "file",
-          "sha256": "77b6359750ff03695a1dc19ee121e664787f4a6954cd9847277ab40fb6b22dfd",
+          "sha256": "0ca007476479bfe674d477826c706b71cc1baac4608c19b0e16e3d2b10d7a206",
           "executable": false
         },
         ".github/PULL_REQUEST_TEMPLATE.md": {
@@ -3674,6 +3784,11 @@
         ".github/dependabot.yml": {
           "type": "file",
           "sha256": "1c4643569f716251dee547487a0a35a8170b001f69dfe5f8ebd5bae53f6f8e2d",
+          "executable": false
+        },
+        ".github/required-checks.json": {
+          "type": "file",
+          "sha256": "1e6689e58761a5714961fc9ec78679d0d8cfb5ae7223ad812723a7b94583f273",
           "executable": false
         },
         ".github/scripts/check-pr-policy.py": {
@@ -3689,6 +3804,11 @@
         ".github/scripts/read-release-notes.sh": {
           "type": "file",
           "sha256": "d5882df8ad8646f102f267eb95092f259969c93f8a38b6657c7e108b522cc7dd",
+          "executable": false
+        },
+        ".github/scripts/test-agent-sandbox.py": {
+          "type": "file",
+          "sha256": "87448b7318115e942d45f07b9220b38f942b59e7b27ff80c85cb6af88df4a651",
           "executable": false
         },
         ".github/scripts/test-release-notes.py": {
@@ -3708,7 +3828,7 @@
         },
         ".github/workflows/ci.yml": {
           "type": "file",
-          "sha256": "85c25d91c014bbdb0364f1e2a79e8b2d27a2f750743db023e523b6af07541cce",
+          "sha256": "f6339c1abb098f9f8a8d912db9cfe0011053692a218cb83668b2c1b1fbd7b81e",
           "executable": false
         },
         ".github/workflows/issue-contracts.yml": {
@@ -3758,12 +3878,12 @@
         },
         "AGENTS.md": {
           "type": "file",
-          "sha256": "ddc8a1fecde13610ba656ee98c9d2cb128b15b7fc20e9068beb0eef9eaf4ba1b",
+          "sha256": "5ca7e2b78cedb385fe2e06b9c1bb46fc5204f66399b38c46f1dc4ed2f9ded32d",
           "executable": false
         },
         "CONTRIBUTING.md": {
           "type": "file",
-          "sha256": "11b73a9e8afa9310ed260d64bd2b284c86ddb0cbc8c23abb84186ad7512ca700",
+          "sha256": "5d9fcfe1255ec85f0d5a8e7784f6dc98d4a02bf808973b81ff6182090e0100aa",
           "executable": false
         },
         "LICENSE": {
@@ -3778,7 +3898,7 @@
         },
         "docs/README.md": {
           "type": "file",
-          "sha256": "4f2d1bd5edc512e61f95712f2960bfb46c4766dba4da40fccfc0c33e38228d7f",
+          "sha256": "e00cd3da6d4c193fd1dcabf9baa18afc190616475b8411b10ea77de0de3c12f0",
           "executable": false
         },
         "docs/adr/0001-one-repository-per-project.md": {
@@ -3803,22 +3923,22 @@
         },
         "docs/agents/issue-tracker.md": {
           "type": "file",
-          "sha256": "bcd5dd6c974b269c98f2b2a9ce81a979e33676f3442c8110bfa4f018fefde895",
+          "sha256": "f4aa5b3e921e4aa2c783ace439236ee0bb9ed12d7338b45e2389bacb0dda8183",
           "executable": false
         },
         "docs/agents/project.md": {
           "type": "file",
-          "sha256": "b60cb10fd3fbc1747b4a5db053b89018f4afef315558c11f0b24298bf57ee403",
+          "sha256": "b8e29d46fb978eef33ca82595697e7cb27f1428b651e22318fbf6ba54755b49d",
           "executable": false
         },
         "docs/agents/triage-labels.md": {
           "type": "file",
-          "sha256": "7103db589b82930dc1f0b7b6d291c5e1aa9bfc40c34354ae18279127573b23d7",
+          "sha256": "6668843407bb5169d8655ed75f30e1e531d0f895ab19b20bd3dc633f668be3b3",
           "executable": false
         },
         "docs/development/README.md": {
           "type": "file",
-          "sha256": "4b61bf166cd57bba67bd0ba9c19e1d969f038af269cf1efe5f2f9b6b111bbe46",
+          "sha256": "485a632ccaf29f20e780efd2491fe73c6a6bad021e53e6cd91572dc3cdbcd240",
           "executable": false
         },
         "docs/development/architecture.md": {
@@ -3860,6 +3980,11 @@
           "type": "file",
           "sha256": "248aaeb4ed190a3b6254831a7978942d4ed4dc4ad3e239a19810d263a662103a",
           "executable": false
+        },
+        "docs/development/verify-agent-sandbox.sh": {
+          "type": "file",
+          "sha256": "5f12fda1b0a1ae1f5dc4254d47c356ed9288b8252da4e9341b0974ba3e541038",
+          "executable": true
         },
         "docs/usage/README.md": {
           "type": "file",
@@ -3943,7 +4068,7 @@
         },
         "plugin/README.md": {
           "type": "file",
-          "sha256": "deba0d69e8ab1ca244c96c087bd20b8de03649e5a6104b548e06bf2d4c20adf7",
+          "sha256": "ac0d1869405abc8d4a51df6d8198834508aa73b375099bd81004ab6476e09733",
           "executable": false
         },
         "plugin/assets/modrinth-icon.png": {
@@ -4303,12 +4428,12 @@
         },
         "scripts/check.sh": {
           "type": "file",
-          "sha256": "122ef76c34e564386f3406c37356a5a773266adc04bf309d4fc9abb92aa01d39",
+          "sha256": "fbcb87763a2bccf399c093004aeb32627dfcdb00f871a3b5b687096c6c285523",
           "executable": false
         },
         "scripts/validate-issue-contract.mjs": {
           "type": "file",
-          "sha256": "704e738a2baa5ddc826b1ef6bcbc852f49d3f6899c2ea5fd8df2f6f78b20b027",
+          "sha256": "4b1c641bc767debcfb3d77e3ad4731aa9b9207bcaa54858c7ad6d30ccb95bbde",
           "executable": false
         },
         "scripts/validate.mjs": {
@@ -4353,7 +4478,7 @@
         },
         "site/README.md": {
           "type": "file",
-          "sha256": "792e24a8822e1d6d2c09f1009bf7fbd07161204afe0aa32996bc7521ded2316e",
+          "sha256": "4bc9fe03e46af0ec8a7a6992947946870eec0060932d8a69a78f06d7609d646b",
           "executable": false
         },
         "site/components.json": {
@@ -4373,7 +4498,7 @@
         },
         "site/docs/development/README.md": {
           "type": "file",
-          "sha256": "fdb3eb8718373f54b37647050a70b6e164f92932764f599bff3d8bd146f504f5",
+          "sha256": "91b645d6bd2dd27a4ee88d648e15b24f1855f62ee271ae5e74f4371d5a822e63",
           "executable": false
         },
         "site/docs/development/architecture/README.md": {
@@ -4775,6 +4900,7 @@
           ".agents/skills/prototype",
           ".agents/skills/repository-standards",
           ".agents/skills/research",
+          ".agents/skills/review",
           ".agents/skills/tdd",
           ".agents/skills/to-spec",
           ".agents/skills/to-tickets",
@@ -4897,6 +5023,7 @@
           ".agents/skills/orchestrate/CREDITS.md",
           ".agents/skills/orchestrate/SKILL.md",
           ".agents/skills/orchestrate/agents",
+          ".agents/skills/orchestrate/records.mjs",
           ".agents/skills/orchestrate/references",
           ".agents/skills/orchestrate/wait.mjs"
         ],
@@ -4940,6 +5067,11 @@
         ],
         ".agents/skills/research/agents": [
           ".agents/skills/research/agents/openai.yaml"
+        ],
+        ".agents/skills/review": [
+          ".agents/skills/review/CREDITS.md",
+          ".agents/skills/review/SKILL.md",
+          ".agents/skills/review/round.mjs"
         ],
         ".agents/skills/tdd": [
           ".agents/skills/tdd/CREDITS.md",
@@ -5015,6 +5147,7 @@
           ".claude/skills/prototype",
           ".claude/skills/repository-standards",
           ".claude/skills/research",
+          ".claude/skills/review",
           ".claude/skills/tdd",
           ".claude/skills/to-spec",
           ".claude/skills/to-tickets",
@@ -5030,6 +5163,7 @@
           ".github/ISSUE_TEMPLATE",
           ".github/PULL_REQUEST_TEMPLATE.md",
           ".github/dependabot.yml",
+          ".github/required-checks.json",
           ".github/scripts",
           ".github/workflows"
         ],
@@ -5044,6 +5178,7 @@
           ".github/scripts/check-pr-policy.py",
           ".github/scripts/plugin-release-version.sh",
           ".github/scripts/read-release-notes.sh",
+          ".github/scripts/test-agent-sandbox.py",
           ".github/scripts/test-release-notes.py",
           ".github/scripts/validate-pr-metadata.mjs",
           ".github/scripts/validate.mjs"
@@ -5079,7 +5214,8 @@
         "docs/development": [
           "docs/development/README.md",
           "docs/development/architecture.md",
-          "docs/development/templates"
+          "docs/development/templates",
+          "docs/development/verify-agent-sandbox.sh"
         ],
         "docs/development/templates": [
           "docs/development/templates/README.md",
@@ -5554,6 +5690,9 @@
         ".agents/skills/research/agents": {
           "type": "directory"
         },
+        ".agents/skills/review": {
+          "type": "directory"
+        },
         ".agents/skills/tdd": {
           "type": "directory"
         },
@@ -5944,6 +6083,9 @@
         ".agents/skills/research/agents/.gitignore": {
           "type": "missing"
         },
+        ".agents/skills/review/.gitignore": {
+          "type": "missing"
+        },
         ".agents/skills/tdd/.gitignore": {
           "type": "missing"
         },
@@ -6216,67 +6358,5 @@
       }
     }
   },
-  "scopeChanges": [
-    {
-      "id": "documentation",
-      "additions": [
-        "docs/adr/0001-one-repository-per-project.md",
-        "docs/adr/README.md",
-        "docs/development/verify-agent-sandbox.sh",
-        "site/docs/README.md",
-        "site/docs/development/README.md",
-        "site/docs/development/architecture/README.md",
-        "site/docs/development/architecture/architecture.md",
-        "site/docs/development/templates/README.md",
-        "site/docs/development/templates/decision.template.md",
-        "site/docs/development/templates/explanation.template.md",
-        "site/docs/development/templates/how-to.template.md",
-        "site/docs/development/templates/index.template.md",
-        "site/docs/development/templates/reference.template.md",
-        "site/docs/development/templates/tutorial.template.md",
-        "site/docs/usage/README.md",
-        "site/docs/usage/guides/README.md",
-        "site/docs/usage/guides/run-locally.md",
-        "site/docs/usage/reference/README.md",
-        "site/docs/usage/reference/live-feed.md"
-      ],
-      "removals": [
-        "docs/_templates/README.md",
-        "docs/_templates/decision.template.md",
-        "docs/_templates/explanation.template.md",
-        "docs/_templates/how-to.template.md",
-        "docs/_templates/index.template.md",
-        "docs/_templates/reference.template.md",
-        "docs/_templates/tutorial.template.md",
-        "docs/explanation/README.md",
-        "docs/explanation/architecture.md",
-        "docs/explanation/enforcement-model.md",
-        "docs/how-to/README.md",
-        "docs/how-to/configure-providers.md",
-        "docs/how-to/publish-live-feed.md",
-        "docs/marketplace.md",
-        "docs/reference/README.md",
-        "docs/reference/commands-and-permissions.md",
-        "docs/reference/configuration.md",
-        "docs/reference/versioning.md",
-        "docs/tutorials/README.md",
-        "docs/tutorials/install-and-configure.md"
-      ]
-    },
-    {
-      "id": "project-readmes",
-      "additions": [
-        "plugin/README.md",
-        "site/README.md"
-      ],
-      "removals": []
-    },
-    {
-      "id": "typescript-vite-stack",
-      "additions": [
-        "site/package.json"
-      ],
-      "removals": []
-    }
-  ]
+  "scopeChanges": []
 }

@@ -8,76 +8,64 @@ A prompt or brief naming this skill is its invocation.
 
 # Triage
 
-Move issues on the project issue tracker through a small state machine of triage roles, and bring each request you triage to an agent brief that holds.
+Bring requests to agent briefs that hold. Resolve bare issue/PR numbers and
+whether external PRs are a request surface from `docs/agents/issue-tracker.md`.
+A PR is an issue with attached code: use the same roles and states.
 
-If this repo treats external pull requests as a request surface (see the issue-tracker config), triage covers them too: **a PR is an issue with attached code**, using the same roles, same states, and same machine, with a few deltas marked "for a PR" below. Resolve a bare `#42` to an issue or PR per the tracker config.
+Before every tracker comment or issue body, read `.repo-standards/rules/comments.md#disclaimers` for the triage disclaimer.
+The contribution guide's Triage and Readiness sections and installed rules own
+routing, inference, acceptance, readiness, labels and owner questions; apply them
+where named below, with the absent-input fallbacks under Reads.
+Use [AGENT-BRIEF.md](AGENT-BRIEF.md) for durable briefs and triage notes, and
+[OUT-OF-SCOPE.md](OUT-OF-SCOPE.md) for the `.out-of-scope/` rejection records.
 
-Before every comment or issue body you post to the issue tracker during triage, read `.repo-standards/rules/comments.md#disclaimers` for its triage disclaimer. Each step below that posts names the section to read.
+For direct specification and ticket bodies, use the contribution guide's
+direct-contract route and the acceptance steps below, applying brief-specific
+shape checks only to Agent Briefs.
 
-The contribution guide's Triage and Readiness sections and the installed rules decide routing, inference, acceptance, readiness, labels, and owner questions. This skill is how to carry them out: where a step names one of those decisions, apply it from there.
+## Publication mode
 
-Follow `AGENTS.md`'s Agent skills requirements for delegation and session naming. Use the available naming capability separately from the command and task context. For each research run below, apply that rule to its research task and use the listed issue references and deliverables as task context. The issue comments below are its assigned research artifacts and destinations.
+Read the validator's current mode and selected source before publishing a
+brief. Prepared mode keeps the comment route. After explicit body-mode
+activation, new/revised contracts replace the issue body and preserve one
+verbatim Original request at its end, as [AGENT-BRIEF.md](AGENT-BRIEF.md) says.
+An exact unchanged inventoried legacy comment stays authoritative until its
+next revision; no new or edited comment becomes a contract after cutoff.
+Missing/ambiguous original input or unknown mode holds publication/readiness.
+Ordinary research notes, progress and questions remain comments.
 
-## Modes
+A factory agent remains read-only and returns its brief as before. The host
+chooses the verified publication route, captures intake author/writer proof
+before replacement, and publishes separate body attestation evidence. Mutable
+run reports are not contract evidence. Wait for a matching validator notice
+and current-event approval; arbitrary app bodies/markers grant no authority.
+The body protocol is an explicit adopter activation, never a package-install
+side effect; no live activation occurs while implementing its source ticket.
 
-- **Orchestrating agent**, the default: the maintainer invokes you, and you start research runs and grills. Every section below applies except [Factory triage run](#factory-triage-run).
-- **Factory triage run**: the factory starts you as its triage run kind for one issue and gives you a path for its run result. Follow [Factory triage run](#factory-triage-run), with the sections it names, and nothing else.
+## Modes and roles
 
-## Reference docs
+- **Orchestrating agent**, the default maintainer invocation: follow every section except Factory triage run. Sort requests, start a fresh-context research run per request, receive every question first, keep the decision inbox, and independently review and accept briefs.
+- **Research run**: gathers facts, verifies claims and writes briefs once intent is settled, unless a grill publishes direct contracts. It applies no labels and never judges its own brief.
+- **Grill**: a separate session with the owner for intent you cannot infer. The owner holds intent; never ask them to finish a brief.
+- **Factory triage run**: receives one issue and a result path. Follow only [Factory triage run](#factory-triage-run) and the sections it names.
 
-- [AGENT-BRIEF.md](AGENT-BRIEF.md): how to write durable agent briefs and the triage notes after them
-- [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md): how the `.out-of-scope/` knowledge base works
+If subagents are unavailable, research and post the brief yourself, then stop
+and link the owner to it for review by someone who did not write it.
+Follow `AGENTS.md`'s Agent skills delegation and session-naming requirements;
+name separately from the invocation and task context. Each research handoff
+uses its listed issue references and deliverables as task context, assigning
+ordinary research notes to comments and the brief to the verified publication
+route above.
 
-## Roles
+Canonical categories are `type:bug` (broken) and `type:enhancement` (improvement).
+States name the wait: `state:triage` (evaluation), `state:reporter` (outside reporter's fact), `state:grill` (owner-intent grill), `state:owner` (owner), `state:ready` (AFK agent); `wontfix` closes work that will not be actioned. For a PR, ready means a brief is attached and an agent takes the next diff step.
+Use `docs/agents/triage-labels.md` for label strings and installed GitHub rules for meanings. Keep exactly one category and state per triaged issue; flag conflicting states and ask the maintainer before acting. Set one `priority:` label by the installed rules' Labels section.
+Unlabeled issues normally enter triage, then a waiting state or `wontfix`. On new information, return waiting work to triage or the guide's Readiness state for answered ready work. Flag unusual transitions and ask before acting; the maintainer may override any time.
 
-Two **category** roles:
-
-- `type:bug`: something is broken
-- `type:enhancement`: new feature or improvement
-
-Five **state** roles, each naming whom the issue waits on, and one closing outcome:
-
-- `state:triage`: triage needs to evaluate it
-- `state:reporter`: its outside reporter, for a missing fact
-- `state:grill`: a grilling session, for the owner's intent
-- `state:owner`: the owner
-- `state:ready`: an AFK agent
-- `wontfix`: will not be actioned
-
-For a PR, the same states read against the attached code: `state:ready` means a brief is attached and an agent should take the next step on the diff.
-
-Every triaged issue should carry exactly one category role and one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
-
-Set one `priority:` label as the installed rules' Labels section says.
-
-These are canonical role names. The actual label strings are in the triage label configuration, `docs/agents/triage-labels.md`, and the installed `github-repository-configuration` rules hold their meanings.
-
-State transitions: an unlabeled issue normally goes to `state:triage` first; from there it moves to `state:reporter`, `state:grill`, `state:owner`, `state:ready`, or `wontfix`. An issue waiting on someone returns to `state:triage` once the missing information arrives, or to the state the contribution guide's Readiness section names for answered ready work. The maintainer can override at any time; flag transitions that look unusual and ask before proceeding.
-
-Repository issues, briefs, comments and decision records must contain every
-decision their work relies on, with its date and quoted words, even when
-copied from a private record. Never reference or require the private
-workbench in those records: no URL, host path or instruction to consult it
-as input or provenance. Cite repository records instead; private planning
-records may retain their own sources.
-
-## Who does what
-
-- **You, the orchestrating agent**: the session the maintainer invoked, in the role the contribution guide's Triage section gives it. You sort each request, start its research run, receive every question first, keep the decision inbox, and review and accept briefs.
-- **The research run**: a sub-agent you start for one request, with a fresh context. It gathers facts and verifies the claim, then writes the brief once no intent question is open, unless a grill drafts it. Leave labels and the judgment of its brief to yourself.
-- **The grill**: a grilling session with the owner, in its own session, for intent questions you cannot infer.
-- **The owner**: holds the project's intent. Never ask them to finish a brief.
-
-If you cannot start a sub-agent, do the research yourself, post the brief, and stop: tell the owner, with a link, that the brief still needs a reviewer who did not write it.
-
-## Invocation
-
-The maintainer invokes `/triage` and describes what they want in natural language. Interpret the request and act. Examples:
-
-- "Show me anything that needs my attention"
-- "Let's look at #42" (issue or PR)
-- "Move #42 to state:ready"
-- "What's ready for agents to pick up?"
+Repository issues, briefs, comments and decision records retain every relied-on
+decision with its date and quoted words, including decisions copied from private
+records. Cite repository records, never private-workbench URLs, host paths or
+instructions as input or provenance; private planning may keep its own sources.
 
 ## Show what needs attention
 
@@ -87,7 +75,7 @@ Query the issue tracker and present three buckets, oldest first:
 2. **`state:triage`**: evaluation in progress.
 3. **`state:reporter`, `state:grill` or `state:owner` with reporter activity or an owner decision since the last triage notes**: needs re-evaluation.
 
-When PRs are in scope, include external PRs in these buckets and tag each line `[PR]` or `[issue]`. Discovery surfaces only *external* PRs (the tracker config defines who counts as external), so a collaborator's in-flight PR is not triage work. This filter is discovery-only; an explicitly named PR is always triaged regardless of author.
+When PRs are in scope, include external PRs in these buckets and tag each line `[PR]` or `[issue]`. Discovery surfaces only _external_ PRs (the tracker config defines who counts as external), so a collaborator's in-flight PR is not triage work. This filter is discovery-only; an explicitly named PR is always triaged regardless of author.
 
 Show counts and a one-line summary per item. Let the maintainer pick.
 
@@ -99,7 +87,7 @@ A request can move from code-bound to intent-bound when research turns up an int
 
 ## Triage a specific issue or PR
 
-1. **Gather context.** Read the full issue or PR (body, comments, labels, author, dates; for a PR, the diff too). Parse prior triage notes and recorded owner decisions so you don't re-ask resolved questions. Read `.out-of-scope/*.md` and surface any that resembles this request (prior rejection). Read enough of the codebase, using the project's domain glossary and its ADRs, to sort the request. Pass any recorded owner-review reservation and its dated source to the brief's writer on either path.
+1. **Gather context.** Read the full issue or PR (body, comments, labels, author, dates; for a PR, the diff too). Parse prior triage notes and recorded owner decisions so you don't re-ask resolved questions. When resuming orchestrating triage, check outstanding questions for reporter/owner answers and present an updated picture before continuing. Read `.out-of-scope/*.md` and surface any that resembles this request (prior rejection). Read enough of the codebase, using the project's domain glossary and its ADRs, to sort the request. Pass any recorded owner-review reservation and its dated source to the brief's writer on either path.
 
 Every research run, on either path, does two checks first:
 
@@ -119,11 +107,12 @@ Every research run, on either path, does two checks first:
    - **Scope**: desired behavior is what the request asks for; nothing the request needs is dropped, nothing beyond it is added, and out of scope names the adjacent work an agent might reach for. Work that must be shown on a live system is split as [AGENT-BRIEF.md](AGENT-BRIEF.md#live-acceptance-gets-its-own-ticket) says.
    - **Acceptance criteria**: each is concrete, testable, and independently verifiable, and together they cover the edge cases the request and the code expose.
    - **Dependencies**: work that must land first is named, so it can be recorded as a blocker.
+   - **Seams**: assess the writer's result under `codebase-design`'s [Ownership check](../codebase-design/SKILL.md#ownership-check), including its honesty, Value owner, consumers, reversibility and cost read. The validator checks structure only.
    - **Open questions**: none remain, including missing required inputs. Route unavailable material as [Route questions](#route-questions) says. An open intent question means the request is intent-bound; switch paths.
 
    Passing the issue-contract check proves the shape, never that the brief holds. When it does not hold, send the research run the specific corrections; it edits the brief, and you review the new revision from the top.
 
-3. **Accept** it, as below.
+Once it holds, [accept it](#accept-a-brief-that-holds).
 
 ### Intent-bound path
 
@@ -131,15 +120,13 @@ Every research run, on either path, does two checks first:
 
 2. **Infer what you can cite.** Answer each intent question the contribution guide's inference test lets you answer, and record it as that test says. When you infer every one, have the research run write the brief from the facts and your inferred answers, then go to step 6.
 
-3. **Grill the owner** on the questions you cannot infer, in a grilling session of its own. Open it with `/grill-with-docs` using the session's supported invocation, followed by task context: the issue links, the facts, your inferred answers, the recorded owner decisions, unresolved questions, scope and [AGENT-BRIEF.md](AGENT-BRIEF.md). Include the owned branch and checkout for domain-document edits, the per-repository pull request destinations and the workbench destination required by the contribution guide's Triage section. Its deliverables are the decision record and draft briefs in a proposed ticket split, with the report-back destination. When the owner cannot join a grill now, put the request in your decision inbox with your recommendation.
+3. **Grill the owner** on the one-way doors or unchosen values the full inference test cannot settle, in a grilling session of its own. Open it with `/grill-with-docs` using the session's supported invocation, followed by task context: the issue links, facts, inferred answers, dated recorded decisions with quoted words, unresolved questions and scope. Include the owned branch and checkout for domain-document edits, per-repository PR destinations, the decision-record destination and report-back destination. Its deliverables are the decision record and, through `to-spec` then `to-tickets`, one published specification and proposed tickets in their responsible repositories with actual native parent/blocker links, awaiting independent review. Have it reuse settled answers and list qualifying inferences under **Inferred, listed for the owner**, with dated sources and owner veto. When the owner cannot join a grill now, put the request in your decision inbox with your recommendation.
 
-4. **Decide the split** as the contribution guide's Triage section says, and send any draft your split changes substantially back to the grill, or to a research run when it needs code facts the grill did not gather.
+4. **Decide the split** as the contribution guide's Triage section says. Inspect granularity, dependencies and factual/test-seam evidence, and use its correction and fact-finding routes. For failed native writes, report the exact missing relationship and platform response under the guide's publication rule.
 
-5. **File** the issues with the grill's briefs: post each brief on its intake issue, or file a new issue for it, as `.repo-standards/rules/comments.md#disclaimers` says, with the owner decisions it relies on copied with their dates and quoted words into its triage notes, without a reference to the private record.
+5. **Check publication** by the grill writer against the guide's Triage publication rules. Inspect the specification and ticket bodies, native parent/blocker relationships and copied decisions. The original intake's triaged contract, if revised, still follows Publication mode above; do not create a second authoritative contract for the same work.
 
-6. **Review** each brief as on the code-bound path, and refuse one that leaves owner intent open as the contribution guide's Triage section says. Route each such question as [Route questions](#route-questions) says, and accept only once every one the owner must answer is answered. A question a recorded decision already settles goes back to the brief's writer as a correction instead.
-
-7. **Accept** each brief that holds, as below.
+6. **Review and accept** each exact contract independently as on the code-bound path, using the direct specification/ticket shape rather than Agent Brief fields where applicable. Route open questions as [Route questions](#route-questions) says, and return settled questions to the writer for correction. Apply the guide's Readiness section and installed parent-readiness rules. For amendments, check the revised specification and delta contracts through this same review process under the guide's Triage amendment rules.
 
 ### Accept a brief that holds
 
@@ -151,7 +138,7 @@ Every research run, on either path, does two checks first:
 
    When owner review before merge is reserved, verify that the brief explicitly designates it as contract behavior and its triage notes retain the dated decision source. Check this even when that reason first arises here, after the initial brief review. If the designation or its source is missing or unclear, return the brief to its writer with the recorded reservation and source; the writer corrects it. Independently review the corrected brief from the top, then return to step 1 for its new validator revision notice before applying readiness.
 
-3. **Choose the model**, when the installed rules ask for a `model:` label: weigh the triage notes' suggestion against the work, and pick one label yourself. Keep a matching model already on the issue, or remove a conflicting one before applying readiness.
+3. **Choose the model**, when the installed rules ask for a `model:` label: apply their Model selection rule to the triage notes' suggestion and the work, pick one label yourself, and give the guidance-based reason. Keep a matching model already on the issue, or remove a conflicting one before applying readiness.
 4. **Apply and confirm readiness** with the bundled command, using the `sha256:` revision from the notice you reviewed and the companion labels you chose:
 
    ```sh
@@ -172,7 +159,7 @@ The factory starts this run for one issue, read-only, and the installed factory 
 1. **Gather context** as [Triage a specific issue or PR](#triage-a-specific-issue-or-pr) step 1 says, and run its two checks first, yourself. Read the repository's ADRs, its glossary, and the issues the request links, with their decisions: the records the Triage run section lets you cite.
 2. **Sort** the request as [Sort by uncertainty](#sort-by-uncertainty) says. Answer each intent question the inference test lets you answer from those records, and list it with the record and its date under **Inferred intent** in the triage notes.
 3. **Choose the outcome** the Triage run section names, with the labels it lists, and write its body:
-   - `state:ready`: write the Agent Brief and its triage notes as [AGENT-BRIEF.md](AGENT-BRIEF.md) says, review them as the [code-bound path](#code-bound-path)'s step 2 says, and correct them until they hold. Choose the `model:` label from the models the factory's run facts list, or from any when they list none.
+   - `state:ready`: write the Agent Brief and its triage notes as [AGENT-BRIEF.md](AGENT-BRIEF.md) says, review them as the [code-bound path](#code-bound-path)'s step 2 says, and correct them until they hold. Choose the `model:` label under the installed Model selection rule, within the host capabilities the factory supplies, and record its reason in the triage notes.
    - `state:reporter`: the [reporter template](#reporter-template).
    - `state:owner`: the question and what you found.
    - `state:grill`: the facts gathered (current behavior, constraints, the records you read, the options and what each would cost) and the open questions, numbered.
@@ -184,8 +171,8 @@ The factory starts this run for one issue, read-only, and the installed factory 
 Before posting a comment for any outcome below, read `.repo-standards/rules/comments.md#disclaimers`.
 
 - A missing fact or decision: route it as [Route questions](#route-questions) says; for a question to an outside reporter, post triage notes (template below).
-- For `wontfix`, close the issue, with the comment depending on *why*:
-  - **Already implemented**: the change already exists in the codebase. Point to where it lives; do **not** write to `.out-of-scope/` (that KB is for *rejected* requests, not built ones).
+- For `wontfix`, close the issue, with the comment depending on _why_:
+  - **Already implemented**: the change already exists in the codebase. Point to where it lives; do **not** write to `.out-of-scope/` (that KB is for _rejected_ requests, not built ones).
   - **Rejected (bug)**: give a polite explanation, then close.
   - **Rejected (enhancement)**: write to `.out-of-scope/`, link to it from a comment, then close ([OUT-OF-SCOPE.md](OUT-OF-SCOPE.md)).
 - `state:triage`: apply the role. Optional comment if there's partial progress.
@@ -207,25 +194,8 @@ If the maintainer says "move #42 to state:ready", trust them: that is their revi
 
 ## Reporter template
 
-```markdown
-## Triage Notes
-
-**What we've established so far:**
-
-- point 1
-- point 2
-
-**What we still need from you (@reporter):**
-
-- question 1
-- question 2
-```
-
-Capture everything resolved so far under "established so far" so the work isn't lost. Questions must be specific and actionable, not "please provide more info".
-
-## Resuming a previous session
-
-If prior triage notes exist on the issue or PR, read them and the recorded owner decisions, check whether the reporter or owner has answered any outstanding questions, and present an updated picture before continuing. Don't re-ask resolved questions.
+Post `## Triage Notes` with **What we've established so far:** listing every resolved point,
+then **What we still need from you (@reporter):** listing specific, actionable questions.
 
 ## Reads
 
@@ -233,35 +203,26 @@ Paths are relative to the repository root. The installed rules' paths follow
 Repository Standards'
 [rules reference](https://github.com/lutzseverino/repo-standards/blob/v10.0.0/docs/usage/rules.md).
 
-- `CONTRIBUTING.md`: its Triage, Readiness and Owner questions sections. When
-  it is missing, carry out this skill's method as written, and ask the owner
-  for any rule the method leaves to the guide.
-- `.repo-standards/rules/comments.md`: the installed comment rules, whose
-  sections the posting steps name. When it is missing, post as each step
-  describes; the issue-contract check, where installed, names the disclaimer
-  an Agent Brief needs.
-- The installed rules, such as the `github-repository-configuration` and
-  factory workflow rules, which the `repository-standards` skill looks up.
-  When they are missing, take the brief's shape from
-  [AGENT-BRIEF.md](AGENT-BRIEF.md) and the role meanings from this skill, and
-  apply no `model:` or `factory:` label.
-- `AGENTS.md`: its Agent skills requirements for delegation and session
-  naming. When it is missing, give each research run only its task context,
-  and name the session for its operation and target where naming is
-  supported.
-- `docs/agents/issue-tracker.md`: the issue-tracker config, including whether
-  external pull requests are a request surface. When it is missing, triage
-  issues only, and ask the user which tracker to use.
-- `docs/agents/triage-labels.md`: the label string for each role. When it is
-  missing, use the canonical role names as the label strings.
-- `.out-of-scope/`, holding `.out-of-scope/<concept>.md` files: requests
-  rejected before. When it is missing, none were; create it with the first
-  rejection, as [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md) says.
-- `scripts/validate-issue-contract.mjs`, Repo Canon's issue-contract
-  validator, and the `babysit` skill's GitHub connection: `ready.mjs` imports
-  both. When either is missing, `ready.mjs` cannot start: stop at acceptance,
-  as when your credentials cannot apply readiness.
-- `.repo-standards/rules/factory-workflow.md` and `.factory/config.json` at
-  the destination's default branch: `ready.mjs` reads both to tell whether a
-  model label applies and its prefix. When the rules are missing there, it
-  requires no model label.
+- `CONTRIBUTING.md`: Triage, Readiness and Owner questions. If missing,
+  follow this method and ask the owner for any rule left to the guide.
+- `.repo-standards/rules/comments.md`: posting sections named above. If missing,
+  post as each step describes; an installed issue-contract check names the Agent Brief disclaimer.
+- Installed rules, such as `github-repository-configuration` and factory workflow,
+  looked up by `repository-standards`. If missing, use [AGENT-BRIEF.md](AGENT-BRIEF.md)
+  for brief shape, this skill for role meanings, and no `model:` or `factory:` label.
+- The `codebase-design` skill: its Ownership check supplies the Seams read
+  and independent assessment. If missing, report the missing definition and
+  stop brief writing or acceptance until it is available.
+- `AGENTS.md`: Agent skills delegation and naming. If missing, give research runs
+  only task context and name sessions for operation and target where supported.
+- `docs/agents/issue-tracker.md`: tracker and external-PR scope. If missing,
+  triage issues only and ask which tracker to use.
+- `docs/agents/triage-labels.md`: role label strings. If missing, use canonical role names.
+- `.out-of-scope/`, with `.out-of-scope/<concept>.md`: prior rejections. If missing,
+  none were; create it on the first rejection as [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md) says.
+- `vendor/repo-canon/validate-issue-contract.mjs` and the `babysit` skill's GitHub connection:
+  `ready.mjs` imports both. If either is missing it cannot start; stop at acceptance
+  as for credentials that cannot apply readiness.
+- `.repo-standards/rules/factory-workflow.md` and `.scriptorium/config.json` at the
+  destination default branch: `ready.mjs` reads both for model applicability
+  and prefix. If rules are missing there, it requires no model label.
